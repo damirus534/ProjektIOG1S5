@@ -1,10 +1,18 @@
 package Main;
 
+import View.UzytkownikWidok;
+
+import java.awt.*;
+
 public class Main {
 
 
     public static void main(String[] args){
-        System.out.println("hello world");
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new UzytkownikWidok().setVisible(true);
+            }
+        });
     }
 
 }
