@@ -1,9 +1,12 @@
 package View;
 
+import Controllers.DB;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.Vector;
 
 public class UzytkownikWidok extends JFrame{
@@ -11,6 +14,7 @@ public class UzytkownikWidok extends JFrame{
     //metoda ktora inicjuje okno
     public UzytkownikWidok(){
         initComponents();
+        initDB();
     }
     //zmienna okna
     JFrame oknoUzytkownika = new JFrame("Wywozka smieci");
@@ -28,6 +32,9 @@ public class UzytkownikWidok extends JFrame{
     private JTextField textFieldLogin = new JTextField();
     private JTextField textFieldHaslo = new JTextField();
     private JButton buttonZaloguj = new JButton();
+
+    //db
+    private DB db;
 
     private void initComponents() {//metoda do edycji
 
@@ -70,6 +77,11 @@ public class UzytkownikWidok extends JFrame{
         panelLogowania.add(buttonZaloguj);
         panelLogowania.setVisible(true);
 
+        //akcja logowania
+        buttonZaloguj.addActionListener((var e) -> {
+            //macias:xdxd
+            alert(this.db.login(textFieldLogin.getText(), textFieldHaslo.getText()));
+        });
 
 
 
@@ -80,6 +92,17 @@ public class UzytkownikWidok extends JFrame{
 
         oknoUzytkownika.setVisible(true);
 
+    }
+
+    private void initDB(){
+        this.db = new DB();
+    }
+
+    private void alert(String message){
+        JFrame f = new JFrame("Parent");
+        f.setAlwaysOnTop(true);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JOptionPane.showMessageDialog(f, message, "error", JOptionPane.ERROR_MESSAGE);
     }
 
 
