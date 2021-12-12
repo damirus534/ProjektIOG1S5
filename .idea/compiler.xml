@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ProjektIO" />
+        <module name="ProjektIOG1S5" />
       </profile>
     </annotationProcessing>
   </component>
