@@ -1,10 +1,16 @@
 package Main;
 
+import java.awt.*;
+
 public class Main {
 
 
     public static void main(String[] args){
-        System.out.println("hello world");
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new View.UzytkownikWidok();
+            }
+        });
     }
 
 }
