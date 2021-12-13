@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ProjektIO" />
         <module name="smeici" />
+        <module name="smieci" />
       </profile>
     </annotationProcessing>
   </component>
