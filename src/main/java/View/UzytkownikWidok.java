@@ -54,7 +54,7 @@ public class UzytkownikWidok extends JFrame{
         panelListy.setLayout(new BorderLayout());
         daneDoTabeli = new Vector<Vector<String>>();
         nazwyKolumn = new Vector<String>(3);
-        nazwyKolumn.add("nr_Konetenra");
+        nazwyKolumn.add("nr_Kontenera");
         nazwyKolumn.add("najblizsza_dostepnosc");
         nazwyKolumn.add("Status");
 
@@ -65,6 +65,12 @@ public class UzytkownikWidok extends JFrame{
         daneDoTabeli1.add(kont.najblizszaDostepnosc);
         daneDoTabeli1.add(String.valueOf(kont.konteneryVector.get(0).status));
         daneDoTabeli.add(daneDoTabeli1);
+        kont.konteneryVector.add(new Kontener(false, "od wczoraj", 2));
+        Vector<String>daneDoTabeli2 = new Vector<String>();
+        daneDoTabeli2.add(String.valueOf(kont.konteneryVector.get(1).idKontenera));
+        daneDoTabeli2.add(kont.konteneryVector.get(1).najblizszaDostepnosc);
+        daneDoTabeli2.add(String.valueOf(kont.konteneryVector.get(1).status));
+        daneDoTabeli.add(daneDoTabeli2);
 
         //tworzenie listy w panelu w ktorym bedzie sie wyswietlac lista
         modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
