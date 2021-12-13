@@ -1,6 +1,7 @@
 package View;
 
 import Controllers.DB;
+import Controllers.Kontener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +36,8 @@ public class UzytkownikWidok extends JFrame{
     private JTextField textFieldHaslo = new JTextField();
     private JButton buttonZaloguj = new JButton();
 
+    //chwilowa zmienna do tabeli
+    private Controllers.Kontener kont = new Kontener(true, "od jutra", 1);
     //db
     private DB db;
 
@@ -48,18 +51,29 @@ public class UzytkownikWidok extends JFrame{
 
         //tworzenie panelu na ktorym bedzie wyswietlac sie lista
         panelListy.setPreferredSize(new Dimension(600,600));
-        panelListy.setLayout(null);
+        panelListy.setLayout(new BorderLayout());
         daneDoTabeli = new Vector<Vector<String>>();
-        nazwyKolumn = new Vector<String>();
-        nazwyKolumn.add("nr Konetenra");
-        nazwyKolumn.add("Rozmiar kontenera");
+        nazwyKolumn = new Vector<String>(3);
+        nazwyKolumn.add("nr_Konetenra");
+        nazwyKolumn.add("najblizsza_dostepnosc");
         nazwyKolumn.add("Status");
+
+
+        //aktualnie dodam kontener recznie aby wyswietlala sie tabela po uruchomieniu
+        Vector<String>daneDoTabeli1 = new Vector<String>();
+        daneDoTabeli1.add(String.valueOf(kont.konteneryVector.get(0).idKontenera));
+        daneDoTabeli1.add(kont.najblizszaDostepnosc);
+        daneDoTabeli1.add(String.valueOf(kont.konteneryVector.get(0).status));
+        daneDoTabeli.add(daneDoTabeli1);
+
+        //tworzenie listy w panelu w ktorym bedzie sie wyswietlac lista
         modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
         tabela = new JTable(modelTabeli);
         tabela.setBounds(0,0,600,600);
         tabela.setEnabled(false);
         tabela.setVisible(true);
-        panelListy.add(tabela);
+        panelListy.add(tabela, BorderLayout.CENTER);
+        panelListy.add(tabela.getTableHeader(), BorderLayout.NORTH);
 
         //tworzenie panelu w ktorym bedzie mozna sie zalogowac
         panelLogowania.setPreferredSize(new Dimension(200, 600));
