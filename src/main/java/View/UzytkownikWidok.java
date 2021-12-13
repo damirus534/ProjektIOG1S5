@@ -1,12 +1,11 @@
 package View;
 
-import Controllers.DB;
+import DB.DB;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -81,20 +80,31 @@ public class UzytkownikWidok extends JFrame{
 
         //akcja logowania
         buttonZaloguj.addActionListener((var e) -> {
+            //test kontenerow
+//            Map<String, String> data = new HashMap<>();
+//            data.put("bruher", "xdxdxd");
+//            data.put("crng", "crng");
+//            data.put("xdxddxd", "123123");
+//            data.put("kaczynski", "crng");
+//            db.table("containers").add(data);
+
+            System.out.println(db.table("containers").list().toString());
+            //db.table("containers").delete("apJEuDv3OxQKDR6PoO0w")
+
             //test:test
             //macias:xdxd
             //bruher:cringo
-            switch (this.db.login(textFieldLogin.getText(), textFieldHaslo.getText())){
-                case NULL:
-                    alert(db.userName + " zalogowaned");
-                    break;
-                case USER_NULL:
-                    alert("nie ma takiego usera xdds");
-                    break;
-                case BAD_PASSWORD:
-                    alert("zle haslo dsxddxd");
-                    break;
-            }
+//            switch (db.auth().login(textFieldLogin.getText(), textFieldHaslo.getText())){
+//                case GOOD:
+//                    alert(db.auth().userName + " zalogowaned");
+//                    break;
+//                case USER_NULL:
+//                    alert("nie ma takiego usera xdds");
+//                    break;
+//                case BAD_PASSWORD:
+//                    alert("zle haslo dsxddxd");
+//                    break;
+//            }
         });
 
 
@@ -123,7 +133,7 @@ public class UzytkownikWidok extends JFrame{
         Map<String, String> data = new HashMap<>();
         data.put("pass", pass);
 
-        db.register(name, data);
+        db.auth().register(name, data);
     }
 
 }
