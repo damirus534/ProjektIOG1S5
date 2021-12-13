@@ -11,17 +11,30 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class DB {
+    public enum Error {
+        NULL, BAD_PASSWORD, USER_NULL
+    }
+    private Error error;
+
+
+
+    //db stuff
     private Firestore connection;
 
     public DB(){
         try {
-            this.connect();
+            connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.error = Error.NULL;
+        this.authStatus = AuthStatus.GUEST;
+        this.userName = "";
     }
 
     private void connect() throws IOException {
@@ -36,7 +49,17 @@ public class DB {
         this.connection = FirestoreClient.getFirestore();
     }
 
-    public String login(String name, String pass) {
+
+
+    //auth stuff
+    public enum AuthStatus {
+        GUEST, CLIENT, WASTE_COLLECTOR, OWNER, ADMIN
+    }
+    private AuthStatus authStatus;
+    public String userName;
+
+    public Error login(String name, String pass) {
+        error = Error.NULL;
         DocumentReference docRef = this.connection.collection("users").document(name);
         // asynchronously retrieve the document
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -52,14 +75,21 @@ public class DB {
         }
 
         if (document.exists()) {
-            if(pass.equals(document.getString("pass")))
-                return "0";
+            if(pass.equals(document.getString("pass"))){
+                authStatus = AuthStatus.CLIENT;
+                userName = name;
+            }
             else
-                return "bad password";
+                error = Error.BAD_PASSWORD;
         } else {
-            return "user doesn't exist";
+            error = Error.USER_NULL;
         }
 
-//        return "something went wrong";
+        return error;
+    }
+
+    public Error register(String name, Map<String, String> data){
+        connection.collection("users").document(name).set(data);
+        return login(name, data.get("pass"));
     }
 }

@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class UzytkownikWidok extends JFrame{
@@ -79,8 +81,20 @@ public class UzytkownikWidok extends JFrame{
 
         //akcja logowania
         buttonZaloguj.addActionListener((var e) -> {
+            //test:test
             //macias:xdxd
-            alert(this.db.login(textFieldLogin.getText(), textFieldHaslo.getText()));
+            //bruher:cringo
+            switch (this.db.login(textFieldLogin.getText(), textFieldHaslo.getText())){
+                case NULL:
+                    alert(db.userName + " zalogowaned");
+                    break;
+                case USER_NULL:
+                    alert("nie ma takiego usera xdds");
+                    break;
+                case BAD_PASSWORD:
+                    alert("zle haslo dsxddxd");
+                    break;
+            }
         });
 
 
@@ -105,6 +119,11 @@ public class UzytkownikWidok extends JFrame{
         JOptionPane.showMessageDialog(f, message, "error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void register(String name, String pass){
+        Map<String, String> data = new HashMap<>();
+        data.put("pass", pass);
 
+        db.register(name, data);
+    }
 
 }
