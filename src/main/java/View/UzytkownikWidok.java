@@ -20,8 +20,9 @@ public class UzytkownikWidok extends JPanel{
     //zmienne dla paneluLogowania
     private JLabel labelLogin= new JLabel();
     private JLabel labelHaslo= new JLabel();
-    private JTextField textFieldLogin = new JTextField();
-    private JTextField textFieldHaslo = new JTextField();
+
+    private JTextField textFieldLogin = new JTextField("macias"); //szybsze logowanie mozna potem wywalic
+    private JTextField textFieldHaslo = new JTextField("xdxd");
     private JButton buttonZaloguj = new JButton();
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
 

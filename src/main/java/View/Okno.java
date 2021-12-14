@@ -10,13 +10,13 @@ import java.util.Map;
 public class Okno extends JFrame {
 
     //metoda ktora inicjuje okno
-    public Okno(){
+    public Okno() {
         initComponents();
         initDB();
     }
 
     JFrame okno = new JFrame();
-    private UzytkownikWidok WidokUzytkownika =  new UzytkownikWidok();
+    private UzytkownikWidok WidokUzytkownika = new UzytkownikWidok();
     private JPanel oknoOdUzytkownika = WidokUzytkownika.getPanelUzytkownikaCaly();
 
     private KierowcaWidok WidokKierowcy = new KierowcaWidok();
@@ -25,12 +25,14 @@ public class Okno extends JFrame {
     private WlascicielWidok WidokWlasciciela = new WlascicielWidok();
     private JPanel oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
 
+    private KlientWidok WidokKlienta = new KlientWidok();
+    private JPanel oknoOdKlienta = WidokKlienta.getOknoKlienta();
+
     private DB db;
 
-
-    private void initComponents(){
+    private void initComponents() {
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        okno.setSize(800,600);
+        okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
         okno.setLayout(new BorderLayout());
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
@@ -58,7 +60,7 @@ public class Okno extends JFrame {
 
                     okno.getContentPane().removeAll();
                     okno.getContentPane().invalidate();
-                    okno.getContentPane().add(oknoOdKierowcy);
+                    okno.getContentPane().add(oknoOdKlienta);
                     okno.getContentPane().revalidate();
                     break;
                 case USER_NULL:
@@ -83,21 +85,26 @@ public class Okno extends JFrame {
             okno.getContentPane().add(oknoOdWlasciciela);
             okno.getContentPane().revalidate();
         });
+        WidokKlienta.getWylogujButton().addActionListener((var e) -> {
+            okno.getContentPane().removeAll();
+            okno.getContentPane().invalidate();
+            okno.getContentPane().add(oknoOdWlasciciela);
+            okno.getContentPane().revalidate();
+        });
     }
 
-
-    private void initDB(){
+    private void initDB() {
         this.db = new DB();
     }
 
-    private void alert(String message){
+    private void alert(String message) {
         JFrame f = new JFrame("Parent");
         f.setAlwaysOnTop(true);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JOptionPane.showMessageDialog(f, message, "error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void register(String name, String pass){
+    public void register(String name, String pass) {
         Map<String, String> data = new HashMap<>();
         data.put("pass", pass);
 
