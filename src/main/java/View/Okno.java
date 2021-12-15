@@ -60,7 +60,7 @@ public class Okno extends JFrame {
 
                     okno.getContentPane().removeAll();
                     okno.getContentPane().invalidate();
-                    okno.getContentPane().add(oknoOdKlienta);
+                    okno.getContentPane().add(oknoOdKierowcy);
                     okno.getContentPane().revalidate();
                     break;
                 case USER_NULL:
