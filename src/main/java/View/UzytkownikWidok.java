@@ -1,56 +1,59 @@
 package View;
 
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.Vector;
 
-public class UzytkownikWidok extends JFrame{
+public class UzytkownikWidok extends JPanel{
 
-    //metoda ktora inicjuje okno
+    //metoda ktora inicjuje panel uzytkownika
     public UzytkownikWidok(){
         initComponents();
     }
-    //zmienna okna
-    JFrame oknoUzytkownika = new JFrame("Wywozka smieci");
+
+
     //zmienne dla paneli znajdujacych sie w oknie
+    private JPanel panelUzytkownikaCaly = new JPanel();
     private JPanel panelLogowania = new JPanel();
     private JPanel panelListy = new JPanel();
-    //zmienne dla paneluListy
-    private Vector<Vector<String>> daneDoTabeli;
-    private Vector<String> nazwyKolumn;
-    private TableModel modelTabeli;
-    private JTable tabela = new JTable();
+
     //zmienne dla paneluLogowania
     private JLabel labelLogin= new JLabel();
     private JLabel labelHaslo= new JLabel();
-    private JTextField textFieldLogin = new JTextField();
-    private JTextField textFieldHaslo = new JTextField();
+
+    private JTextField textFieldLogin = new JTextField("macias"); //szybsze logowanie mozna potem wywalic
+    private JTextField textFieldHaslo = new JTextField("xdxd");
     private JButton buttonZaloguj = new JButton();
+    private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
+
+
+
+
+    //gettery
+    public JPanel getPanelUzytkownikaCaly() {
+        return panelUzytkownikaCaly;
+    }
+    public JButton getButtonZaloguj() {
+        return buttonZaloguj;
+    }
+    public JTextField getTextFieldHaslo() {
+        return textFieldHaslo;
+    }
+    public JTextField getTextFieldLogin() {
+        return textFieldLogin;
+    }
 
     private void initComponents() {//metoda do edycji
 
-        //tworzenie okna dla uzytkownika z lista kontenerow i logowaniem
-        oknoUzytkownika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        oknoUzytkownika.setSize(800,600);
-        oknoUzytkownika.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
-        oknoUzytkownika.setLayout(new BorderLayout(0,0));
+        //tworzenie panelu w ktorym wyswietla sie dwa panele
+        panelUzytkownikaCaly.setPreferredSize(new Dimension(800,600));
+        panelUzytkownikaCaly.setLayout(new BorderLayout());
 
         //tworzenie panelu na ktorym bedzie wyswietlac sie lista
         panelListy.setPreferredSize(new Dimension(600,600));
-        panelListy.setLayout(null);
-        daneDoTabeli = new Vector<Vector<String>>();
-        nazwyKolumn = new Vector<String>();
-        nazwyKolumn.add("nr Konetenra");
-        nazwyKolumn.add("Rozmiar kontenera");
-        nazwyKolumn.add("Status");
-        modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
-        tabela = new JTable(modelTabeli);
-        tabela.setBounds(0,0,600,600);
-        tabela.setEnabled(false);
-        tabela.setVisible(true);
-        panelListy.add(tabela);
+        panelListy.setLayout(new BorderLayout());
+        panelListy.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+        panelListy.add(tabelaKontenerow.getTabela().getTableHeader(), BorderLayout.NORTH);
 
         //tworzenie panelu w ktorym bedzie mozna sie zalogowac
         panelLogowania.setPreferredSize(new Dimension(200, 600));
@@ -71,17 +74,9 @@ public class UzytkownikWidok extends JFrame{
         panelLogowania.setVisible(true);
 
 
-
-
-        //dodanie paneli do okna
-        oknoUzytkownika.add(panelListy, BorderLayout.WEST);
-        oknoUzytkownika.add(panelLogowania, BorderLayout.EAST);
-
-
-        oknoUzytkownika.setVisible(true);
-
+        panelUzytkownikaCaly.add(panelListy, BorderLayout.WEST);
+        panelUzytkownikaCaly.add(panelLogowania, BorderLayout.EAST);
+        panelUzytkownikaCaly.setVisible(true);
     }
-
-
 
 }
