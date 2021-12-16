@@ -1,6 +1,7 @@
 package View;
 
 import Controllers.Kontener;
+import Controllers.ListaKontenerow;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,11 +16,13 @@ public class TabelaKontenerow {
         nazwyKolumn.add("Status");
 
         Vector<String>daneDoTabeli1 = new Vector<String>();
+
+        kont.ListaKontenerowDodajKontener(new Kontener(true,"od jutra", 1));
         daneDoTabeli1.add(String.valueOf(kont.konteneryVector.get(0).idKontenera));
-        daneDoTabeli1.add(kont.najblizszaDostepnosc);
+        daneDoTabeli1.add(kont.konteneryVector.get(0).najblizszaDostepnosc);
         daneDoTabeli1.add(String.valueOf(kont.konteneryVector.get(0).status));
         daneDoTabeli.add(daneDoTabeli1);
-        kont.konteneryVector.add(new Kontener(false, "od wczoraj", 2));
+        kont.ListaKontenerowDodajKontener(new Kontener(false, "od wczoraj", 2));
         Vector<String>daneDoTabeli2 = new Vector<String>();
         daneDoTabeli2.add(String.valueOf(kont.konteneryVector.get(1).idKontenera));
         daneDoTabeli2.add(kont.konteneryVector.get(1).najblizszaDostepnosc);
@@ -38,7 +41,7 @@ public class TabelaKontenerow {
     private Vector<String> nazwyKolumn = new Vector<String>(3);
     private TableModel modelTabeli;
     private JTable tabela;
-    private Controllers.Kontener kont = new Kontener(true, "od jutra", 1);
+    private Controllers.ListaKontenerow kont = new ListaKontenerow();
 
     public JTable getTabela() {
         return tabela;
