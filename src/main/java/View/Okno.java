@@ -1,5 +1,6 @@
 package View;
 
+import Controllers.KlasaUzytkownikow;
 import DB.DB;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class Okno extends JFrame {
         initComponents();
         initDB();
     }
+
 
     JFrame okno = new JFrame();
     private UzytkownikWidok WidokUzytkownika = new UzytkownikWidok();
@@ -38,6 +40,7 @@ public class Okno extends JFrame {
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
         okno.setVisible(true);
 
+        KlasaUzytkownikow xd= new KlasaUzytkownikow("xd", "xd", 2);
         //akcja logowania
         WidokUzytkownika.getButtonZaloguj().addActionListener((var e) -> {
             //test kontenerow
