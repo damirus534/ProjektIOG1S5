@@ -47,13 +47,13 @@ public class Table {
     }
 
     //adds document with specified id
-    public DB.Error add(String id, Map<String, String> data){
+    public DB.Error add(String id, Map<String, Object> data){
         db.collection(currentTable).document(id).set(data);
         return DB.Error.GOOD;
     }
 
     //adds document with auto id
-    public DB.Error add(Map<String, String> data){
+    public DB.Error add(Map<String, Object> data){
         db.collection(currentTable).document().set(data);
         return DB.Error.GOOD;
     }
