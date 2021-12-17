@@ -1,17 +1,20 @@
 package Main;
 
-import java.awt.*;
+import View.KierowcaWidok;
+import org.checkerframework.checker.units.qual.K;
 
+import java.awt.*;
+//jrieojfioejfioewjio
 public class Main {
 
-//penis
+
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                new View.UzytkownikWidok();
+                new View.Okno();
             }
         });
     }
 
 }
-//brats
