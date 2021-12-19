@@ -14,9 +14,7 @@ public class KlasaUzytkownikow {
         grupaUzytkownika(int id){
             this.id=id;
         }
-
-
-    };
+    }
 
     public KlasaUzytkownikow(String LOGIN, String HASLO, int GRUPAUZYTKOWNIKA){
         this.Login = LOGIN;
@@ -27,4 +25,5 @@ public class KlasaUzytkownikow {
             }
         }
     }
+
 }
