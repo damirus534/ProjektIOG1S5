@@ -21,6 +21,7 @@ public class KierowcaWidok extends JPanel {
     private JButton wylogujButton =new JButton();
     private JLabel AktualnyKursLabel=new JLabel();
     private JLabel Kursy=new JLabel();
+    private JLabel aktualnyUzytkownikLabel = new JLabel();
     //wektory
     private Vector<String> KolumnyWektor= new Vector<String>(3);
     private Vector<Vector<String>> KursyWektor= new Vector<Vector<String>>();
@@ -57,7 +58,7 @@ public class KierowcaWidok extends JPanel {
         AktualnyKursLabel.setText("Aktualny Kurs");
         Kursy.setFont(new Font("Serif",Font.PLAIN,20));
         AktualnyKursLabel.setFont(new Font("Serif",Font.PLAIN,20));
-        PanelListyKursow.setBorder(new EmptyBorder(new Insets(50,0,50,0)));
+        PanelListyKursow.setBorder(new EmptyBorder(new Insets(0,0,50,0)));
         PanelListyKursow.add(AktualnyKursLabel,BorderLayout.CENTER);
         PanelListyKursow.add(Box.createRigidArea(new Dimension(0,20)));
         PanelListyKursow.add(AktualnyKurs.getTableHeader());
@@ -71,16 +72,21 @@ public class KierowcaWidok extends JPanel {
 
 
         //Ustawianie panelu z buttonami
-        PanelButton.setPreferredSize(new Dimension(200,600));
+        PanelButton.setPreferredSize(new Dimension(180,600));
         PanelButton.setLayout(null);
 
         wylogujButton.setText("Wyloguj");
-        wylogujButton.setBounds(30 ,500,160,30);
+        wylogujButton.setBounds(10 ,520,160,20);
 
         koniecKursuButton.setText("Koniec Kursu");
-        koniecKursuButton.setBounds(30,100,160,30);
+        koniecKursuButton.setBounds(10,70,160,30);
         PanelButton.add(wylogujButton);
         PanelButton.add(koniecKursuButton);
+        //Dodanie Labela do panelu z buttonami
+        aktualnyUzytkownikLabel.setText("zalogowany jako: Kierowca");
+        aktualnyUzytkownikLabel.setBounds(10,0, 160,20);
+        PanelButton.add(aktualnyUzytkownikLabel);
+
         //Dodanie paneli do okana
         OknoKierowcy.add(PanelListyKursow,BorderLayout.WEST);
         OknoKierowcy.add(PanelButton,BorderLayout.EAST);

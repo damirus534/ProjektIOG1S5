@@ -63,7 +63,7 @@ public class Okno extends JFrame {
 
                     okno.getContentPane().removeAll();
                     okno.getContentPane().invalidate();
-                    okno.getContentPane().add(oknoOdKierowcy);
+                    okno.getContentPane().add(oknoOdKlienta);
                     okno.getContentPane().revalidate();
                     break;
                 case USER_NULL:
@@ -81,7 +81,7 @@ public class Okno extends JFrame {
             okno.getContentPane().add(oknoOdWlasciciela);
             okno.getContentPane().revalidate();
         });
-        WidokWlasciciela.getPrzyciskZmianyWidoku().addActionListener((var e) -> {
+        WidokWlasciciela.getZmianaWidokuButton().addActionListener((var e) -> {
             //trzeba dodac tabele kursow do klasy tak jak tabela kontenerow jest dodana i tutaj zmieniac panele po wcisnieciu przycisku
             okno.getContentPane().removeAll();
             okno.getContentPane().invalidate();
