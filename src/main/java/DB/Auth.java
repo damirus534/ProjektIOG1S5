@@ -18,10 +18,14 @@ public class Auth {
     }
 
     public enum AuthStatus {
-        GUEST, CLIENT, WASTE_COLLECTOR, OWNER, ADMIN
+        GUEST, CLIENT, WASTE_COLLECTOR, OWNER, DRIVER
     }
     private AuthStatus authStatus;
     public String userName;
+
+    public AuthStatus authStatusGetter(){
+        return this.authStatus;
+    }
 
     public DB.Error login(String name, String pass) {
         DocumentReference docRef = db.collection("users").document(name);
@@ -40,7 +44,15 @@ public class Auth {
 
         if (document.exists()) {
             if(pass.equals(document.getString("pass"))){
-                authStatus = AuthStatus.CLIENT;
+                if("client".equals(document.getString("type"))){
+                    authStatus = AuthStatus.CLIENT;
+                }else if("driver".equals(document.getString("type"))){
+                    authStatus = AuthStatus.DRIVER;
+                }else if("owner".equals(document.getString("type"))){
+                    authStatus = AuthStatus.OWNER;
+                }else{
+                    authStatus = AuthStatus.WASTE_COLLECTOR;
+                }
                 userName = name;
                 return DB.Error.GOOD;
             }

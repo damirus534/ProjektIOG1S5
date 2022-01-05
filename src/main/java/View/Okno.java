@@ -60,11 +60,24 @@ public class Okno extends JFrame {
             switch (db.auth().login(WidokUzytkownika.getTextFieldLogin().getText(), WidokUzytkownika.getTextFieldHaslo().getText())) {
                 case GOOD:
                     alert(db.auth().userName + " zalogowaned");
+                    switch(db.auth().authStatusGetter()){
+                        case CLIENT:
+                            okno.getContentPane().invalidate();
+                            okno.setContentPane(oknoOdKlienta);
+                            okno.getContentPane().revalidate();
+                            break;
+                        case DRIVER:
+                            okno.getContentPane().invalidate();
+                            okno.setContentPane(oknoOdKierowcy);
+                            okno.getContentPane().revalidate();
+                            break;
+                        case OWNER:
+                            okno.getContentPane().invalidate();
+                            okno.setContentPane(oknoOdWlasciciela);
+                            okno.getContentPane().revalidate();
+                    }
 
-                    okno.getContentPane().removeAll();
-                    okno.getContentPane().invalidate();
-                    okno.getContentPane().add(oknoOdKlienta);
-                    okno.getContentPane().revalidate();
+
                     break;
                 case USER_NULL:
                     alert("nie ma takiego usera xdds");
@@ -76,24 +89,26 @@ public class Okno extends JFrame {
         });
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
-            okno.getContentPane().removeAll();
             okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
+            okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
         WidokWlasciciela.getZmianaWidokuButton().addActionListener((var e) -> {
             //trzeba dodac tabele kursow do klasy tak jak tabela kontenerow jest dodana i tutaj zmieniac panele po wcisnieciu przycisku
-            okno.getContentPane().removeAll();
-            okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
             okno.getContentPane().revalidate();
         });
+        WidokWlasciciela.getWylogujButton().addActionListener((var e) -> {
+            okno.getContentPane().invalidate();
+            okno.setContentPane(oknoOdUzytkownika);
+            okno.getContentPane().revalidate();
+        });
+
         WidokKlienta.getWylogujButton().addActionListener((var e) -> {
-            okno.getContentPane().removeAll();
             okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
+            okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
+
     }
 
     private void initDB() {
