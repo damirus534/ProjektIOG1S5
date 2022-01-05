@@ -162,6 +162,7 @@ public class WlascicielWidok extends JPanel {
     public JButton getZmianaWidokuButton() {
         return zmianaWidokuButton;
     }
+    public JButton getWylogujButton(){return wylogujButton;}
     public JPanel getPanelWlascicielaCaly() {
         return panelWlascicielaCaly;
     }
