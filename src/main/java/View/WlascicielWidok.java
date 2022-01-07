@@ -28,6 +28,7 @@ public class WlascicielWidok extends JPanel {
 
     //zmienna dla tabeli kontenerow
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
+    private TabelaKursow tabelaKursow = new TabelaKursow();
 
     //zmienne dla tabeli kursow
     //wektory
@@ -74,7 +75,7 @@ public class WlascicielWidok extends JPanel {
         KolumnyWektor.add("Adres");
         KolumnyWektor.add("Numer Kontenera");
         KolumnyWektor.add("Data rozpoczecia kursu");
-        TabelaKursow=new JTable(KursyWektor,KolumnyWektor);
+        TabelaKursow=tabelaKursow.getTabela();
         panelTabeliKursow.setPreferredSize(new Dimension(600,600));
         TabelaKursow.setFillsViewportHeight(true);
         panelTabeliKursow.setLayout(new BoxLayout(panelTabeliKursow,BoxLayout.Y_AXIS));

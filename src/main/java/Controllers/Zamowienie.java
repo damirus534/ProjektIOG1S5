@@ -2,20 +2,28 @@ package Controllers;
 
 public class Zamowienie {
     //pola klasy zamowienia
-    private int idZamowienia;
-    private String loginUzytkownika;
-    private String data;
-    private String adres;
-    private  int idKontenera;
-    private  StatusZamowienia status;
+    public int idZamowienia;
+    public String loginUzytkownika;
+    public String data;
+    public String adres;
+    public int idKontenera;
+    public StatusZamowienia status;
     //Konstruktor
-    Zamowienie(int idZamowienia,String loginUzytkownika,String data,String adres,
-               int idKontenera,StatusZamowienia status){
+    public Zamowienie(int idZamowienia,String loginUzytkownika,String data,String adres,
+               int idKontenera,StatusZamowienia STATUS){
         this.idZamowienia=idZamowienia;
         this.adres=adres;
         this.idKontenera=idKontenera;
         this.loginUzytkownika=loginUzytkownika;
         this.data=data;
-        this.status=status;
+        this.status=STATUS;
+    }
+
+    public int getIdKontenera(){
+        return this.idKontenera;
+    }
+
+    public void zmienStatusZamowienia(){
+        status.kolejneZamowienie();
     }
 }

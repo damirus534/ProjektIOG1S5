@@ -3,7 +3,13 @@ package Controllers;
 public enum StatusZamowienia {
     //typ wyliczeniowy używany przy zamówieniu
 
-    OczekiwaniaNaDostarczenie,DostarczenieDoKlienta,DostarcznieDoWysypiska,Zakończenie
+    OczekiwaniaNaDostarczenie,DostarczenieDoKlienta,DostarcznieDoWysypiska,Zakończenie;
+
+    public static StatusZamowienia[] wartosci = values();
+
+    public StatusZamowienia kolejneZamowienie(){
+        return wartosci[(this.ordinal()+1) % wartosci.length];
+    }
 
 
 }
