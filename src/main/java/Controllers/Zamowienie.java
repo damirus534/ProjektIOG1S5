@@ -9,11 +9,11 @@ public class Zamowienie {
     public int idKontenera;
     public StatusZamowienia status;
     //Konstruktor
-    public Zamowienie(int idZamowienia,String loginUzytkownika,String data,String adres,
-               int idKontenera,StatusZamowienia STATUS){
-        this.idZamowienia=idZamowienia;
+    public Zamowienie(long idZamowienia,String loginUzytkownika,String data,String adres,
+               long idKontenera,StatusZamowienia STATUS){
+        this.idZamowienia=(int)idZamowienia;
         this.adres=adres;
-        this.idKontenera=idKontenera;
+        this.idKontenera=(int)idKontenera;
         this.loginUzytkownika=loginUzytkownika;
         this.data=data;
         this.status=STATUS;
@@ -22,6 +22,9 @@ public class Zamowienie {
     public int getIdKontenera(){
         return this.idKontenera;
     }
+    public String getAdres(){return this.adres;}
+    public String getData(){return  this.data;}
+
 
     public void zmienStatusZamowienia(){
         status.kolejneZamowienie();

@@ -20,7 +20,7 @@ public class TabelaKursow {
 
         Vector<String> daneDoTabeli1 = new Vector<>();
 
-        kursy.dodajZamowienie(new Zamowienie(1, "user1", "07.01.2022", "Krasinskiego8", 1, StatusZamowienia.Zakończenie));
+        kursy.dodajZamowienie(new Zamowienie(1, "user1", "07.01.2022", "Krasinskiego8", 1, StatusZamowienia.Zakonczenie));
 
         daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
         daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
@@ -32,8 +32,36 @@ public class TabelaKursow {
         tabela.setBounds(0,0, 600, 600);
         tabela.setEnabled(false);
         tabela.setVisible(true);
+        daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
+        daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
+        daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
+        daneDoTabeli.add(daneDoTabeli1);
 
     };
+    public TabelaKursow(ListaZamówień listaZamówień){
+        //tworzenie na tabeli na podstawie bazy danych i stworzonej zmiennej lista zamowien
+        kursy=listaZamówień;
+        nazwyKolumn.add("data");
+        nazwyKolumn.add("Status zamowienia");
+        nazwyKolumn.add("id kontenera");
+    //dodawanie do wektora tabeli
+        Vector<String> daneDoTabeli1 = new Vector<>();
+        for(int i=0;i<kursy.getListaZanowien().size();i++){
+            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
+            daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
+            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
+            daneDoTabeli.add(daneDoTabeli1);
+        }
+        modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
+        tabela = new JTable(modelTabeli);
+        tabela.setBounds(0,0, 600, 600);
+        tabela.setEnabled(false);
+        tabela.setVisible(true);
+        daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
+        daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
+        daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
+        daneDoTabeli.add(daneDoTabeli1);
+    }
 
 
     private JTable tabela;

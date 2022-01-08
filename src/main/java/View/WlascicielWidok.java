@@ -1,5 +1,7 @@
 package View;
 
+import Controllers.ListaKontenerow;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -8,6 +10,11 @@ import java.util.Vector;
 public class WlascicielWidok extends JPanel {
     //konstruktor
     public WlascicielWidok() {
+        initComponents();
+    }
+    public WlascicielWidok(ListaKontenerow listaKontenerow){
+        //uzycie danych z bazy danych
+        tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
         initComponents();
     }
 
@@ -34,6 +41,7 @@ public class WlascicielWidok extends JPanel {
     //wektory
     private Vector<String> KolumnyWektor= new Vector<String>(3);
     private Vector<Vector<String>> KursyWektor= new Vector<Vector<String>>();
+    private Vector<Vector<String>> aktualneWektor=new Vector<>();
     //tabele
     private JTable TabelaKursow;
     private JTable AktualnyKurs=new JTable();
@@ -80,7 +88,7 @@ public class WlascicielWidok extends JPanel {
         TabelaKursow.setFillsViewportHeight(true);
         panelTabeliKursow.setLayout(new BoxLayout(panelTabeliKursow,BoxLayout.Y_AXIS));
         TabelaKursow.setFillsViewportHeight(true);
-        AktualnyKurs=new JTable(KursyWektor,KolumnyWektor);
+        AktualnyKurs=new JTable(aktualneWektor,KolumnyWektor);
         AktualnyKurs.setFillsViewportHeight(true);
 
         panelTabeliKursow.setBorder(new EmptyBorder(new Insets(0,0,50,0)));

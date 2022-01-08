@@ -8,10 +8,19 @@ public class Kontener {
     public int idKontenera;
 
 
-    public Kontener(boolean STATUS, String NAJBLIZSZADOSTEPNOSC, int IDKONTENERA){
+    public Kontener(boolean STATUS, String NAJBLIZSZADOSTEPNOSC, long IDKONTENERA){
         this.status = STATUS;
         this.najblizszaDostepnosc = NAJBLIZSZADOSTEPNOSC;
-        this.idKontenera = IDKONTENERA;
+        this.idKontenera = (int) IDKONTENERA;
+    }
+    public boolean getStatus(){
+        return this.status;
+    }
+    public String getNajblizszaDostepnosc(){
+        return this.najblizszaDostepnosc;
+    }
+    public int getIdKontenera(){
+        return this.idKontenera;
     }
 
     public Kontener() {//konstruktor potrzebny aby zrobic taki sam w klasie listakontenerow

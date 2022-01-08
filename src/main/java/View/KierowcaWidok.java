@@ -1,5 +1,8 @@
 package View;
 
+import Controllers.ListaKontenerow;
+import Controllers.ListaZamówień;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -25,6 +28,7 @@ public class KierowcaWidok extends JPanel {
     //wektory
     private Vector<String> KolumnyWektor= new Vector<String>(3);
     private Vector<Vector<String>> KursyWektor= new Vector<Vector<String>>();
+    private Vector<Vector<String>> AktualneWektor=new Vector<>();
 
     //gettery
     public JPanel getOknoKierowcy() {
@@ -35,6 +39,18 @@ public class KierowcaWidok extends JPanel {
     }
     //tworzenie okna
     public KierowcaWidok(){
+        initComponens();
+    }
+    public KierowcaWidok(ListaZamówień listaZamówień)
+    {
+        //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
+        for(int i=0;i<listaZamówień.getListaZanowien().size();i++){
+            Vector<String> temp=new Vector<>();
+            temp.add(listaZamówień.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamówień.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamówień.getListaZanowien().get(i).getData());
+            KursyWektor.add(temp);
+        }
         initComponens();
     }
 
@@ -50,7 +66,7 @@ public class KierowcaWidok extends JPanel {
         TabelaKursow.setFillsViewportHeight(true);
         PanelListyKursow.setLayout(new BoxLayout(PanelListyKursow,BoxLayout.Y_AXIS));
         TabelaKursow.setFillsViewportHeight(true);
-        AktualnyKurs=new JTable(KursyWektor,KolumnyWektor);
+        AktualnyKurs=new JTable(AktualneWektor,KolumnyWektor);
         AktualnyKurs.setFillsViewportHeight(true);
 
         //Dodawanie elementow do panelu z tabelami

@@ -36,6 +36,29 @@ public class TabelaKontenerow {
         tabela.setEnabled(false);
         tabela.setVisible(true);
     };
+    //konstruktor uzywajacy danych z bazy danych
+    public TabelaKontenerow(ListaKontenerow lista){
+        this.kont=lista;
+        nazwyKolumn.add("nr_Kontenera");
+        nazwyKolumn.add("najblizsza_dostepnosc");
+        nazwyKolumn.add("Status");
+
+        Vector<String>daneDoTabeli1 = new Vector<String>();
+        //dodawanie wartosci do wektora tabeli
+        for(int i=0;i<kont.getLista().size();i++){
+            daneDoTabeli1.add(String.valueOf(kont.getLista().get(i).idKontenera));
+            daneDoTabeli1.add(kont.getLista().get(i).getNajblizszaDostepnosc());
+            daneDoTabeli1.add(String.valueOf(kont.getLista().get(i).getStatus()));
+
+
+            daneDoTabeli.add(daneDoTabeli1);
+        }
+        modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
+        tabela = new JTable(modelTabeli);
+        tabela.setBounds(0,0,600,600);
+        tabela.setEnabled(false);
+        tabela.setVisible(true);
+    }
 
     private Vector<Vector<String>> daneDoTabeli = new Vector<Vector<String>>();
     private Vector<String> nazwyKolumn = new Vector<String>(3);

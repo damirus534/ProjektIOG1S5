@@ -1,6 +1,8 @@
 package View;
 
 
+import Controllers.ListaKontenerow;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +10,12 @@ public class UzytkownikWidok extends JPanel{
 
     //metoda ktora inicjuje panel uzytkownika
     public UzytkownikWidok(){
+        initComponents();
+    }
+
+    public UzytkownikWidok(ListaKontenerow listaKontenerow){
+        //uzycie listy kontenrow z bazy danych
+        tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
         initComponents();
     }
 

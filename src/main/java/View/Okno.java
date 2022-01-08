@@ -1,7 +1,10 @@
 package View;
 
 import Controllers.KlasaUzytkownikow;
+import Controllers.ListaKontenerow;
+import Controllers.ListaZamówień;
 import DB.DB;
+import DB.Table;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +15,10 @@ public class Okno extends JFrame {
 
     //metoda ktora inicjuje okno
     public Okno() {
-        initComponents();
         initDB();
+        initComponents();
+
+
     }
 
 
@@ -31,12 +36,21 @@ public class Okno extends JFrame {
     private JPanel oknoOdKlienta = WidokKlienta.getOknoKlienta();
 
     private DB db;
+    private Table table;
 
+    //lista kontenerow
+    private ListaKontenerow listaKontenerow;
+    //lista kursow
+    private ListaZamówień listaZamówień;
     private void initComponents() {
+        listaKontenerow=new ListaKontenerow(db.table("containers").list());
+        listaZamówień=new ListaZamówień(db.table("orders").list());
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
         okno.setLayout(new BorderLayout());
+        WidokUzytkownika=new UzytkownikWidok(listaKontenerow);
+        oknoOdUzytkownika=WidokUzytkownika.getPanelUzytkownikaCaly();
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
         okno.setVisible(true);
 
@@ -62,19 +76,26 @@ public class Okno extends JFrame {
                     alert(db.auth().userName + " zalogowaned");
                     switch(db.auth().authStatusGetter()){
                         case CLIENT:
+                            //uzycie nowego konstruktora
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKlienta);
                             okno.getContentPane().revalidate();
                             break;
                         case DRIVER:
+                            //uzycie nowego konstrukotra
+                            WidokKierowcy=new KierowcaWidok(listaZamówień);
+                            oknoOdKierowcy=WidokKierowcy.getOknoKierowcy();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKierowcy);
                             okno.getContentPane().revalidate();
                             break;
                         case OWNER:
+                            WidokWlasciciela=new WlascicielWidok(listaKontenerow);
+                            oknoOdWlasciciela=WidokWlasciciela.getPanelWlascicielaCaly();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdWlasciciela);
                             okno.getContentPane().revalidate();
+
                     }
 
 
@@ -89,6 +110,7 @@ public class Okno extends JFrame {
         });
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
+
             okno.getContentPane().invalidate();
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
