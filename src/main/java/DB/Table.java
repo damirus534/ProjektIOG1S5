@@ -47,21 +47,13 @@ public class Table {
     }
 
     //adds document with specified id
-<<<<<<< Updated upstream
-    public DB.Error add(String id, Map<String, String> data){
-=======
     public DataBase.Error add(String id, Map<String, Object> data){
->>>>>>> Stashed changes
         db.collection(currentTable).document(id).set(data);
         return DataBase.Error.GOOD;
     }
 
     //adds document with auto id
-<<<<<<< Updated upstream
-    public DB.Error add(Map<String, String> data){
-=======
     public DataBase.Error add(Map<String, Object> data){
->>>>>>> Stashed changes
         db.collection(currentTable).document().set(data);
         return DataBase.Error.GOOD;
     }

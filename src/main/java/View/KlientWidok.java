@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public final class KlientWidok extends JPanel {
 
@@ -20,8 +21,6 @@ public final class KlientWidok extends JPanel {
     }
     
     public KlientWidok() {
-        this.KursyWektor = new Vector<>();
-        this.KolumnyWektor = new Vector<>(3);
         initComponents();
     }
 
@@ -38,30 +37,30 @@ public final class KlientWidok extends JPanel {
     private final JPanel panelZamowienia = new JPanel();
 
     //tabele
-    private final DefaultTableModel tabelaZamowien = new DefaultTableModel();
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
+    private JTable tabelaZamowien;
+    private TableModel modelTabelaZamowien;
 
     //komponety
     private final JButton aktualneZamowieniaButton = new JButton();
     private final JButton wylogujButton = new JButton();
-    private final JLabel aktualneZamowienieLabel = new JLabel();
+    private JLabel nazwaUzytkownikaLabel = new JLabel();
+    private JButton zlozZamowienieButton = new JButton();
 
     //wektory
-<<<<<<< Updated upstream
-    private final Vector<String> KolumnyWektor;
-    private final Vector<Vector<String>> KursyWektor;
-    
-=======
     private Vector<String> KolumnyZamowienWektor;
     private Vector<Vector<String>> ZamowieniaWektor;
 
->>>>>>> Stashed changes
     //okno z powiadomieniami
     private JTextArea powiadomienie = new JTextArea(20, 20);
 
     //gettery
     public JPanel getOknoKlienta() {
         return panelKlientaCaly;
+    }
+
+    public JButton getZlozZamowienieButton() {
+        return zlozZamowienieButton;
     }
 
     public JButton getWylogujButton() {
@@ -76,28 +75,6 @@ public final class KlientWidok extends JPanel {
     public void initComponents() {
         //tworzenie okna klienta
         panelKlientaCaly.setSize(800, 600);
-<<<<<<< Updated upstream
-        panelKlientaCaly.setLayout(new BorderLayout());
-        
-        
-        //stworzenie panelu z lista kontenerow
-        panelListy.setPreferredSize(new Dimension(600, 300));
-        panelListy.setLayout(new BorderLayout());
-        panelListy.setBounds(0, 300, 590, 300);
-        
-        //stworzenie panelu z lista zamowien
-        panelListyZamowien.setPreferredSize(new Dimension(590, 300));
-        panelListyZamowien.setLayout(new BorderLayout());
-        
-        //tworzenie tabeli z aktualnymi zamowieniami
-        tabelaZamowien.addColumn("nr_Zamowienia");
-        tabelaZamowien.addColumn("Status");
-        JTable tabela = new JTable(tabelaZamowien);
-        tabela.setVisible(true);
-        tabela.setEnabled(false);
-        panelListyZamowien.add(new JScrollPane(tabela));
-        
-=======
         panelKlientaCaly.setLayout(new BorderLayout(0, 1));
 
         //stworzenie panelu z lista kontenerow
@@ -147,21 +124,13 @@ public final class KlientWidok extends JPanel {
         panelListyZamowien.add(tabelaZamowien.getTableHeader(), BorderLayout.NORTH);
         panelListyZamowien.add(tabelaZamowien, BorderLayout.CENTER);
 
->>>>>>> Stashed changes
         //dodanie tabeli kontenerow do layoutu
         panelListy.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
         panelListy.add(tabelaKontenerow.getTabela().getTableHeader(), BorderLayout.NORTH);
 
         //Ustawianie panelu z przyciskami
-        panelZamowienia.setPreferredSize(new Dimension(200, 600));
+        panelZamowienia.setPreferredSize(new Dimension(180, 600));
         panelZamowienia.setLayout(null);
-<<<<<<< Updated upstream
-        
-        //utworzenie przycisku wyloguj
-        wylogujButton.setText("Wyloguj");
-        wylogujButton.setBounds(30, 500, 160, 30);
-        
-=======
 
         //utworzenie przycisku zaloz zamowienie
         zlozZamowienieButton.setText("Zloz zamowienie");
@@ -171,29 +140,11 @@ public final class KlientWidok extends JPanel {
         wylogujButton.setText("Wyloguj");
         wylogujButton.setBounds(10, 520, 160, 20);
 
->>>>>>> Stashed changes
         //utworzenie przycisku wyswietl zamowienia
         aktualneZamowieniaButton.setText("Wyswietl zamowienia");
         aktualneZamowieniaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< Updated upstream
-                
-                tabelaZamowien.setRowCount(0);
-                //tutaj bedzie pobieranie danych z bazy
-                String tab[] = {"1", "Kontener zabiera œmieci na wysypisko"};
-                tabelaZamowien.addRow(tab);
-                
-            }
-        }
-        );
-        aktualneZamowieniaButton.setBounds(30, 100, 160, 30);
-        
-        //dodanie przycikow do panelu
-        panelZamowienia.add(wylogujButton);
-        panelZamowienia.add(aktualneZamowieniaButton);
-        
-=======
 
                 if (aktualneZamowieniaButton.getText() == "Wyswietl zamowienia") {
                     panelListy.setVisible(false);
@@ -221,19 +172,17 @@ public final class KlientWidok extends JPanel {
         nazwaUzytkownikaLabel.setText("zalogowany jako: " + loggedUser);
         panelZamowienia.add(nazwaUzytkownikaLabel);
 
->>>>>>> Stashed changes
         //okno z powiadomieniami
         powiadomienie.setText("Aktualizacja dla \ntwojego zamowinia! \nZobacz teraz!");
         powiadomienie.setVisible(true);
         powiadomienie.setPreferredSize(new Dimension(800, 600));
         powiadomienie.setEditable(false);
-        powiadomienie.setBounds(30, 300, 160, 50);
+        powiadomienie.setBounds(10, 250, 160, 200);
         powiadomienie.doLayout();
         panelZamowienia.add(powiadomienie);
 
         //dodanie paneli do okna
         panelKlientaCaly.add(panelListy, BorderLayout.WEST);
         panelKlientaCaly.add(panelZamowienia, BorderLayout.EAST);
-        panelKlientaCaly.add(panelListyZamowien, BorderLayout.WEST);
     }
 }

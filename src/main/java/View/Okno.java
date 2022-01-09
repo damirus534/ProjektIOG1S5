@@ -1,15 +1,11 @@
 package View;
 
-<<<<<<< Updated upstream
-import DB.DB;
-=======
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
-import Controllers.ListaZamÛwieÒ;
+import Controllers.ListaZam√≥wie≈Ñ;
 import Controllers.Zamowienie;
 import DB.DataBase;
 import DB.Table;
->>>>>>> Stashed changes
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,12 +16,9 @@ public class Okno extends JFrame {
 
     //metoda ktora inicjuje okno
     public Okno() {
-        initComponents();
-<<<<<<< Updated upstream
         initDB();
-=======
+        initComponents();
 
->>>>>>> Stashed changes
     }
 
     JFrame okno = new JFrame();
@@ -41,39 +34,27 @@ public class Okno extends JFrame {
     private KlientWidok WidokKlienta = new KlientWidok();
     private JPanel oknoOdKlienta = WidokKlienta.getOknoKlienta();
 
-<<<<<<< Updated upstream
-    private DB db;
-
-    private void initComponents() {
-=======
     private DataBase db;
     private Table table;
 
     //lista kontenerow
     private ListaKontenerow listaKontenerow;
     //lista kursow
-    private ListaZamÛwieÒ listaZamÛwieÒ;
+    private ListaZam√≥wie≈Ñ listaZam√≥wie≈Ñ;
 
     private void initComponents() {
         listaKontenerow = new ListaKontenerow(db.table("containers").list());
-        listaZamÛwieÒ = new ListaZamÛwieÒ(db.table("orders").list());
->>>>>>> Stashed changes
+        listaZam√≥wie≈Ñ = new ListaZam√≥wie≈Ñ(db.table("orders").list());
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
         okno.setLayout(new BorderLayout());
-<<<<<<< Updated upstream
-        okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
-        okno.setVisible(true);
-
-=======
         WidokUzytkownika = new UzytkownikWidok(listaKontenerow);
         oknoOdUzytkownika = WidokUzytkownika.getPanelUzytkownikaCaly();
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
         okno.setVisible(true);
 
         KlasaUzytkownikow xd = new KlasaUzytkownikow("xd", "xd", 2);
->>>>>>> Stashed changes
         //akcja logowania
         WidokUzytkownika.getButtonZaloguj().addActionListener((var e) -> {
             //test kontenerow
@@ -84,10 +65,6 @@ public class Okno extends JFrame {
 //            data.put("kaczynski", "crng");
 //            db.table("containers").add(data);
 
-<<<<<<< Updated upstream
-            System.out.println(db.table("containers").list().toString());
-=======
->>>>>>> Stashed changes
             //db.table("containers").delete("apJEuDv3OxQKDR6PoO0w")
             //test:test
             //macias:xdxd
@@ -96,13 +73,6 @@ public class Okno extends JFrame {
                 case GOOD:
                     String loggedUser = db.auth().userName + "";
                     alert(db.auth().userName + " zalogowaned");
-<<<<<<< Updated upstream
-
-                    okno.getContentPane().removeAll();
-                    okno.getContentPane().invalidate();
-                    okno.getContentPane().add(oknoOdKierowcy);
-                    okno.getContentPane().revalidate();
-=======
                     switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
@@ -114,14 +84,14 @@ public class Okno extends JFrame {
                             break;
                         case DRIVER:
                             //uzycie nowego konstrukotra
-                            WidokKierowcy = new KierowcaWidok(listaZamÛwieÒ);
+                            WidokKierowcy = new KierowcaWidok(listaZam√≥wie≈Ñ);
                             oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKierowcy);
                             okno.getContentPane().revalidate();
                             break;
                         case OWNER:
-                            WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamÛwieÒ);
+                            WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZam√≥wie≈Ñ);
                             oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdWlasciciela);
@@ -129,7 +99,6 @@ public class Okno extends JFrame {
 
                     }
 
->>>>>>> Stashed changes
                     break;
                 case USER_NULL:
                     alert("nie ma takiego usera xdds");
@@ -141,33 +110,32 @@ public class Okno extends JFrame {
         });
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
-            okno.getContentPane().removeAll();
+
             okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
+            okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
-        WidokWlasciciela.getPrzyciskZmianyWidoku().addActionListener((var e) -> {
+        WidokWlasciciela.getZmianaWidokuButton().addActionListener((var e) -> {
             //trzeba dodac tabele kursow do klasy tak jak tabela kontenerow jest dodana i tutaj zmieniac panele po wcisnieciu przycisku
-            okno.getContentPane().removeAll();
-            okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
             okno.getContentPane().revalidate();
         });
+        WidokWlasciciela.getWylogujButton().addActionListener((var e) -> {
+            okno.getContentPane().invalidate();
+            okno.setContentPane(oknoOdUzytkownika);
+            okno.getContentPane().revalidate();
+        });
+
         WidokKlienta.getWylogujButton().addActionListener((var e) -> {
-            okno.getContentPane().removeAll();
             okno.getContentPane().invalidate();
-            okno.getContentPane().add(oknoOdWlasciciela);
+            okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
-<<<<<<< Updated upstream
-=======
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaÊ date kiedy dostarczyc kontener oraz adres.
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaƒá date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizowaÊ tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            //potem oczywiscie zaktualizowaƒá tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
         });
->>>>>>> Stashed changes
     }
 
     private void initDB() {

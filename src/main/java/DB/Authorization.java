@@ -18,20 +18,16 @@ public class Authorization {
     }
 
     public enum AuthStatus {
-        GUEST, CLIENT, WASTE_COLLECTOR, OWNER, ADMIN
+        GUEST, CLIENT, WASTE_COLLECTOR, OWNER, DRIVER
     }
     private AuthStatus authStatus;
     public String userName;
 
-<<<<<<< Updated upstream:src/main/java/DB/Auth.java
-    public DB.Error login(String name, String pass) {
-=======
     public AuthStatus authStatusGetter(){
         return this.authStatus;
     }
 
     public DataBase.Error login(String name, String pass) {
->>>>>>> Stashed changes:src/main/java/DB/Authorization.java
         DocumentReference docRef = db.collection("users").document(name);
         // asynchronously retrieve the document
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -48,7 +44,15 @@ public class Authorization {
 
         if (document.exists()) {
             if(pass.equals(document.getString("pass"))){
-                authStatus = AuthStatus.CLIENT;
+                if("client".equals(document.getString("type"))){
+                    authStatus = AuthStatus.CLIENT;
+                }else if("driver".equals(document.getString("type"))){
+                    authStatus = AuthStatus.DRIVER;
+                }else if("owner".equals(document.getString("type"))){
+                    authStatus = AuthStatus.OWNER;
+                }else{
+                    authStatus = AuthStatus.WASTE_COLLECTOR;
+                }
                 userName = name;
                 return DataBase.Error.GOOD;
             }

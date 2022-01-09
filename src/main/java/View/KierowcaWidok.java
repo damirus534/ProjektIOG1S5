@@ -1,11 +1,8 @@
 package View;
 
-<<<<<<< Updated upstream
-=======
 import Controllers.ListaKontenerow;
-import Controllers.ListaZamówieñ;
+import Controllers.ListaZamÃ³wieÅ„;
 
->>>>>>> Stashed changes
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -27,9 +24,11 @@ public class KierowcaWidok extends JPanel {
     private JButton wylogujButton =new JButton();
     private JLabel AktualnyKursLabel=new JLabel();
     private JLabel Kursy=new JLabel();
+    private JLabel aktualnyUzytkownikLabel = new JLabel();
     //wektory
     private Vector<String> KolumnyWektor= new Vector<String>(3);
     private Vector<Vector<String>> KursyWektor= new Vector<Vector<String>>();
+    private Vector<Vector<String>> AktualneWektor=new Vector<>();
 
     //gettery
     public JPanel getOknoKierowcy() {
@@ -42,27 +41,24 @@ public class KierowcaWidok extends JPanel {
     public KierowcaWidok(){
         initComponens();
     }
-<<<<<<< Updated upstream
-=======
-    public KierowcaWidok(ListaZamówieñ listaZamówieñ)
+    public KierowcaWidok(ListaZamÃ³wieÅ„ listaZamÃ³wieÅ„)
     {
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
-        for(int i=0;i<listaZamówieñ.getListaZanowien().size();i++){
+        for(int i=0;i<listaZamÃ³wieÅ„.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
 
-            temp.add(listaZamówieñ.getListaZanowien().get(i).getAdres());
-            temp.add(String.valueOf(listaZamówieñ.getListaZanowien().get(i).getIdKontenera()));
-            temp.add(listaZamówieñ.getListaZanowien().get(i).getData());
-            if(java.time.LocalDate.now().toString().equals(listaZamówieñ.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+            temp.add(listaZamÃ³wieÅ„.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamÃ³wieÅ„.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamÃ³wieÅ„.getListaZanowien().get(i).getData());
+            if(java.time.LocalDate.now().toString().equals(listaZamÃ³wieÅ„.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
             else KursyWektor.add(temp);
 
 
         }
         initComponens();
     }
->>>>>>> Stashed changes
 
-    //inicjalizacja komponentów
+    //inicjalizacja komponentÃ³w
     private void initComponens(){
         //ustawienia okna
         OknoKierowcy.setSize(800,600);
@@ -74,7 +70,7 @@ public class KierowcaWidok extends JPanel {
         TabelaKursow.setFillsViewportHeight(true);
         PanelListyKursow.setLayout(new BoxLayout(PanelListyKursow,BoxLayout.Y_AXIS));
         TabelaKursow.setFillsViewportHeight(true);
-        AktualnyKurs=new JTable(KursyWektor,KolumnyWektor);
+        AktualnyKurs=new JTable(AktualneWektor,KolumnyWektor);
         AktualnyKurs.setFillsViewportHeight(true);
 
         //Dodawanie elementow do panelu z tabelami
@@ -82,7 +78,7 @@ public class KierowcaWidok extends JPanel {
         AktualnyKursLabel.setText("Aktualny Kurs");
         Kursy.setFont(new Font("Serif",Font.PLAIN,20));
         AktualnyKursLabel.setFont(new Font("Serif",Font.PLAIN,20));
-        PanelListyKursow.setBorder(new EmptyBorder(new Insets(50,0,50,0)));
+        PanelListyKursow.setBorder(new EmptyBorder(new Insets(0,0,50,0)));
         PanelListyKursow.add(AktualnyKursLabel,BorderLayout.CENTER);
         PanelListyKursow.add(Box.createRigidArea(new Dimension(0,20)));
         PanelListyKursow.add(AktualnyKurs.getTableHeader());
@@ -96,16 +92,21 @@ public class KierowcaWidok extends JPanel {
 
 
         //Ustawianie panelu z buttonami
-        PanelButton.setPreferredSize(new Dimension(200,600));
+        PanelButton.setPreferredSize(new Dimension(180,600));
         PanelButton.setLayout(null);
 
         wylogujButton.setText("Wyloguj");
-        wylogujButton.setBounds(30 ,500,160,30);
+        wylogujButton.setBounds(10 ,520,160,20);
 
         koniecKursuButton.setText("Koniec Kursu");
-        koniecKursuButton.setBounds(30,100,160,30);
+        koniecKursuButton.setBounds(10,70,160,30);
         PanelButton.add(wylogujButton);
         PanelButton.add(koniecKursuButton);
+        //Dodanie Labela do panelu z buttonami
+        aktualnyUzytkownikLabel.setText("zalogowany jako: Kierowca");
+        aktualnyUzytkownikLabel.setBounds(10,0, 160,20);
+        PanelButton.add(aktualnyUzytkownikLabel);
+
         //Dodanie paneli do okana
         OknoKierowcy.add(PanelListyKursow,BorderLayout.WEST);
         OknoKierowcy.add(PanelButton,BorderLayout.EAST);
