@@ -7,7 +7,7 @@ public enum StatusZamowienia {
 
     public static StatusZamowienia[] wartosci = values();
 
-    public StatusZamowienia kolejneZamowienie(){
+    public StatusZamowienia kolejnyStatusZamowienia(){
         return wartosci[(this.ordinal()+1) % wartosci.length];
     }
 

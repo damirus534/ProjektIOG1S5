@@ -27,6 +27,6 @@ public class Zamowienie {
 
 
     public void zmienStatusZamowienia(){
-        status.kolejneZamowienie();
+        status.kolejnyStatusZamowienia();
     }
 }
