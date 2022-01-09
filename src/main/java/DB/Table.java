@@ -4,11 +4,13 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 //todo
 public class Table {
@@ -55,6 +57,12 @@ public class Table {
     //adds document with auto id
     public dataBase.Error add(Map<String, Object> data){
         db.collection(currentTable).document().set(data);
+        return dataBase.Error.GOOD;
+    }
+
+    //edits document with given id
+    public dataBase.Error edit(String id, String field, Object value){
+        db.collection("containers").document(id).update(field, value);
         return dataBase.Error.GOOD;
     }
 
