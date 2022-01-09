@@ -47,20 +47,28 @@ public class Table {
     }
 
     //adds document with specified id
+<<<<<<< Updated upstream
     public DB.Error add(String id, Map<String, String> data){
+=======
+    public DataBase.Error add(String id, Map<String, Object> data){
+>>>>>>> Stashed changes
         db.collection(currentTable).document(id).set(data);
-        return DB.Error.GOOD;
+        return DataBase.Error.GOOD;
     }
 
     //adds document with auto id
+<<<<<<< Updated upstream
     public DB.Error add(Map<String, String> data){
+=======
+    public DataBase.Error add(Map<String, Object> data){
+>>>>>>> Stashed changes
         db.collection(currentTable).document().set(data);
-        return DB.Error.GOOD;
+        return DataBase.Error.GOOD;
     }
 
     //deletes doc
-    public DB.Error delete(String id){
+    public DataBase.Error delete(String id){
         db.collection(currentTable).document(id).delete();
-        return DB.Error.GOOD;
+        return DataBase.Error.GOOD;
     }
 }

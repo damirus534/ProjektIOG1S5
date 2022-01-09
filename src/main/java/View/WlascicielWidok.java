@@ -1,5 +1,11 @@
 package View;
 
+<<<<<<< Updated upstream
+=======
+import Controllers.ListaKontenerow;
+import Controllers.ListaZamówieñ;
+
+>>>>>>> Stashed changes
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +14,16 @@ public class WlascicielWidok extends JPanel {
     public WlascicielWidok() {
         initComponents();
     }
+<<<<<<< Updated upstream
+=======
+    public WlascicielWidok(ListaKontenerow listaKontenerow, ListaZamówieñ listaZamówieñ){
+        //uzycie danych z bazy danych
+        tabelaKursow=new TabelaKursow(listaZamówieñ);
+        tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
+        aktualneWektor=tabelaKursow.getAktualne();
+        initComponents();
+    }
+>>>>>>> Stashed changes
 
 
 

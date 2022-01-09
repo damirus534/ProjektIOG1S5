@@ -1,5 +1,11 @@
 package View;
 
+<<<<<<< Updated upstream
+=======
+import Controllers.ListaKontenerow;
+import Controllers.ListaZamówieñ;
+
+>>>>>>> Stashed changes
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -36,8 +42,27 @@ public class KierowcaWidok extends JPanel {
     public KierowcaWidok(){
         initComponens();
     }
+<<<<<<< Updated upstream
+=======
+    public KierowcaWidok(ListaZamówieñ listaZamówieñ)
+    {
+        //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
+        for(int i=0;i<listaZamówieñ.getListaZanowien().size();i++){
+            Vector<String> temp=new Vector<>();
 
-    //inicjalizacja komponentÃ³w
+            temp.add(listaZamówieñ.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamówieñ.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamówieñ.getListaZanowien().get(i).getData());
+            if(java.time.LocalDate.now().toString().equals(listaZamówieñ.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+            else KursyWektor.add(temp);
+
+
+        }
+        initComponens();
+    }
+>>>>>>> Stashed changes
+
+    //inicjalizacja komponentów
     private void initComponens(){
         //ustawienia okna
         OknoKierowcy.setSize(800,600);
