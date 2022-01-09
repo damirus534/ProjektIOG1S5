@@ -3,6 +3,7 @@ package View;
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
 import Controllers.ListaZamówień;
+import Controllers.Zamowienie;
 import DB.DB;
 import DB.Table;
 
@@ -42,6 +43,7 @@ public class Okno extends JFrame {
     private ListaKontenerow listaKontenerow;
     //lista kursow
     private ListaZamówień listaZamówień;
+
     private void initComponents() {
         listaKontenerow=new ListaKontenerow(db.table("containers").list());
         listaZamówień=new ListaZamówień(db.table("orders").list());
@@ -130,7 +132,11 @@ public class Okno extends JFrame {
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
-
+        WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczytać date kiedy dostarczyc kontener oraz adres.
+            //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
+            //potem oczywiscie zaktualizować tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+        });
     }
 
     private void initDB() {

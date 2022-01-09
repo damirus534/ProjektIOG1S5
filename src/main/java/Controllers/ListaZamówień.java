@@ -45,6 +45,16 @@ public class ListaZamówień {
         }
     }
 
+    public int zwrocWolneIdZamowienia(){
+        int i;
+        for(i=1;i<listaZanowien.size()+1;i++){
+            if(listaZanowien.get(i-1).idZamowienia != i){
+                return i;
+            }
+        }
+        return i+1;
+    }
+
     public Vector<Zamowienie> getListaZanowien(){
         return this.listaZanowien;
     }

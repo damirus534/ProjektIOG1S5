@@ -46,6 +46,10 @@ public final class KlientWidok extends JPanel {
         return panelKlientaCaly;
     }
 
+    public JButton getZlozZamowienieButton() {
+        return zlozZamowienieButton;
+    }
+
     public JButton getWylogujButton() {
         return wylogujButton;
     }
