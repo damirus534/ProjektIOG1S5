@@ -2,6 +2,7 @@ package View;
 
 import Controllers.ListaKontenerow;
 import Controllers.ListaZamówień;
+import Controllers.StatusZamowienia;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -50,8 +51,9 @@ public class KierowcaWidok extends JPanel {
             temp.add(listaZamówień.getListaZanowien().get(i).getAdres());
             temp.add(String.valueOf(listaZamówień.getListaZanowien().get(i).getIdKontenera()));
             temp.add(listaZamówień.getListaZanowien().get(i).getData());
+            if(listaZamówień.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
             if(java.time.LocalDate.now().toString().equals(listaZamówień.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
-            else KursyWektor.add(temp);
+            else KursyWektor.add(temp);}
 
 
         }

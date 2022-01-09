@@ -112,8 +112,7 @@ public class Okno extends JFrame {
         });
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
-            WidokUzytkownika=new UzytkownikWidok();
-            oknoOdUzytkownika=WidokUzytkownika.getPanelUzytkownikaCaly();
+
             okno.getContentPane().invalidate();
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
