@@ -9,7 +9,8 @@ import com.google.firebase.cloud.FirestoreClient;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DB {
+public class DataBase {
+    
     public enum Error {
         GOOD, BAD_PASSWORD, USER_NULL
     }
@@ -21,14 +22,14 @@ public class DB {
         return this.connectionPlate;
     }
 
-    public DB(){
+    public DataBase(){
         try {
             connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.authPlate = new Auth(connectionPlate);
+        this.authPlate = new Authorization(connectionPlate);
         this.tablePlate = new Table(connectionPlate);
     }
 
@@ -39,15 +40,21 @@ public class DB {
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setProjectId("smietnik-dfef1")
                 .build();
-        FirebaseApp.initializeApp(options);
+        try{
+            FirebaseApp.initializeApp(options);
+        }catch(Exception e)
+        {
+            System.out.println("");
+        }
+        
 
         this.connectionPlate = FirestoreClient.getFirestore();
     }
 
     //auth stuff
-    private Auth authPlate;
+    private Authorization authPlate;
 
-    public Auth auth(){
+    public Authorization auth(){
         return this.authPlate;
     }
 

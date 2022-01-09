@@ -73,7 +73,7 @@ public class UzytkownikWidok extends JPanel{
         textFieldLogin.setBounds(30, 80, 160, 20);
         textFieldHaslo.setBounds(30, 150, 160, 20);
         buttonZaloguj.setBounds(30,200, 160, 20);
-        buttonZaloguj.setText("zaloguj się");
+        buttonZaloguj.setText("zaloguj sie");
         panelLogowania.add(labelLogin);
         panelLogowania.add(labelHaslo);
         panelLogowania.add(textFieldLogin);

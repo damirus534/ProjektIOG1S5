@@ -4,7 +4,7 @@ import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
 import Controllers.ListaZamówień;
 import Controllers.Zamowienie;
-import DB.DB;
+import DB.DataBase;
 import DB.Table;
 
 import javax.swing.*;
@@ -19,9 +19,7 @@ public class Okno extends JFrame {
         initDB();
         initComponents();
 
-
     }
-
 
     JFrame okno = new JFrame();
     private UzytkownikWidok WidokUzytkownika = new UzytkownikWidok();
@@ -36,7 +34,7 @@ public class Okno extends JFrame {
     private KlientWidok WidokKlienta = new KlientWidok();
     private JPanel oknoOdKlienta = WidokKlienta.getOknoKlienta();
 
-    private DB db;
+    private DataBase db;
     private Table table;
 
     //lista kontenerow
@@ -45,18 +43,18 @@ public class Okno extends JFrame {
     private ListaZamówień listaZamówień;
 
     private void initComponents() {
-        listaKontenerow=new ListaKontenerow(db.table("containers").list());
-        listaZamówień=new ListaZamówień(db.table("orders").list());
+        listaKontenerow = new ListaKontenerow(db.table("containers").list());
+        listaZamówień = new ListaZamówień(db.table("orders").list());
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
         okno.setLayout(new BorderLayout());
-        WidokUzytkownika=new UzytkownikWidok(listaKontenerow);
-        oknoOdUzytkownika=WidokUzytkownika.getPanelUzytkownikaCaly();
+        WidokUzytkownika = new UzytkownikWidok(listaKontenerow);
+        oknoOdUzytkownika = WidokUzytkownika.getPanelUzytkownikaCaly();
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
         okno.setVisible(true);
 
-        KlasaUzytkownikow xd= new KlasaUzytkownikow("xd", "xd", 2);
+        KlasaUzytkownikow xd = new KlasaUzytkownikow("xd", "xd", 2);
         //akcja logowania
         WidokUzytkownika.getButtonZaloguj().addActionListener((var e) -> {
             //test kontenerow
@@ -67,39 +65,39 @@ public class Okno extends JFrame {
 //            data.put("kaczynski", "crng");
 //            db.table("containers").add(data);
 
-
             //db.table("containers").delete("apJEuDv3OxQKDR6PoO0w")
-
             //test:test
             //macias:xdxd
             //bruher:cringo
             switch (db.auth().login(WidokUzytkownika.getTextFieldLogin().getText(), WidokUzytkownika.getTextFieldHaslo().getText())) {
                 case GOOD:
+                    String loggedUser = db.auth().userName + "";
                     alert(db.auth().userName + " zalogowaned");
-                    switch(db.auth().authStatusGetter()){
+                    switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
                             okno.getContentPane().invalidate();
+                            WidokKlienta = new KlientWidok(loggedUser);
+                            oknoOdKlienta = WidokKlienta.getOknoKlienta();
                             okno.setContentPane(oknoOdKlienta);
                             okno.getContentPane().revalidate();
                             break;
                         case DRIVER:
                             //uzycie nowego konstrukotra
-                            WidokKierowcy=new KierowcaWidok(listaZamówień);
-                            oknoOdKierowcy=WidokKierowcy.getOknoKierowcy();
+                            WidokKierowcy = new KierowcaWidok(listaZamówień);
+                            oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKierowcy);
                             okno.getContentPane().revalidate();
                             break;
                         case OWNER:
-                            WidokWlasciciela=new WlascicielWidok(listaKontenerow,listaZamówień);
-                            oknoOdWlasciciela=WidokWlasciciela.getPanelWlascicielaCaly();
+                            WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamówień);
+                            oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdWlasciciela);
                             okno.getContentPane().revalidate();
 
                     }
-
 
                     break;
                 case USER_NULL:
@@ -132,6 +130,7 @@ public class Okno extends JFrame {
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
+        
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
             //tutaj trzeba zrobic wyswietlanie dialoga i odczytać date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
@@ -140,7 +139,7 @@ public class Okno extends JFrame {
     }
 
     private void initDB() {
-        this.db = new DB();
+        this.db = new DataBase();
     }
 
     private void alert(String message) {

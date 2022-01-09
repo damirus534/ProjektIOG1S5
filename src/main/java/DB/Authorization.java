@@ -8,10 +8,10 @@ import com.google.cloud.firestore.Firestore;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class Auth {
+public class Authorization {
     private Firestore db;
 
-    public Auth(Firestore connection){
+    public Authorization(Firestore connection){
         this.authStatus = AuthStatus.GUEST;
         this.userName = "";
         this.db = connection;
@@ -27,7 +27,7 @@ public class Auth {
         return this.authStatus;
     }
 
-    public DB.Error login(String name, String pass) {
+    public DataBase.Error login(String name, String pass) {
         DocumentReference docRef = db.collection("users").document(name);
         // asynchronously retrieve the document
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -54,16 +54,16 @@ public class Auth {
                     authStatus = AuthStatus.WASTE_COLLECTOR;
                 }
                 userName = name;
-                return DB.Error.GOOD;
+                return DataBase.Error.GOOD;
             }
             else
-                return DB.Error.BAD_PASSWORD;
+                return DataBase.Error.BAD_PASSWORD;
         } else {
-            return DB.Error.USER_NULL;
+            return DataBase.Error.USER_NULL;
         }
     }
 
-    public DB.Error register(String name, Map<String, String> data){
+    public DataBase.Error register(String name, Map<String, String> data){
         db.collection("users").document(name).set(data);
         return login(name, data.get("pass"));
     }
