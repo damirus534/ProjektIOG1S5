@@ -17,15 +17,15 @@ public class ListaZamówień {
         HashMap<String,Object> temp;
         StatusZamowienia statusZamowienia=StatusZamowienia.DostarczenieDoKlienta;
         for(Integer i=1;i<=dane.size();i++){
-            System.out.println(dane.toString());
             temp= (HashMap<String, Object>) dane.get(i.toString());
-            //dokonczyc
-            /*switch((String) temp.get("status")){
+            //status pamietać żeby dodać musi się zgadzać z tymi nazwami
+            switch((String) temp.get("status")){
                 case "Zakonczono":statusZamowienia=StatusZamowienia.Zakonczenie;break;
                 case "OczekiwaniaNaDostarczenie":statusZamowienia=StatusZamowienia.OczekiwaniaNaDostarczenie;break;
                 case "DostarczenieDoKlienta":statusZamowienia=StatusZamowienia.DostarczenieDoKlienta;break;
                 case "DostarcznieDoWysypiska":statusZamowienia=StatusZamowienia.DostarcznieDoWysypiska;break;
-            }*/
+                default:statusZamowienia=StatusZamowienia.Zakonczenie;break;
+            }
             Zamowienie zamowienie=new Zamowienie((long)temp.get("orderID"),(String)temp.get("username"),(String) temp.get("data"),(String) temp.get("adres"),(long)temp.get("containerID")
                     ,statusZamowienia);
             listaZanowien.add(zamowienie);

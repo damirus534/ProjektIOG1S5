@@ -67,7 +67,7 @@ public class Okno extends JFrame {
 //            data.put("kaczynski", "crng");
 //            db.table("containers").add(data);
 
-            System.out.println(db.table("containers").list().toString());
+
             //db.table("containers").delete("apJEuDv3OxQKDR6PoO0w")
 
             //test:test
@@ -92,7 +92,7 @@ public class Okno extends JFrame {
                             okno.getContentPane().revalidate();
                             break;
                         case OWNER:
-                            WidokWlasciciela=new WlascicielWidok(listaKontenerow);
+                            WidokWlasciciela=new WlascicielWidok(listaKontenerow,listaZamówień);
                             oknoOdWlasciciela=WidokWlasciciela.getPanelWlascicielaCaly();
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdWlasciciela);

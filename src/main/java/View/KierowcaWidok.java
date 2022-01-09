@@ -46,10 +46,14 @@ public class KierowcaWidok extends JPanel {
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
         for(int i=0;i<listaZamówień.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
+
             temp.add(listaZamówień.getListaZanowien().get(i).getAdres());
             temp.add(String.valueOf(listaZamówień.getListaZanowien().get(i).getIdKontenera()));
             temp.add(listaZamówień.getListaZanowien().get(i).getData());
-            KursyWektor.add(temp);
+            if(java.time.LocalDate.now().toString().equals(listaZamówień.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+            else KursyWektor.add(temp);
+
+
         }
         initComponens();
     }
