@@ -1,6 +1,6 @@
 package View;
 
-import DB.DataBase;
+import DB.dataBase;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -25,7 +25,7 @@ public final class KlientWidok extends JPanel {
     }
 
     //baza danych
-    DataBase db = new DataBase();
+    dataBase db = new dataBase();
     
     //zalogowany aktualnie uzytkownik
     String loggedUser = "";

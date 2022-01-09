@@ -9,6 +9,7 @@
         <module name="ProjektIO" />
         <module name="smeici" />
         <module name="smieci" />
+        <module name="IOAA" />
       </profile>
     </annotationProcessing>
   </component>

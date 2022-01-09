@@ -47,20 +47,20 @@ public class Table {
     }
 
     //adds document with specified id
-    public DataBase.Error add(String id, Map<String, Object> data){
+    public dataBase.Error add(String id, Map<String, Object> data){
         db.collection(currentTable).document(id).set(data);
-        return DataBase.Error.GOOD;
+        return dataBase.Error.GOOD;
     }
 
     //adds document with auto id
-    public DataBase.Error add(Map<String, Object> data){
+    public dataBase.Error add(Map<String, Object> data){
         db.collection(currentTable).document().set(data);
-        return DataBase.Error.GOOD;
+        return dataBase.Error.GOOD;
     }
 
     //deletes doc
-    public DataBase.Error delete(String id){
+    public dataBase.Error delete(String id){
         db.collection(currentTable).document(id).delete();
-        return DataBase.Error.GOOD;
+        return dataBase.Error.GOOD;
     }
 }
