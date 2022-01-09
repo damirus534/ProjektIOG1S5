@@ -49,9 +49,9 @@ public class TabelaKursow {
 
         for(int i=0;i<kursy.getListaZanowien().size();i++){
             daneDoTabeli1=new Vector<>();
-            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).data));
-            daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
+            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).adres));
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
+            daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
             if(java.time.LocalDate.now().toString().equals(listaZamówień.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
             else
             daneDoTabeli.add(daneDoTabeli1);
