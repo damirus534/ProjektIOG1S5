@@ -31,7 +31,6 @@ public class WlascicielWidok extends JPanel {
     private JPanel panelTabeliKontenerow = new JPanel();
     private JPanel panelZarzadzaniaKursami = new JPanel();
     private JPanel panelZarzadzaniaKontenerami = new JPanel();
-    private JPanel panelDodawanieKontenera = new JPanel();
 
     //zmienne komponentow
     private JButton zmianaWidokuButton = new JButton("zmien widok");
@@ -122,9 +121,6 @@ public class WlascicielWidok extends JPanel {
         panelZarzadzaniaKursami.add(zmienKolejnoscButton);
         panelZarzadzaniaKursami.setVisible(false);
 
-
-
-
         //przypisanie komponentom rozmiarow itp.
         wlascicielLabel.setBounds(10,0,160,20);
         wylogujButton.setBounds(10, 520, 160,20);
@@ -163,10 +159,17 @@ public class WlascicielWidok extends JPanel {
         });
 
         dodajKontenerButton.addActionListener((var e) -> {
-                tabelaKontenerow.dodawanieKonteneru();
-                panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
-                panelTabeliKontenerow.validate();
-                showMessageDialog(null, "Kontener zostal dodany!");
+            tabelaKontenerow.dodawanieKonteneru();
+            panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+            panelTabeliKontenerow.validate();
+            showMessageDialog(null, "Kontener zostal dodany!");
+        });
+
+        usunKontenerButton.addActionListener((var e) -> {
+            tabelaKontenerow.usuwanieKonteneru();
+            panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+            panelTabeliKontenerow.validate();
+            showMessageDialog(null, "Kontener zostal usuniety!");
         });
 
         panelWlascicielaCaly.add(panelZarzadzaniaKontenerami, BorderLayout.EAST);

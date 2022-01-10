@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class TabelaKontenerow {
-
+    private int row;
     public TabelaKontenerow(){
         nazwyKolumn.add("nr_Kontenera");
         nazwyKolumn.add("najblizsza_dostepnosc");
@@ -55,15 +55,20 @@ public class TabelaKontenerow {
             daneDoTabeli1.add(kont.getLista().get(i).getNajblizszaDostepnosc());
             daneDoTabeli1.add(String.valueOf(kont.getLista().get(i).getStatus()));
 
-
             daneDoTabeli.add(daneDoTabeli1);
 
         }
         modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
         tabela = new JTable(modelTabeli);
         tabela.setBounds(0,0,600,600);
-        tabela.setEnabled(false);
+        tabela.setEnabled(true);
         tabela.setVisible(true);
+        tabela.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        for (int c = 0; c < tabela.getColumnCount(); c++)
+        {
+            Class<?> col_class = tabela.getColumnClass(c);
+            tabela.setDefaultEditor(col_class, null);        // remove editor
+        }
     }
 
     private Vector<Vector<String>> daneDoTabeli = new Vector<Vector<String>>();
@@ -94,5 +99,14 @@ public class TabelaKontenerow {
         data.put("id", temp.idKontenera);
 
         db.table("containers").add(String.valueOf(temp.idKontenera), data);
+    }
+
+    public void usuwanieKonteneru(){
+        row = tabela.getSelectedRow();
+        daneDoTabeli.remove(row);
+        modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
+        tabela = new JTable(modelTabeli);
+        dataBase db = new dataBase();
+        db.table("containers").delete(String.valueOf(kont.konteneryVector.get(row).idKontenera));
     }
 }
