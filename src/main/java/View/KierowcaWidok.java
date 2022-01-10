@@ -1,7 +1,7 @@
 package View;
 
 import Controllers.ListaKontenerow;
-import Controllers.ListaZamĂłwieĹ„;
+import Controllers.ListaZamowien;
 import Controllers.StatusZamowienia;
 import DB.Table;
 import DB.dataBase;
@@ -51,25 +51,25 @@ public class KierowcaWidok extends JPanel {
     public KierowcaWidok(){
         initComponens();
     }
-    public KierowcaWidok(ListaZamówień listaZamówień)
+    public KierowcaWidok(ListaZamowien listaZamowien)
     {
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
-        for(int i=0;i<listaZamówień.getListaZanowien().size();i++){
+        for(int i=0;i<listaZamowien.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
-            temp.add(listaZamĂłwieĹ„.getListaZanowien().get(i).getAdres());
-            temp.add(String.valueOf(listaZamĂłwieĹ„.getListaZanowien().get(i).getIdKontenera()));
-            temp.add(listaZamĂłwieĹ„.getListaZanowien().get(i).getData());
-            if(listaZamĂłwieĹ„.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
-            if(java.time.LocalDate.now().toString().equals(listaZamĂłwieĹ„.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
-            else KursyWektor.add(temp);
 
+            temp.add(listaZamowien.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamowien.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamowien.getListaZanowien().get(i).getData());
+            if(listaZamowien.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
+                if(java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+                else KursyWektor.add(temp);}
 
 
         }
         initComponens();
     }
 
-    //inicjalizacja komponentów
+    //inicjalizacja komponent�w
     private void initComponens(){
         //ustawienia okna
         OknoKierowcy.setSize(800,600);
@@ -111,43 +111,43 @@ public class KierowcaWidok extends JPanel {
 
         koniecKursuButton.setText("Koniec Kursu");
         koniecKursuButton.setBounds(10,70,160,30);
-        
-        
-        
-        koniecKursuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                String statusNowy;
-                switch(status.toString())
-                {
-                    case "Zakonczono":
-                        statusNowy = "Zakonczono";
-                        break;
-                    case "OczekiwaniaNaDostarczenie":
-                        statusNowy = "DostarczenieDoKlienta";
-                        break;
-                    case "DostarczenieDoKlienta":
-                        statusNowy = "DostarcznieDoWysypiska";
-                        break;
-                    case "DostarcznieDoWysypiska":
-                        statusNowy = "Zakonczenie";
-                        break;
-                    default:
-                        statusNowy = "OczekiwaniaNaDostarczenie";
-                }
-                
-                
-                String nrZamowienia = KursyWektor.get(0).get(1);
-                System.out.println(nrZamowienia);
 
-                System.out.println(statusNowy);
-                db.table("orders").edit(nrZamowienia, "status", statusNowy);
-                status = statusNowy;        
-            }
-        }
+
+
+        koniecKursuButton.addActionListener(new ActionListener() {
+                                                @Override
+                                                public void actionPerformed(ActionEvent e)
+                                                {
+                                                    String statusNowy;
+                                                    switch(status.toString())
+                                                    {
+                                                        case "Zakonczono":
+                                                            statusNowy = "Zakonczono";
+                                                            break;
+                                                        case "OczekiwaniaNaDostarczenie":
+                                                            statusNowy = "DostarczenieDoKlienta";
+                                                            break;
+                                                        case "DostarczenieDoKlienta":
+                                                            statusNowy = "DostarcznieDoWysypiska";
+                                                            break;
+                                                        case "DostarcznieDoWysypiska":
+                                                            statusNowy = "Zakonczenie";
+                                                            break;
+                                                        default:
+                                                            statusNowy = "OczekiwaniaNaDostarczenie";
+                                                    }
+
+
+                                                    String nrZamowienia = KursyWektor.get(0).get(1);
+                                                    System.out.println(nrZamowienia);
+
+                                                    System.out.println(statusNowy);
+                                                    db.table("orders").edit(nrZamowienia, "status", statusNowy);
+                                                    status = statusNowy;
+                                                }
+                                            }
         );
-        
+
         PanelButton.add(wylogujButton);
         PanelButton.add(koniecKursuButton);
         //Dodanie Labela do panelu z buttonami

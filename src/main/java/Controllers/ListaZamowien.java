@@ -4,21 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class ListaZamówieñ {
+public class ListaZamowien {
     private Vector<Zamowienie> listaZanowien = new Vector<>();
 
 
 
-    public ListaZamówieñ(){
+    public ListaZamowien(){
 
     }
     //przetworzenie danych z bazy danych
-    public ListaZamówieñ(Map<String,Object> dane){
+    public ListaZamowien(Map<String,Object> dane){
         HashMap<String,Object> temp;
         StatusZamowienia statusZamowienia=StatusZamowienia.DostarczenieDoKlienta;
         for(Integer i=1;i<=dane.size();i++){
             temp= (HashMap<String, Object>) dane.get(i.toString());
-            //status pamietaæ ¿eby dodaæ musi siê zgadzaæ z tymi nazwami
+            //status pamietaï¿½ ï¿½eby dodaï¿½ musi siï¿½ zgadzaï¿½ z tymi nazwami
             switch((String) temp.get("status")){
                 case "Zakonczono":statusZamowienia=StatusZamowienia.Zakonczenie;break;
                 case "OczekiwaniaNaDostarczenie":statusZamowienia=StatusZamowienia.OczekiwaniaNaDostarczenie;break;
