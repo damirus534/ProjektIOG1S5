@@ -60,11 +60,14 @@ public class Table {
         return dataBase.Error.GOOD;
     }
 
+
+
     //edits document with given id
     public dataBase.Error edit(String id, String field, Object value){
-        db.collection("containers").document(id).update(field, value);
+        db.collection(currentTable).document(id).update(field, value);
         return dataBase.Error.GOOD;
     }
+
 
     //deletes doc
     public dataBase.Error delete(String id){

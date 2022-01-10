@@ -1,6 +1,6 @@
 package View;
 
-import Controllers.ListaZamówień;
+import Controllers.ListaZam�wie�;
 import Controllers.StatusZamowienia;
 import Controllers.Zamowienie;
 
@@ -38,9 +38,9 @@ public class TabelaKursow {
         daneDoTabeli.add(daneDoTabeli1);
 
     };
-    public TabelaKursow(ListaZamówień listaZamówień){
+    public TabelaKursow(ListaZam�wie� listaZam�wie�){
         //tworzenie na tabeli na podstawie bazy danych i stworzonej zmiennej lista zamowien
-        this.kursy=listaZamówień;
+        this.kursy=listaZam�wie�;
         nazwyKolumn.add("data");
         nazwyKolumn.add("Status zamowienia");
         nazwyKolumn.add("id kontenera");
@@ -49,10 +49,12 @@ public class TabelaKursow {
 
         for(int i=0;i<kursy.getListaZanowien().size();i++){
             daneDoTabeli1=new Vector<>();
+            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).data));
+            daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).adres));
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
             daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
-            if(java.time.LocalDate.now().toString().equals(listaZamówień.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
+            if(java.time.LocalDate.now().toString().equals(listaZam�wie�.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
             else
             daneDoTabeli.add(daneDoTabeli1);
 
@@ -70,7 +72,7 @@ public class TabelaKursow {
     private TableModel modelTabeli;
     private Vector<Vector<String>> daneDoTabeli = new Vector<>();
     private Vector<String> nazwyKolumn = new Vector<>();
-    private Controllers.ListaZamówień kursy = new ListaZamówień();
+    private Controllers.ListaZam�wie� kursy = new ListaZam�wie�();
     Vector<Vector<String>> aktualne=new Vector<>();
     public JTable getTabela(){
         return this.tabela;

@@ -2,12 +2,13 @@ package View;
 
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
-import Controllers.ListaZamówień;
+import Controllers.ListaZam�wie�;
 import DB.dataBase;
 import DB.Table;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,16 +40,17 @@ public class Okno extends JFrame {
     //lista kontenerow
     private ListaKontenerow listaKontenerow;
     //lista kursow
-    private ListaZamówień listaZamówień;
+    private ListaZam�wie� listaZam�wie�;
 
     private void initComponents() {
         listaKontenerow = new ListaKontenerow(db.table("containers").list());
-        listaZamówień = new ListaZamówień(db.table("orders").list());
+        listaZam�wie� = new ListaZam�wie�(db.table("orders").list());
 
-        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamówień);
+        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZam�wie�);
         oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
-        WidokKierowcy = new KierowcaWidok(listaZamówień);
+        WidokKierowcy = new KierowcaWidok(listaZam�wie�);
         oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
+
 
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
@@ -61,7 +63,7 @@ public class Okno extends JFrame {
 
         KlasaUzytkownikow xd = new KlasaUzytkownikow("xd", "xd", 2);
         //akcja logowania
-        WidokUzytkownika.getButtonZaloguj().addActionListener((var e) -> {
+        WidokUzytkownika.getButtonZaloguj().addActionListener((ActionEvent e) -> {
             //test kontenerow
 //            Map<String, String> data = new HashMap<>();
 //            data.put("bruher", "xdxdxd");
@@ -134,9 +136,9 @@ public class Okno extends JFrame {
         });
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczytać date kiedy dostarczyc kontener oraz adres.
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczyta� date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizować tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            //potem oczywiscie zaktualizowa� tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
         });
     }
 

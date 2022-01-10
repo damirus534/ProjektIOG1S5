@@ -19,10 +19,10 @@ public class ListaKontenerow extends Kontener{
         HashMap<String,Object> temp;
 
         for(Integer i=1;i<=dane.size();i++){
-            temp= (HashMap<String, Object>) dane.get(i.toString());
-            Kontener kontener=new Kontener((boolean)temp.get("status"),(String) temp.get("dostepnosc"),(long)temp.get("id"));
+           temp = (HashMap<String, Object>) dane.get(i.toString());
+           Kontener kontener = new Kontener((boolean)temp.get("status"),(String) temp.get("dostepnosc"),(long)temp.get("id"));
             
-            konteneryVector.add(kontener);
+           konteneryVector.add(kontener);
         }
 
     }

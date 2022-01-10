@@ -1,7 +1,7 @@
 package View;
 
 import Controllers.ListaKontenerow;
-import Controllers.ListaZamÃ³wieÅ„;
+import Controllers.ListaZamówieñ;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,9 +13,9 @@ public class WlascicielWidok extends JPanel {
     public WlascicielWidok() {
         initComponents();
     }
-    public WlascicielWidok(ListaKontenerow listaKontenerow, ListaZamÃ³wieÅ„ listaZamÃ³wieÅ„){
+    public WlascicielWidok(ListaKontenerow listaKontenerow, ListaZamówieñ listaZamówieñ){
         //uzycie danych z bazy danych
-        tabelaKursow=new TabelaKursow(listaZamÃ³wieÅ„);
+        tabelaKursow=new TabelaKursow(listaZamówieñ);
         tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
         aktualneWektor=tabelaKursow.getAktualne();
         initComponents();

@@ -1,7 +1,9 @@
+DB\dataBase.class
 View\TabelaKursow.class
 View\TabelaKontenerow.class
 DB\Table.class
 Controllers\StatusZamowienia.class
+DB\dataBase$Error.class
 DB\Authorization.class
 View\UzytkownikWidok.class
 View\WlascicielWidok.class
@@ -15,8 +17,6 @@ View\Okno.class
 DB\Authorization$AuthStatus.class
 View\Okno$1.class
 Controllers\KlasaUzytkownikow$grupaUzytkownika.class
-DB\DataBase$Error.class
-DB\DataBase.class
 View\KlientWidok$1.class
 Main\Main$1.class
 View\KlientWidok.class
