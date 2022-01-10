@@ -10,6 +10,7 @@
         <module name="smeici" />
         <module name="smieci" />
         <module name="IOAA" />
+        <module name="ProjektIOG1S5" />
       </profile>
     </annotationProcessing>
   </component>
