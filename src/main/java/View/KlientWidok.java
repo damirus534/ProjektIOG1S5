@@ -19,11 +19,7 @@ public final class KlientWidok extends JPanel {
 
     //konstruktor    
     public KlientWidok() {
-        initComponents();
-    }
-    public KlientWidok(String loggedUser) {
-        this.loggedUser = loggedUser;
-        initComponents();
+        this.loggedUser = "";
     }
     
 
@@ -31,13 +27,13 @@ public final class KlientWidok extends JPanel {
     dataBase db = new dataBase();
     
     //zalogowany aktualnie uzytkownik
-    private String loggedUser = "";
+    private String loggedUser;
 
     //zmienne paneli
-    private final JPanel panelKlientaCaly = new JPanel();
-    private final JPanel panelListy = new JPanel();
-    private final JPanel panelListyZamowien = new JPanel();
-    private final JPanel panelZamowienia = new JPanel();
+    private JPanel panelKlientaCaly = new JPanel();;
+    private JPanel panelListy;
+    private JPanel panelListyZamowien;
+    private JPanel panelZamowienia;
 
     //tabele
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
@@ -45,7 +41,7 @@ public final class KlientWidok extends JPanel {
     private TableModel modelTabelaZamowien;
 
     //komponety
-    private final JButton aktualneZamowieniaButton = new JButton();
+    private JButton aktualneZamowieniaButton;
     private final JButton wylogujButton = new JButton();
     private JLabel nazwaUzytkownikaLabel = new JLabel();
     private JButton zlozZamowienieButton = new JButton();
@@ -55,7 +51,7 @@ public final class KlientWidok extends JPanel {
     private Vector<Vector<String>> ZamowieniaWektor;
 
     //okno z powiadomieniami
-    private JTextArea powiadomienie = new JTextArea(20, 20);
+    private JTextArea powiadomienie;
 
     //gettery
     public JPanel getOknoKlienta() {
@@ -72,21 +68,25 @@ public final class KlientWidok extends JPanel {
     
     //settery
     public void setLoggedUser(String loggedUsr){
+        panelKlientaCaly.removeAll();
         loggedUser = loggedUsr;
+        initComponents();
     }
 
     public void initComponents() {
         //tworzenie okna klienta
+        
         panelKlientaCaly.setSize(800, 600);
         panelKlientaCaly.setLayout(new BorderLayout(0, 1));
-        System.out.println(loggedUser);
 
         //stworzenie panelu z lista kontenerow
+        panelListy = new JPanel();
         panelListy.setPreferredSize(new Dimension(600, 600));
         panelListy.setLayout(new BorderLayout(0, 0));
         panelListy.setBounds(0, 0, 580, 600);
 
         //stworzenie panelu z lista zamowien
+        panelListyZamowien = new JPanel();
         panelListyZamowien.setPreferredSize(new Dimension(600, 600));
         panelListyZamowien.setLayout(new BorderLayout(0, 0));
 
@@ -119,7 +119,8 @@ public final class KlientWidok extends JPanel {
         {
             ZamowieniaWektor.add(daneDotabeli);
         }
-        
+        powiadomienie = new JTextArea(20, 20);
+        powiadomienie.setText("Nie masz zadnych \npowiadomien");
         if(!ZamowieniaWektor.isEmpty())
         {
                 switch(ZamowieniaWektor.get(0).get(0))
@@ -154,6 +155,7 @@ public final class KlientWidok extends JPanel {
         panelListy.add(tabelaKontenerow.getTabela().getTableHeader(), BorderLayout.NORTH);
 
         //Ustawianie panelu z przyciskami
+        panelZamowienia = new JPanel();
         panelZamowienia.setPreferredSize(new Dimension(180, 600));
         panelZamowienia.setLayout(null);
 
@@ -166,6 +168,7 @@ public final class KlientWidok extends JPanel {
         wylogujButton.setBounds(10, 520, 160, 20);
 
         //utworzenie przycisku wyswietl zamowienia
+        aktualneZamowieniaButton = new JButton();
         aktualneZamowieniaButton.setText("Wyswietl zamowienia");
         aktualneZamowieniaButton.addActionListener(new ActionListener() {
             @Override
@@ -197,9 +200,6 @@ public final class KlientWidok extends JPanel {
         nazwaUzytkownikaLabel.setText("zalogowany jako: " + loggedUser);
         panelZamowienia.add(nazwaUzytkownikaLabel);
 
-
-        
-        
         //okno z powiadomieniami
         powiadomienie.setVisible(true);
         powiadomienie.setPreferredSize(new Dimension(800, 600));
