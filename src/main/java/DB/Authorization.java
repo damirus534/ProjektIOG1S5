@@ -27,7 +27,7 @@ public class Authorization {
         return this.authStatus;
     }
 
-    public DataBase.Error login(String name, String pass) {
+    public dataBase.Error login(String name, String pass) {
         DocumentReference docRef = db.collection("users").document(name);
         // asynchronously retrieve the document
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -54,16 +54,16 @@ public class Authorization {
                     authStatus = AuthStatus.WASTE_COLLECTOR;
                 }
                 userName = name;
-                return DataBase.Error.GOOD;
+                return dataBase.Error.GOOD;
             }
             else
-                return DataBase.Error.BAD_PASSWORD;
+                return dataBase.Error.BAD_PASSWORD;
         } else {
-            return DataBase.Error.USER_NULL;
+            return dataBase.Error.USER_NULL;
         }
     }
 
-    public DataBase.Error register(String name, Map<String, String> data){
+    public dataBase.Error register(String name, Map<String, String> data){
         db.collection("users").document(name).set(data);
         return login(name, data.get("pass"));
     }

@@ -24,6 +24,7 @@ public class Zamowienie {
     }
     public String getAdres(){return this.adres;}
     public String getData(){return  this.data;}
+    public StatusZamowienia getStatus(){return status;}
 
 
     public void zmienStatusZamowienia(){

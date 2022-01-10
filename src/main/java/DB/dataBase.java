@@ -9,7 +9,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DataBase {
+public class dataBase {
     
     public enum Error {
         GOOD, BAD_PASSWORD, USER_NULL
@@ -22,7 +22,7 @@ public class DataBase {
         return this.connectionPlate;
     }
 
-    public DataBase(){
+    public dataBase(){
         try {
             connect();
         } catch (IOException e) {

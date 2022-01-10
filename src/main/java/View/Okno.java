@@ -2,14 +2,8 @@ package View;
 
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
-<<<<<<< Updated upstream
-import Controllers.ListaZamÃ³wieÅ„;
-import Controllers.Zamowienie;
-import DB.DataBase;
-=======
-import Controllers.ListaZamówieñ;
+import Controllers.ListaZamï¿½wieï¿½;
 import DB.dataBase;
->>>>>>> Stashed changes
 import DB.Table;
 
 import javax.swing.*;
@@ -40,27 +34,24 @@ public class Okno extends JFrame {
     private KlientWidok WidokKlienta = new KlientWidok();
     private JPanel oknoOdKlienta = WidokKlienta.getOknoKlienta();
 
-    private DataBase db;
+    private dataBase db;
     private Table table;
 
     //lista kontenerow
     private ListaKontenerow listaKontenerow;
     //lista kursow
-    private ListaZamówieñ listaZamówieñ;
+    private ListaZamï¿½wieï¿½ listaZamï¿½wieï¿½;
 
     private void initComponents() {
         listaKontenerow = new ListaKontenerow(db.table("containers").list());
-<<<<<<< Updated upstream
-        listaZamÃ³wieÅ„ = new ListaZamÃ³wieÅ„(db.table("orders").list());
-=======
-        listaZamówieñ = new ListaZamówieñ(db.table("orders").list());
+        listaZamï¿½wieï¿½ = new ListaZamï¿½wieï¿½(db.table("orders").list());
 
-        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamówieñ);
+        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamï¿½wieï¿½);
         oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
-        WidokKierowcy = new KierowcaWidok(listaZamówieñ);
+        WidokKierowcy = new KierowcaWidok(listaZamï¿½wieï¿½);
         oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
 
->>>>>>> Stashed changes
+
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
@@ -99,16 +90,13 @@ public class Okno extends JFrame {
                             okno.getContentPane().revalidate();
                             break;
                         case DRIVER:
-                            //uzycie nowego konstrukotra
-                            WidokKierowcy = new KierowcaWidok(listaZamÃ³wieÅ„);
-                            oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
+
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKierowcy);
                             okno.getContentPane().revalidate();
                             break;
                         case OWNER:
-                            WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamÃ³wieÅ„);
-                            oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
+
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdWlasciciela);
                             okno.getContentPane().revalidate();
@@ -148,14 +136,14 @@ public class Okno extends JFrame {
         });
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaæ date kiedy dostarczyc kontener oraz adres.
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaï¿½ date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizowaæ tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            //potem oczywiscie zaktualizowaï¿½ tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
         });
     }
 
     private void initDB() {
-        this.db = new DataBase();
+        this.db = new dataBase();
     }
 
     private void alert(String message) {

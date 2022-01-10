@@ -1,11 +1,9 @@
 package View;
 
-<<<<<<< Updated upstream
-import DB.DataBase;
-=======
+
 import Controllers.StatusZamowienia;
 import DB.dataBase;
->>>>>>> Stashed changes
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,7 +28,7 @@ public final class KlientWidok extends JPanel {
     
 
     //baza danych
-    DataBase db = new DataBase();
+    dataBase db = new dataBase();
     
     //zalogowany aktualnie uzytkownik
     private String loggedUser = "";
@@ -139,7 +137,7 @@ public final class KlientWidok extends JPanel {
                         powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska");
                         break;
                     default:
-                        powiadomienie.setText("Nie masz ¿adnych \npowiadomieñ");
+                        powiadomienie.setText("Nie masz zadnych \npowiadomien");
                         break;
                 }
         }

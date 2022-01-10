@@ -1,14 +1,10 @@
 package View;
 
 import Controllers.ListaKontenerow;
-<<<<<<< Updated upstream
-import Controllers.ListaZamówień;
-=======
-import Controllers.ListaZam�wie�;
+import Controllers.ListaZamĂłwieĹ„;
 import Controllers.StatusZamowienia;
 import DB.Table;
 import DB.dataBase;
->>>>>>> Stashed changes
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -55,33 +51,25 @@ public class KierowcaWidok extends JPanel {
     public KierowcaWidok(){
         initComponens();
     }
-    public KierowcaWidok(ListaZam�wie� listaZam�wie�)
+    public KierowcaWidok(ListaZamówień listaZamówień)
     {
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
-        for(int i=0;i<listaZam�wie�.getListaZanowien().size();i++){
+        for(int i=0;i<listaZamówień.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
-
-<<<<<<< Updated upstream
-            temp.add(listaZamówień.getListaZanowien().get(i).getAdres());
-            temp.add(String.valueOf(listaZamówień.getListaZanowien().get(i).getIdKontenera()));
-            temp.add(listaZamówień.getListaZanowien().get(i).getData());
-            if(java.time.LocalDate.now().toString().equals(listaZamówień.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+            temp.add(listaZamĂłwieĹ„.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamĂłwieĹ„.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamĂłwieĹ„.getListaZanowien().get(i).getData());
+            if(listaZamĂłwieĹ„.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
+            if(java.time.LocalDate.now().toString().equals(listaZamĂłwieĹ„.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
             else KursyWektor.add(temp);
-=======
-            temp.add(listaZam�wie�.getListaZanowien().get(i).getAdres());
-            temp.add(String.valueOf(listaZam�wie�.getListaZanowien().get(i).getIdKontenera()));
-            temp.add(listaZam�wie�.getListaZanowien().get(i).getData());
-            if(listaZam�wie�.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
-            if(java.time.LocalDate.now().toString().equals(listaZam�wie�.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
-            else KursyWektor.add(temp);}
->>>>>>> Stashed changes
+
 
 
         }
         initComponens();
     }
 
-    //inicjalizacja komponent�w
+    //inicjalizacja komponentów
     private void initComponens(){
         //ustawienia okna
         OknoKierowcy.setSize(800,600);
