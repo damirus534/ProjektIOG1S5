@@ -2,6 +2,8 @@ package Controllers;
 
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -32,5 +34,19 @@ public class ListaKontenerow extends Kontener{
     }
     public Vector<Kontener> getLista(){
         return this.konteneryVector;
+    }
+
+    public String podajAktualnaDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        return formatter.format(date);
+    }
+
+    public long wolneID(){
+        long i = 1;
+        for(Kontener kontener : konteneryVector){
+            if(i<kontener.getIdKontenera()) i = kontener.getIdKontenera();
+        }
+        return i+1;
     }
 }

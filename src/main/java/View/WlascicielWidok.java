@@ -30,6 +30,7 @@ public class WlascicielWidok extends JPanel {
     private JPanel panelTabeliKontenerow = new JPanel();
     private JPanel panelZarzadzaniaKursami = new JPanel();
     private JPanel panelZarzadzaniaKontenerami = new JPanel();
+    private JPanel panelDodawanieKontenera = new JPanel();
 
     //zmienne komponentow
     private JButton zmianaWidokuButton = new JButton("zmien widok");
@@ -59,8 +60,6 @@ public class WlascicielWidok extends JPanel {
 
     //zmienne dla panelu zarzadzania kursami
     private JButton zmienKolejnoscButton = new JButton("zmien kolejnosc");
-
-
 
 
 
@@ -105,8 +104,6 @@ public class WlascicielWidok extends JPanel {
         panelTabeliKursow.add(TabelaKursow.getTableHeader());
         panelTabeliKursow.add(TabelaKursow);
         panelTabeliKursow.setVisible(false);
-
-
 
 
         //ustawienie panelu bocznego dla kontenerow
@@ -162,6 +159,13 @@ public class WlascicielWidok extends JPanel {
 
                 panelTabeliKontenerow.setVisible(true);
             }
+        });
+
+        dodajKontenerButton.addActionListener((var e) -> {
+                tabelaKontenerow.dodawanieKonteneru();
+                panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+                panelTabeliKontenerow.validate();
+
         });
 
         panelWlascicielaCaly.add(panelZarzadzaniaKontenerami, BorderLayout.EAST);
