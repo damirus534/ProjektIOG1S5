@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Vector;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class WlascicielWidok extends JPanel {
     //konstruktor
@@ -63,8 +64,6 @@ public class WlascicielWidok extends JPanel {
 
 
 
-
-
     public void initComponents(){
         panelWlascicielaCaly.setPreferredSize(new Dimension(800,600));
         panelWlascicielaCaly.setLayout(new BorderLayout());
@@ -107,8 +106,6 @@ public class WlascicielWidok extends JPanel {
         panelTabeliKursow.setVisible(false);
 
 
-
-
         //ustawienie panelu bocznego dla kontenerow
         panelZarzadzaniaKontenerami.setPreferredSize(new Dimension(180, 600));
         panelZarzadzaniaKontenerami.setLayout(null);
@@ -123,9 +120,6 @@ public class WlascicielWidok extends JPanel {
         panelZarzadzaniaKursami.setLayout(null);
         panelZarzadzaniaKursami.add(zmienKolejnoscButton);
         panelZarzadzaniaKursami.setVisible(false);
-
-
-
 
         //przypisanie komponentom rozmiarow itp.
         wlascicielLabel.setBounds(10,0,160,20);
@@ -162,6 +156,20 @@ public class WlascicielWidok extends JPanel {
 
                 panelTabeliKontenerow.setVisible(true);
             }
+        });
+
+        dodajKontenerButton.addActionListener((var e) -> {
+            tabelaKontenerow.dodawanieKonteneru();
+            panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+            panelTabeliKontenerow.validate();
+            showMessageDialog(null, "Kontener zostal dodany!");
+        });
+
+        usunKontenerButton.addActionListener((var e) -> {
+            tabelaKontenerow.usuwanieKonteneru();
+            panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
+            panelTabeliKontenerow.validate();
+            showMessageDialog(null, "Kontener zostal usuniety!");
         });
 
         panelWlascicielaCaly.add(panelZarzadzaniaKontenerami, BorderLayout.EAST);
