@@ -89,9 +89,9 @@ public class TabelaKontenerow {
         dataBase db = new dataBase();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("dostepnosc", temp.najblizszaDostepnosc);
-        data.put("status", String.valueOf(temp.status));
-        data.put("id", String.valueOf(temp.idKontenera));
+        data.put("dostepnosc", String.valueOf(temp.najblizszaDostepnosc));
+        data.put("status", temp.status);
+        data.put("id", temp.idKontenera);
 
         db.table("containers").add(String.valueOf(temp.idKontenera), data);
     }

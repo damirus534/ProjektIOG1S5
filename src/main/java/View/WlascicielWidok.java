@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Vector;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class WlascicielWidok extends JPanel {
     //konstruktor
@@ -165,7 +166,7 @@ public class WlascicielWidok extends JPanel {
                 tabelaKontenerow.dodawanieKonteneru();
                 panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
                 panelTabeliKontenerow.validate();
-
+                showMessageDialog(null, "Kontener zostal dodany!");
         });
 
         panelWlascicielaCaly.add(panelZarzadzaniaKontenerami, BorderLayout.EAST);
