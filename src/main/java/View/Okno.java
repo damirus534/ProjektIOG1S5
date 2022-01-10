@@ -83,11 +83,12 @@ public class Okno extends JFrame {
                     switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
+                            WidokKlienta.setLoggedUser(loggedUser);
                             okno.getContentPane().invalidate();
-                            WidokKlienta = new KlientWidok(loggedUser);
-                            oknoOdKlienta = WidokKlienta.getOknoKlienta();
                             okno.setContentPane(oknoOdKlienta);
                             okno.getContentPane().revalidate();
+
+                            
                             break;
                         case DRIVER:
 
@@ -136,9 +137,9 @@ public class Okno extends JFrame {
         });
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczyta� date kiedy dostarczyc kontener oraz adres.
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczyta? date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizowa� tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            //potem oczywiscie zaktualizowa? tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
         });
     }
 
