@@ -55,8 +55,19 @@ public class Table {
     //adds document with auto id
     public DataBase.Error add(Map<String, Object> data){
         db.collection(currentTable).document().set(data);
+<<<<<<< Updated upstream
         return DataBase.Error.GOOD;
+=======
+        return dataBase.Error.GOOD;
     }
+
+    //edits document with given id
+    public dataBase.Error edit(String id, String field, Object value){
+        db.collection(currentTable).document(id).update(field, value);
+        return dataBase.Error.GOOD;
+>>>>>>> Stashed changes
+    }
+
 
     //deletes doc
     public DataBase.Error delete(String id){

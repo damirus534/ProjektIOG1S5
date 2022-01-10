@@ -2,13 +2,19 @@ package View;
 
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
+<<<<<<< Updated upstream
 import Controllers.ListaZamÃ³wieÅ„;
 import Controllers.Zamowienie;
 import DB.DataBase;
+=======
+import Controllers.ListaZamówieñ;
+import DB.dataBase;
+>>>>>>> Stashed changes
 import DB.Table;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,11 +46,21 @@ public class Okno extends JFrame {
     //lista kontenerow
     private ListaKontenerow listaKontenerow;
     //lista kursow
-    private ListaZamÃ³wieÅ„ listaZamÃ³wieÅ„;
+    private ListaZamówieñ listaZamówieñ;
 
     private void initComponents() {
         listaKontenerow = new ListaKontenerow(db.table("containers").list());
+<<<<<<< Updated upstream
         listaZamÃ³wieÅ„ = new ListaZamÃ³wieÅ„(db.table("orders").list());
+=======
+        listaZamówieñ = new ListaZamówieñ(db.table("orders").list());
+
+        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamówieñ);
+        oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
+        WidokKierowcy = new KierowcaWidok(listaZamówieñ);
+        oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
+
+>>>>>>> Stashed changes
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
         okno.setResizable(false); //blokowanie zmiany rozmiaru okna dla wartosci false
@@ -56,7 +72,7 @@ public class Okno extends JFrame {
 
         KlasaUzytkownikow xd = new KlasaUzytkownikow("xd", "xd", 2);
         //akcja logowania
-        WidokUzytkownika.getButtonZaloguj().addActionListener((var e) -> {
+        WidokUzytkownika.getButtonZaloguj().addActionListener((ActionEvent e) -> {
             //test kontenerow
 //            Map<String, String> data = new HashMap<>();
 //            data.put("bruher", "xdxdxd");
@@ -132,9 +148,9 @@ public class Okno extends JFrame {
         });
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaÄ‡ date kiedy dostarczyc kontener oraz adres.
+            //tutaj trzeba zrobic wyswietlanie dialoga i odczytaæ date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizowaÄ‡ tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            //potem oczywiscie zaktualizowaæ tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
         });
     }
 

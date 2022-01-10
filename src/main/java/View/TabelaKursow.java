@@ -1,6 +1,6 @@
 package View;
 
-import Controllers.ListaZamÃ³wieÅ„;
+import Controllers.ListaZamówieñ;
 import Controllers.StatusZamowienia;
 import Controllers.Zamowienie;
 
@@ -38,9 +38,9 @@ public class TabelaKursow {
         daneDoTabeli.add(daneDoTabeli1);
 
     };
-    public TabelaKursow(ListaZamÃ³wieÅ„ listaZamÃ³wieÅ„){
+    public TabelaKursow(ListaZamówieñ listaZamówieñ){
         //tworzenie na tabeli na podstawie bazy danych i stworzonej zmiennej lista zamowien
-        this.kursy=listaZamÃ³wieÅ„;
+        this.kursy=listaZamówieñ;
         nazwyKolumn.add("data");
         nazwyKolumn.add("Status zamowienia");
         nazwyKolumn.add("id kontenera");
@@ -51,8 +51,12 @@ public class TabelaKursow {
             daneDoTabeli1=new Vector<>();
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).data));
             daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
+<<<<<<< Updated upstream
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
             if(java.time.LocalDate.now().toString().equals(listaZamÃ³wieÅ„.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
+=======
+            if(java.time.LocalDate.now().toString().equals(listaZamówieñ.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
+>>>>>>> Stashed changes
             else
             daneDoTabeli.add(daneDoTabeli1);
 
@@ -70,7 +74,7 @@ public class TabelaKursow {
     private TableModel modelTabeli;
     private Vector<Vector<String>> daneDoTabeli = new Vector<>();
     private Vector<String> nazwyKolumn = new Vector<>();
-    private Controllers.ListaZamÃ³wieÅ„ kursy = new ListaZamÃ³wieÅ„();
+    private Controllers.ListaZamówieñ kursy = new ListaZamówieñ();
     Vector<Vector<String>> aktualne=new Vector<>();
     public JTable getTabela(){
         return this.tabela;

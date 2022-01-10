@@ -1,6 +1,11 @@
 package View;
 
+<<<<<<< Updated upstream
 import DB.DataBase;
+=======
+import Controllers.StatusZamowienia;
+import DB.dataBase;
+>>>>>>> Stashed changes
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -14,21 +19,21 @@ import javax.swing.table.TableModel;
 
 public final class KlientWidok extends JPanel {
 
-    //konstruktor
+    //konstruktor    
+    public KlientWidok() {
+        initComponents();
+    }
     public KlientWidok(String loggedUser) {
         this.loggedUser = loggedUser;
         initComponents();
     }
     
-    public KlientWidok() {
-        initComponents();
-    }
 
     //baza danych
     DataBase db = new DataBase();
     
     //zalogowany aktualnie uzytkownik
-    String loggedUser = "";
+    private String loggedUser = "";
 
     //zmienne paneli
     private final JPanel panelKlientaCaly = new JPanel();
@@ -68,14 +73,15 @@ public final class KlientWidok extends JPanel {
     }
     
     //settery
-    public void setLoggedUser(String loggedUser){
-        this.loggedUser = loggedUser;
+    public void setLoggedUser(String loggedUsr){
+        loggedUser = loggedUsr;
     }
 
     public void initComponents() {
         //tworzenie okna klienta
         panelKlientaCaly.setSize(800, 600);
         panelKlientaCaly.setLayout(new BorderLayout(0, 1));
+        System.out.println(loggedUser);
 
         //stworzenie panelu z lista kontenerow
         panelListy.setPreferredSize(new Dimension(600, 600));
@@ -116,6 +122,27 @@ public final class KlientWidok extends JPanel {
             ZamowieniaWektor.add(daneDotabeli);
         }
         
+        if(!ZamowieniaWektor.isEmpty())
+        {
+                switch(ZamowieniaWektor.get(0).get(0))
+                {
+                    case "Zakonczono":
+                        powiadomienie.setText("Twoje zamowienie \nzostalo zakonczone");
+                        break;
+                    case "OczekiwaniaNaDostarczenie":
+                        powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie");
+                        break;
+                    case "DostarczenieDoKlienta":
+                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie");
+                        break;
+                    case "DostarcznieDoWysypiska":
+                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska");
+                        break;
+                    default:
+                        powiadomienie.setText("Nie masz ¿adnych \npowiadomieñ");
+                        break;
+                }
+        }
 
         modelTabelaZamowien = new DefaultTableModel(ZamowieniaWektor, KolumnyZamowienWektor);
         tabelaZamowien = new JTable(modelTabelaZamowien);
@@ -172,8 +199,10 @@ public final class KlientWidok extends JPanel {
         nazwaUzytkownikaLabel.setText("zalogowany jako: " + loggedUser);
         panelZamowienia.add(nazwaUzytkownikaLabel);
 
+
+        
+        
         //okno z powiadomieniami
-        powiadomienie.setText("Aktualizacja dla \ntwojego zamowinia! \nZobacz teraz!");
         powiadomienie.setVisible(true);
         powiadomienie.setPreferredSize(new Dimension(800, 600));
         powiadomienie.setEditable(false);

@@ -1,15 +1,29 @@
 package View;
 
 import Controllers.ListaKontenerow;
+<<<<<<< Updated upstream
 import Controllers.ListaZamÃ³wieÅ„;
+=======
+import Controllers.ListaZamówieñ;
+import Controllers.StatusZamowienia;
+import DB.Table;
+import DB.dataBase;
+>>>>>>> Stashed changes
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
+import Controllers.StatusZamowienia;
 
 public class KierowcaWidok extends JPanel {
 
+    dataBase db = new dataBase();
+    String status = "";
 
     //panele
     private JPanel OknoKierowcy=new JPanel();
@@ -41,24 +55,33 @@ public class KierowcaWidok extends JPanel {
     public KierowcaWidok(){
         initComponens();
     }
-    public KierowcaWidok(ListaZamÃ³wieÅ„ listaZamÃ³wieÅ„)
+    public KierowcaWidok(ListaZamówieñ listaZamówieñ)
     {
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
-        for(int i=0;i<listaZamÃ³wieÅ„.getListaZanowien().size();i++){
+        for(int i=0;i<listaZamówieñ.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
 
+<<<<<<< Updated upstream
             temp.add(listaZamÃ³wieÅ„.getListaZanowien().get(i).getAdres());
             temp.add(String.valueOf(listaZamÃ³wieÅ„.getListaZanowien().get(i).getIdKontenera()));
             temp.add(listaZamÃ³wieÅ„.getListaZanowien().get(i).getData());
             if(java.time.LocalDate.now().toString().equals(listaZamÃ³wieÅ„.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
             else KursyWektor.add(temp);
+=======
+            temp.add(listaZamówieñ.getListaZanowien().get(i).getAdres());
+            temp.add(String.valueOf(listaZamówieñ.getListaZanowien().get(i).getIdKontenera()));
+            temp.add(listaZamówieñ.getListaZanowien().get(i).getData());
+            if(listaZamówieñ.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
+            if(java.time.LocalDate.now().toString().equals(listaZamówieñ.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
+            else KursyWektor.add(temp);}
+>>>>>>> Stashed changes
 
 
         }
         initComponens();
     }
 
-    //inicjalizacja komponentÃ³w
+    //inicjalizacja komponentów
     private void initComponens(){
         //ustawienia okna
         OknoKierowcy.setSize(800,600);
@@ -100,6 +123,43 @@ public class KierowcaWidok extends JPanel {
 
         koniecKursuButton.setText("Koniec Kursu");
         koniecKursuButton.setBounds(10,70,160,30);
+        
+        
+        
+        koniecKursuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String statusNowy;
+                switch(status.toString())
+                {
+                    case "Zakonczono":
+                        statusNowy = "Zakonczono";
+                        break;
+                    case "OczekiwaniaNaDostarczenie":
+                        statusNowy = "DostarczenieDoKlienta";
+                        break;
+                    case "DostarczenieDoKlienta":
+                        statusNowy = "DostarcznieDoWysypiska";
+                        break;
+                    case "DostarcznieDoWysypiska":
+                        statusNowy = "Zakonczenie";
+                        break;
+                    default:
+                        statusNowy = "OczekiwaniaNaDostarczenie";
+                }
+                
+                
+                String nrZamowienia = KursyWektor.get(0).get(1);
+                System.out.println(nrZamowienia);
+
+                System.out.println(statusNowy);
+                db.table("orders").edit(nrZamowienia, "status", statusNowy);
+                status = statusNowy;        
+            }
+        }
+        );
+        
         PanelButton.add(wylogujButton);
         PanelButton.add(koniecKursuButton);
         //Dodanie Labela do panelu z buttonami
