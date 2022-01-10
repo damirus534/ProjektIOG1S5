@@ -2,7 +2,7 @@ package View;
 
 import Controllers.KlasaUzytkownikow;
 import Controllers.ListaKontenerow;
-import Controllers.ListaZam�wie�;
+import Controllers.ListaZamowien;
 import DB.dataBase;
 import DB.Table;
 
@@ -40,15 +40,15 @@ public class Okno extends JFrame {
     //lista kontenerow
     private ListaKontenerow listaKontenerow;
     //lista kursow
-    private ListaZam�wie� listaZam�wie�;
+    private ListaZamowien listaZamowien;
 
     private void initComponents() {
         listaKontenerow = new ListaKontenerow(db.table("containers").list());
-        listaZam�wie� = new ListaZam�wie�(db.table("orders").list());
+        listaZamowien = new ListaZamowien(db.table("orders").list());
 
-        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZam�wie�);
+        WidokWlasciciela = new WlascicielWidok(listaKontenerow, listaZamowien);
         oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
-        WidokKierowcy = new KierowcaWidok(listaZam�wie�);
+        WidokKierowcy = new KierowcaWidok(listaZamowien);
         oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
 
 

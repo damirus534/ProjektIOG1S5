@@ -1,6 +1,6 @@
 package View;
 
-import Controllers.ListaZam�wie�;
+import Controllers.ListaZamowien;
 import Controllers.StatusZamowienia;
 import Controllers.Zamowienie;
 
@@ -38,9 +38,9 @@ public class TabelaKursow {
         daneDoTabeli.add(daneDoTabeli1);
 
     };
-    public TabelaKursow(ListaZam�wie� listaZam�wie�){
+    public TabelaKursow(ListaZamowien listaZamowien){
         //tworzenie na tabeli na podstawie bazy danych i stworzonej zmiennej lista zamowien
-        this.kursy=listaZam�wie�;
+        this.kursy=listaZamowien;
         nazwyKolumn.add("data");
         nazwyKolumn.add("Status zamowienia");
         nazwyKolumn.add("id kontenera");
@@ -54,7 +54,7 @@ public class TabelaKursow {
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).adres));
             daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
             daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
-            if(java.time.LocalDate.now().toString().equals(listaZam�wie�.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
+            if(java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
             else
             daneDoTabeli.add(daneDoTabeli1);
 
@@ -72,7 +72,7 @@ public class TabelaKursow {
     private TableModel modelTabeli;
     private Vector<Vector<String>> daneDoTabeli = new Vector<>();
     private Vector<String> nazwyKolumn = new Vector<>();
-    private Controllers.ListaZam�wie� kursy = new ListaZam�wie�();
+    private Controllers.ListaZamowien kursy = new ListaZamowien();
     Vector<Vector<String>> aktualne=new Vector<>();
     public JTable getTabela(){
         return this.tabela;
