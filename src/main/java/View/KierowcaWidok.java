@@ -60,9 +60,12 @@ public class KierowcaWidok extends JPanel {
             temp.add(listaZamowien.getListaZanowien().get(i).getAdres());
             temp.add(String.valueOf(listaZamowien.getListaZanowien().get(i).getIdKontenera()));
             temp.add(listaZamowien.getListaZanowien().get(i).getData());
-            if(listaZamowien.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie){
+            if(listaZamowien.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie)
+            {
                 if(java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
-                else KursyWektor.add(temp);}
+                else KursyWektor.add(temp);
+            }
+
 
 
         }

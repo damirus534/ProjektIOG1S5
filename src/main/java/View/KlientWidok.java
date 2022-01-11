@@ -70,6 +70,9 @@ public final class KlientWidok extends JPanel {
         loggedUser = loggedUsr;
         initComponents();
     }
+    public void setTabelaKontenerow(TabelaKontenerow tabelaKontenerow){
+        this.tabelaKontenerow=tabelaKontenerow;
+    }
 
     public void initComponents() {
         //tworzenie okna klienta

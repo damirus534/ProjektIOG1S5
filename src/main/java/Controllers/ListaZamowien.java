@@ -17,18 +17,30 @@ public class ListaZamowien {
         HashMap<String,Object> temp;
         StatusZamowienia statusZamowienia=StatusZamowienia.DostarczenieDoKlienta;
         for(Integer i=1;i<=dane.size();i++){
-            temp= (HashMap<String, Object>) dane.get(i.toString());
-            //status pamieta� �eby doda� musi si� zgadza� z tymi nazwami
-            switch((String) temp.get("status")){
-                case "Zakonczono":statusZamowienia=StatusZamowienia.Zakonczenie;break;
-                case "OczekiwaniaNaDostarczenie":statusZamowienia=StatusZamowienia.OczekiwaniaNaDostarczenie;break;
-                case "DostarczenieDoKlienta":statusZamowienia=StatusZamowienia.DostarczenieDoKlienta;break;
-                case "DostarcznieDoWysypiska":statusZamowienia=StatusZamowienia.DostarcznieDoWysypiska;break;
-                default:statusZamowienia=StatusZamowienia.Zakonczenie;break;
+            if(dane.get(i.toString())!=null) {
+                temp = (HashMap<String, Object>) dane.get(i.toString());
+                //status pamieta� �eby doda� musi si� zgadza� z tymi nazwami
+                switch ((String) temp.get("status")) {
+                    case "Zakonczono":
+                        statusZamowienia = StatusZamowienia.Zakonczenie;
+                        break;
+                    case "OczekiwaniaNaDostarczenie":
+                        statusZamowienia = StatusZamowienia.OczekiwaniaNaDostarczenie;
+                        break;
+                    case "DostarczenieDoKlienta":
+                        statusZamowienia = StatusZamowienia.DostarczenieDoKlienta;
+                        break;
+                    case "DostarcznieDoWysypiska":
+                        statusZamowienia = StatusZamowienia.DostarcznieDoWysypiska;
+                        break;
+                    default:
+                        statusZamowienia = StatusZamowienia.Zakonczenie;
+                        break;
+                }
+                Zamowienie zamowienie = new Zamowienie((long) temp.get("orderID"), (String) temp.get("username"), (String) temp.get("data"), (String) temp.get("adres"), (long) temp.get("containerID")
+                        , statusZamowienia);
+                listaZanowien.add(zamowienie);
             }
-            Zamowienie zamowienie=new Zamowienie((long)temp.get("orderID"),(String)temp.get("username"),(String) temp.get("data"),(String) temp.get("adres"),(long)temp.get("containerID")
-                    ,statusZamowienia);
-            listaZanowien.add(zamowienie);
         }
 
     }

@@ -66,6 +66,9 @@ public class TabelaKursow {
         tabela.setVisible(true);
 
     }
+    void zmienStatusKursu(){
+
+    }
 
 
     private JTable tabela;

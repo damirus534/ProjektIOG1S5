@@ -83,7 +83,9 @@ public class Okno extends JFrame {
                     switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
+                            WidokKlienta.setTabelaKontenerow(new TabelaKontenerow(listaKontenerow));
                             WidokKlienta.setLoggedUser(loggedUser);
+
                             okno.getContentPane().invalidate();
                             okno.setContentPane(oknoOdKlienta);
                             okno.getContentPane().revalidate();
