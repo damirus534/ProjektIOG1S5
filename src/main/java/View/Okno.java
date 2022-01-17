@@ -76,10 +76,21 @@ public class Okno extends JFrame {
             //test:test
             //macias:xdxd
             //bruher:cringo
+
+            if(WidokUzytkownika.getTextFieldLogin().getText().equals("")) {
+                alert("wpisz swoja nazwe", 0);
+                return;
+            }
+
+            if(WidokUzytkownika.getTextFieldHaslo().getText().equals("")) {
+                alert("wpisz swoje haslo", 0);
+                return;
+            }
+
             switch (db.auth().login(WidokUzytkownika.getTextFieldLogin().getText(), WidokUzytkownika.getTextFieldHaslo().getText())) {
                 case GOOD:
                     String loggedUser = db.auth().userName + "";
-                    alert(db.auth().userName + " zalogowaned");
+                    alert(db.auth().userName + " zalogowaned", 1);
                     switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
@@ -108,10 +119,10 @@ public class Okno extends JFrame {
 
                     break;
                 case USER_NULL:
-                    alert("nie ma takiego usera xdds");
+                    alert("nie ma takiego usera xdds", 0);
                     break;
                 case BAD_PASSWORD:
-                    alert("zle haslo dsxddxd");
+                    alert("zle haslo dsxddxd dzbanie", 0);
                     break;
             }
         });
@@ -149,11 +160,11 @@ public class Okno extends JFrame {
         this.db = new dataBase();
     }
 
-    private void alert(String message) {
+    private void alert(String message, int type) {
         JFrame f = new JFrame("Parent");
         f.setAlwaysOnTop(true);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JOptionPane.showMessageDialog(f, message, "error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(f, message, "error", type);
     }
 
     public void register(String name, String pass) {

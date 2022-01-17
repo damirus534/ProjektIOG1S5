@@ -29,8 +29,8 @@ public class UzytkownikWidok extends JPanel{
     private JLabel labelLogin= new JLabel();
     private JLabel labelHaslo= new JLabel();
 
-    private JTextField textFieldLogin = new JTextField("macias"); //szybsze logowanie mozna potem wywalic
-    private JTextField textFieldHaslo = new JTextField("xdxd");
+    private JTextField textFieldLogin = new JTextField("admin"); //szybsze logowanie mozna potem wywalic
+    private JTextField textFieldHaslo = new JTextField("admin");
     private JButton buttonZaloguj = new JButton();
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
 
