@@ -11,10 +11,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import Controllers.StatusZamowienia;
+
+import static Controllers.StatusZamowienia.*;
 
 public class KierowcaWidok extends JPanel {
 
@@ -39,7 +43,7 @@ public class KierowcaWidok extends JPanel {
     private Vector<String> KolumnyWektor= new Vector<String>(3);
     private Vector<Vector<String>> KursyWektor= new Vector<Vector<String>>();
     private Vector<Vector<String>> AktualneWektor=new Vector<>();
-
+    private ListaZamowien Zamowienia;
     //gettery
     public JPanel getOknoKierowcy() {
         return OknoKierowcy;
@@ -53,6 +57,7 @@ public class KierowcaWidok extends JPanel {
     }
     public KierowcaWidok(ListaZamowien listaZamowien)
     {
+        Zamowienia=listaZamowien;
         //przy uzyciu listy zamowien dodanie wartosci do wektoru kursow
         for(int i=0;i<listaZamowien.getListaZanowien().size();i++){
             Vector<String> temp=new Vector<>();
@@ -60,7 +65,7 @@ public class KierowcaWidok extends JPanel {
             temp.add(listaZamowien.getListaZanowien().get(i).getAdres());
             temp.add(String.valueOf(listaZamowien.getListaZanowien().get(i).getIdKontenera()));
             temp.add(listaZamowien.getListaZanowien().get(i).getData());
-            if(listaZamowien.getListaZanowien().get(i).getStatus()!= StatusZamowienia.Zakonczenie)
+            if(listaZamowien.getListaZanowien().get(i).getStatus()!= Zakonczenie)
             {
                 if(java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))AktualneWektor.add(temp);
                 else KursyWektor.add(temp);
@@ -117,35 +122,47 @@ public class KierowcaWidok extends JPanel {
 
 
 
-        koniecKursuButton.addActionListener(new ActionListener() {
+        koniecKursuButton.addActionListener(new ActionListener()
+         {
+
                                                 @Override
                                                 public void actionPerformed(ActionEvent e)
                                                 {
+                                                    LocalDate data =java.time.LocalDate.now();
                                                     String statusNowy;
-                                                    switch(status.toString())
+                                                    int wybranyKurs=AktualnyKurs.getSelectedRow();
+                                                    int nrZamowienia = Zamowienia.znajdzZamowienie(AktualneWektor.get(wybranyKurs).get(0),
+                                                            Integer.parseInt(AktualneWektor.get(AktualnyKurs.getSelectedRow()).get(1)));
+                                                    switch(Zamowienia.getZamowienie(nrZamowienia).getStatus())
                                                     {
-                                                        case "Zakonczono":
+                                                        case Zakonczenie:
                                                             statusNowy = "Zakonczono";
                                                             break;
-                                                        case "OczekiwaniaNaDostarczenie":
+                                                        case  OczekiwaniaNaDostarczenie:
                                                             statusNowy = "DostarczenieDoKlienta";
+                                                            data.plusDays(7);
+                                                            AktualnyKurs.remove(wybranyKurs);
+                                                            AktualneWektor.remove(wybranyKurs);
                                                             break;
-                                                        case "DostarczenieDoKlienta":
+                                                        case DostarczenieDoKlienta:
                                                             statusNowy = "DostarcznieDoWysypiska";
                                                             break;
-                                                        case "DostarcznieDoWysypiska":
+                                                        case DostarcznieDoWysypiska:
                                                             statusNowy = "Zakonczenie";
+                                                            AktualnyKurs.remove(wybranyKurs);
+                                                            AktualneWektor.remove(wybranyKurs);
                                                             break;
                                                         default:
                                                             statusNowy = "OczekiwaniaNaDostarczenie";
                                                     }
 
 
-                                                    String nrZamowienia = KursyWektor.get(0).get(1);
+
                                                     System.out.println(nrZamowienia);
 
                                                     System.out.println(statusNowy);
-                                                    db.table("orders").edit(nrZamowienia, "status", statusNowy);
+                                                    db.table("orders").edit(String.valueOf(nrZamowienia), "status", statusNowy);
+                                                    db.table("orders").edit(String.valueOf(nrZamowienia),"data",data.toString());
                                                     status = statusNowy;
                                                 }
                                             }

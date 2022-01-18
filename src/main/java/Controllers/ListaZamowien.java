@@ -37,8 +37,8 @@ public class ListaZamowien {
                         statusZamowienia = StatusZamowienia.Zakonczenie;
                         break;
                 }
-                Zamowienie zamowienie = new Zamowienie((long) temp.get("orderID"), (String) temp.get("username"), (String) temp.get("data"), (String) temp.get("adres"), (long) temp.get("containerID")
-                        , statusZamowienia);
+                Zamowienie zamowienie = new Zamowienie((long) temp.get("orderID"), (String) temp.get("username"), (String) temp.get("data"),
+                        (String) temp.get("adres"), (long) temp.get("containerID"), statusZamowienia);
                 listaZanowien.add(zamowienie);
             }
         }
@@ -69,5 +69,19 @@ public class ListaZamowien {
 
     public Vector<Zamowienie> getListaZanowien(){
         return this.listaZanowien;
+    }
+    public int znajdzZamowienie(String adres,int idKontenera){
+        for(Zamowienie zam1 : this.listaZanowien){
+            if(zam1.getIdKontenera()==idKontenera&&zam1.getAdres()==adres){
+                return zam1.idZamowienia;
+            }
+        }
+        return -1;
+    }
+    public Zamowienie getZamowienie(int id){
+        for(Zamowienie zamowienie:listaZanowien){
+            if(zamowienie.idZamowienia==id)return zamowienie;
+        }
+        return null;
     }
 }
