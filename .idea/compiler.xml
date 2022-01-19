@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ProjektIO" />
-        <module name="smeici" />
         <module name="smieci" />
         <module name="IOAA" />
         <module name="ProjektIOG1S5-master" />
+        <module name="IO" />
+        <module name="ProjektIO" />
+        <module name="smeici" />
         <module name="ProjektIOG1S5" />
       </profile>
     </annotationProcessing>
