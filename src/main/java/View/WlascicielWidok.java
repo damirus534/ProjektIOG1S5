@@ -5,6 +5,7 @@ import Controllers.ListaZamowien;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Vector;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -79,6 +80,7 @@ public class WlascicielWidok extends JPanel {
         //panel z kursami
         Kursy.setText("Kursy");
         AktualnyKursLabel.setText("Aktualny Kurs");
+
         Kursy.setFont(new Font("Serif",Font.PLAIN,20));
         AktualnyKursLabel.setFont(new Font("Serif",Font.PLAIN,20));
         //tabela z kursami
@@ -86,11 +88,13 @@ public class WlascicielWidok extends JPanel {
         KolumnyWektor.add("Numer Kontenera");
         KolumnyWektor.add("Data rozpoczecia kursu");
         TabelaKursow=tabelaKursow.getTabela();
+
         panelTabeliKursow.setPreferredSize(new Dimension(600,600));
         TabelaKursow.setFillsViewportHeight(true);
         panelTabeliKursow.setLayout(new BoxLayout(panelTabeliKursow,BoxLayout.Y_AXIS));
         TabelaKursow.setFillsViewportHeight(true);
         AktualnyKurs=new JTable(aktualneWektor,KolumnyWektor);
+        AktualnyKurs.setBackground(Color.YELLOW);
         AktualnyKurs.setFillsViewportHeight(true);
 
         panelTabeliKursow.setBorder(new EmptyBorder(new Insets(0,0,50,0)));

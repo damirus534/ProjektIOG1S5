@@ -7,6 +7,7 @@ import Controllers.Zamowienie;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.util.Vector;
 
 import static Controllers.StatusZamowienia.DostarczenieDoKlienta;
@@ -32,6 +33,7 @@ public class TabelaKursow {
         tabela.setBounds(0,0, 600, 600);
         tabela.setEnabled(false);
         tabela.setVisible(true);
+
         daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
         daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
         daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
@@ -48,15 +50,18 @@ public class TabelaKursow {
         Vector<String> daneDoTabeli1 = new Vector<>();
 
         for(int i=0;i<kursy.getListaZanowien().size();i++){
-            daneDoTabeli1=new Vector<>();
-            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).data));
-            daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
-            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).adres));
-            daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
-            daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
-            if(java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))aktualne.add(daneDoTabeli1);
-            else
-            daneDoTabeli.add(daneDoTabeli1);
+            if(kursy.getListaZanowien().get(i).status.name()!="Zakonczenie") {
+                daneDoTabeli1 = new Vector<>();
+                daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).data));
+                daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
+                daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).adres));
+                daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(i).idKontenera));
+                daneDoTabeli1.add(kursy.getListaZanowien().get(i).status.name());
+                if (java.time.LocalDate.now().toString().equals(listaZamowien.getListaZanowien().get(i).getData()))
+                    aktualne.add(daneDoTabeli1);
+                else
+                    daneDoTabeli.add(daneDoTabeli1);
+            }
 
         }
         modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);

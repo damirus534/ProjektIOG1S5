@@ -64,7 +64,7 @@ public class ListaZamowien {
                 return i;
             }
         }
-        return i+1;
+        return i;
     }
 
     public Vector<Zamowienie> getListaZanowien(){

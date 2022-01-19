@@ -1,8 +1,6 @@
 package View;
 
-import Controllers.KlasaUzytkownikow;
-import Controllers.ListaKontenerow;
-import Controllers.ListaZamowien;
+import Controllers.*;
 import DB.dataBase;
 import DB.Table;
 
@@ -153,13 +151,68 @@ public class Okno extends JFrame {
             //tutaj trzeba zrobic wyswietlanie dialoga i odczyta? date kiedy dostarczyc kontener oraz adres.
             //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
             //potem oczywiscie zaktualizowa? tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
+            String adres = dialogbox();
+            int wolne_id = listaZamowien.zwrocWolneIdZamowienia();
+            long id_kontenera = listaKontenerow.wolneID();
+            String date = listaKontenerow.podajAktualnaDate();
+            long pierwszyWolnyKontener = listaKontenerow.zwrocPierwszyWolnyKontener();
+            String dostepnosc = listaKontenerow.getLista().get((int)pierwszyWolnyKontener).getNajblizszaDostepnosc();
+            if(adres=="")
+            {
+                JOptionPane.showMessageDialog(okno, "Adres nie może być pusty!", "error", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(adres.length()<=5)
+            {
+                JOptionPane.showMessageDialog(okno, "Adres nie może być krótszy niż 5 znaków!", "error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, date,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
+                listaZamowien.dodajZamowienie(nowe_zamowienie);
+                var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
+                listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
+                addToContainersDB(dostepnosc,false,id_kontenera);
+                addToOrdersDB(adres,id_kontenera,date,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
+            }
         });
     }
 
     private void initDB() {
         this.db = new dataBase();
     }
+    private String dialogbox() {
 
+        String adres = JOptionPane.showInputDialog(okno,"Prosze podac adres:");
+
+        int a = JOptionPane.showConfirmDialog(okno, "Czy wpisano poprawny adres?");
+        if (a == JOptionPane.YES_OPTION) {okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);}
+        return adres;
+    }
+    private void addToContainersDB(String dostepnosc,boolean status,long id)
+    {
+        dataBase db = new dataBase();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("dostepnosc", dostepnosc);
+        data.put("status", status);
+        data.put("id", id);
+
+        db.table("containers").add(String.valueOf(id), data);
+    }
+    private void addToOrdersDB(String adres,long idContainer,String date,int idOrder,String status,String username)
+    {
+        dataBase db = new dataBase();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("adres", adres);
+        data.put("containerID", idContainer);
+        data.put("data", date);
+        data.put("orderID",idOrder);
+        data.put("status",status);
+        data.put("username",username);
+
+        db.table("orders").add(String.valueOf(idOrder), data);
+    }
     private void alert(String message, int type) {
         JFrame f = new JFrame("Parent");
         f.setAlwaysOnTop(true);

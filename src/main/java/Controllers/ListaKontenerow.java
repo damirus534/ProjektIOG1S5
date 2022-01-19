@@ -43,7 +43,16 @@ public class ListaKontenerow extends Kontener{
         Date date = new Date(System.currentTimeMillis());
         return formatter.format(date);
     }
-
+    public long zwrocPierwszyWolnyKontener()
+    {
+        long i = 1;
+        for(Kontener kontener : konteneryVector){
+            if(kontener.getStatus()==true)
+                return i;
+            i++;
+        }
+        return 0;
+    }
     public long wolneID(){
         long i = 1;
         for(Kontener kontener : konteneryVector){
