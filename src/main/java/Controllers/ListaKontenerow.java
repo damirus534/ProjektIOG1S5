@@ -2,11 +2,11 @@ package Controllers;
 
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class ListaKontenerow extends Kontener{
 
@@ -19,21 +19,29 @@ public class ListaKontenerow extends Kontener{
     public ListaKontenerow(Map<String,Object> dane){
         //przetworzenie danych z bazy danych
         HashMap<String,Object> temp;
-
-        for(Integer i=1;i<=dane.size();i++){
-            if(dane.get(i.toString())!=null) {
-                temp = (HashMap<String, Object>) dane.get(i.toString());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        LocalDate localDate = LocalDate.now();
+        LocalDate tmpDate = null;
+        System.out.println(dtf.format(localDate));
+        for(Integer i=1, j = 1; i <= dane.size(); i++, j++) {
+            if (dane.get(j.toString()) != null) {
+                temp = (HashMap<String, Object>) dane.get(j.toString());
                 Kontener kontener = new Kontener((boolean) temp.get("status"), (String) temp.get("dostepnosc"), (long) temp.get("id"));
-
+                tmpDate = LocalDate.parse(kontener.najblizszaDostepnosc);
+                if(localDate.isAfter(tmpDate)){
+                    kontener.najblizszaDostepnosc = localDate.toString();
+                }
                 konteneryVector.add(kontener);
+            } else if (i != dane.size() - 1) {
+                i--;
             }
         }
-
     }
 
     public void ListaKontenerowDodajKontener(Kontener KONTENER) {
         konteneryVector.add(KONTENER);
     }
+
     public Vector<Kontener> getLista(){
         return this.konteneryVector;
     }
