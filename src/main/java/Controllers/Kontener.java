@@ -9,7 +9,6 @@ public class Kontener {
 
 
     public Kontener(boolean STATUS, String NAJBLIZSZADOSTEPNOSC, long IDKONTENERA){
-        int Âç?Âç?Âç?Âç?Âç?Âç?Âç?Âç?Âç?Âç?Âç?Âç?=1488;
         this.status = STATUS;
         this.najblizszaDostepnosc = NAJBLIZSZADOSTEPNOSC;
         this.idKontenera = (int) IDKONTENERA;

@@ -1,8 +1,5 @@
 package Controllers;
 
-import com.google.firebase.database.DataSnapshot;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -51,6 +48,7 @@ public class ListaKontenerow extends Kontener{
         Date date = new Date(System.currentTimeMillis());
         return formatter.format(date);
     }
+
     public long zwrocPierwszyWolnyKontener()
     {
         long i = 1;
@@ -61,6 +59,7 @@ public class ListaKontenerow extends Kontener{
         }
         return 0;
     }
+
     public long wolneID(){
         long i = 1;
         for(Kontener kontener : konteneryVector){
