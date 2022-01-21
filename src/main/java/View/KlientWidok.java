@@ -6,9 +6,18 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -96,8 +105,10 @@ public final class KlientWidok extends JPanel {
         KolumnyZamowienWektor.add("status");
         KolumnyZamowienWektor.add("id zamowienia");
         
-        Vector<String> daneDotabeli = new Vector<String>(2);
+        ZamowieniaWektor = new Vector<Vector<String>>();
+        
         Map<String, Object> orders = db.table("orders").list();
+        String dataZamowieniaUzytkownika = "";
 
         //petla ktora sprawdza ktore zamowienia w dazie 
         //naleza do zalogowanego uzytkownika
@@ -106,19 +117,40 @@ public final class KlientWidok extends JPanel {
             HashMap<String, Object> order = (HashMap<String, Object>) orders.get(iString);
             String username = (String) order.get("username");
             String status = (String) order.get("status");
+            String dataZamowienia = (String) order.get("data");
             long idZamowienia = (long) order.get("orderID");
             String idZamowieniaTekst = idZamowienia + "";
             if (loggedUser.equals(username)) {
+                Vector<String> daneDotabeli = new Vector<String>(2);
                 daneDotabeli.add(status);
                 daneDotabeli.add(idZamowieniaTekst);
+                ZamowieniaWektor.add(daneDotabeli);
+                if(dataZamowienia.compareTo(dataZamowieniaUzytkownika) > 0)
+                    dataZamowieniaUzytkownika = dataZamowienia;
             }
         }
         
+        //pobranie aktualnej daty
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+        String date2 = java.time.LocalDate.now().toString();
+        long diff = 0;
+        
         //sprawdzanie czy uzytkownik posiada jakies zamowienia
-        ZamowieniaWektor = new Vector<Vector<String>>();
-        if(!daneDotabeli.isEmpty())
+        if(!ZamowieniaWektor.isEmpty())
         {
-            ZamowieniaWektor.add(daneDotabeli);
+            try 
+            {
+                Date firstDate = sdf.parse(dataZamowieniaUzytkownika);
+                Date secondDate = sdf.parse(date2);
+                long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+                diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                if(diff < 2)
+                    diff = 2;
+            } 
+            catch (ParseException ex) 
+            {
+                diff = 2;
+            }
         }
         powiadomienie = new JTextArea(20, 20);
         powiadomienie.setText("Nie masz zadnych \npowiadomien");
@@ -127,16 +159,19 @@ public final class KlientWidok extends JPanel {
                 switch(ZamowieniaWektor.get(0).get(0))
                 {
                     case "Zakonczono":
-                        powiadomienie.setText("Twoje zamowienie \nzostalo zakonczone");
+                        powiadomienie.setText("Twoje zamowienie \nzostalo zakonczone.");
                         break;
                     case "OczekiwaniaNaDostarczenie":
-                        powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie");
+                        powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie\n"
+                                +"\nPozosta³y " + (diff-2) + " dni do\ndostarczenia kontenera.");
                         break;
                     case "DostarczenieDoKlienta":
-                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie");
+                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie\n"
+                                + "\nPozosta³y " + (diff-1) + " dni do\ndostarczenia do\nPana/Pani kontenera.");
                         break;
                     case "DostarcznieDoWysypiska":
-                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska");
+                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska\n"
+                                + "\nPozosta³y " + diff + " dni do\ndostarczenia kontenera\nna wysypisko.");
                         break;
                     default:
                         powiadomienie.setText("Nie masz zadnych \npowiadomien");
