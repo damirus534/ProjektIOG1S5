@@ -41,6 +41,7 @@ public class ListaKontenerow extends Kontener{
     public void ListaKontenerowDodajKontener(Kontener KONTENER) {
         konteneryVector.add(KONTENER);
     }
+
     public Vector<Kontener> getLista(){
         return this.konteneryVector;
     }
