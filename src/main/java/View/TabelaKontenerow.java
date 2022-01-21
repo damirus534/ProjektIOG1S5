@@ -48,12 +48,16 @@ public class TabelaKontenerow {
 
         Vector<String>daneDoTabeli1 = new Vector<String>();
         //dodawanie wartosci do wektora tabeli
-        for(int i=0;i<kont.getLista().size();i++){
+        //for(int i=0;i<kont.getLista().size();i++){
+        int i = 0;
+        for(Kontener el : kont.getLista()){
             daneDoTabeli1=new Vector<>();
 
-            daneDoTabeli1.add(String.valueOf(kont.getLista().get(i).idKontenera));
-            daneDoTabeli1.add(kont.getLista().get(i).getNajblizszaDostepnosc());
-            daneDoTabeli1.add(String.valueOf(kont.getLista().get(i).getStatus()));
+            daneDoTabeli1.add(String.valueOf(el.idKontenera));
+            daneDoTabeli1.add(el.getNajblizszaDostepnosc());
+            daneDoTabeli1.add(String.valueOf(el.getStatus()));
+
+            i += 1;
 
             daneDoTabeli.add(daneDoTabeli1);
 
