@@ -48,7 +48,9 @@ public class Okno extends JFrame {
         oknoOdWlasciciela = WidokWlasciciela.getPanelWlascicielaCaly();
         WidokKierowcy = new KierowcaWidok(listaZamowien);
         oknoOdKierowcy = WidokKierowcy.getOknoKierowcy();
-
+        
+        WidokUzytkownika = new UzytkownikWidok (listaKontenerow);
+        
 
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setSize(800, 600);
@@ -126,16 +128,18 @@ public class Okno extends JFrame {
         });
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
-
+            
             okno.getContentPane().invalidate();
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
         WidokWlasciciela.getZmianaWidokuButton().addActionListener((var e) -> {
             //trzeba dodac tabele kursow do klasy tak jak tabela kontenerow jest dodana i tutaj zmieniac panele po wcisnieciu przycisku
+            
             okno.getContentPane().revalidate();
         });
         WidokWlasciciela.getWylogujButton().addActionListener((var e) -> {
+            WidokUzytkownika.refreshContainers(listaKontenerow);
             okno.getContentPane().invalidate();
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();

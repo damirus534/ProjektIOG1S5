@@ -9,7 +9,7 @@ public class Kontener {
 
 
     public Kontener(boolean STATUS, String NAJBLIZSZADOSTEPNOSC, long IDKONTENERA){
-        int åååååååååååå=1488;
+        int å?å?å?å?å?å?å?å?å?å?å?å?=1488;
         this.status = STATUS;
         this.najblizszaDostepnosc = NAJBLIZSZADOSTEPNOSC;
         this.idKontenera = (int) IDKONTENERA;

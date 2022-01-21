@@ -2,28 +2,20 @@ package View;
 
 
 import Controllers.ListaKontenerow;
+import Controllers.ListaZamowien;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class UzytkownikWidok extends JPanel{
 
-    //metoda ktora inicjuje panel uzytkownika
-    public UzytkownikWidok(){
-        initComponents();
-    }
-
-    public UzytkownikWidok(ListaKontenerow listaKontenerow){
-        //uzycie listy kontenrow z bazy danych
-        tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
-        initComponents();
-    }
-
 
     //zmienne dla paneli znajdujacych sie w oknie
     private JPanel panelUzytkownikaCaly = new JPanel();
     private JPanel panelLogowania = new JPanel();
     private JPanel panelListy = new JPanel();
+    private JPanel panelTabeliKontenerow = new JPanel();
+
 
     //zmienne dla paneluLogowania
     private JLabel labelLogin= new JLabel();
@@ -34,8 +26,23 @@ public class UzytkownikWidok extends JPanel{
     private JButton buttonZaloguj = new JButton();
     private TabelaKontenerow tabelaKontenerow = new TabelaKontenerow();
 
+    //metoda ktora inicjuje panel uzytkownika
+    public UzytkownikWidok(ListaKontenerow listaKontenerow){
 
+        tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
+        initComponents();
+    }
 
+    public UzytkownikWidok(){
+        initComponents();
+    }
+
+    public void refreshContainers(ListaKontenerow listaKontenerow){
+        panelListy.removeAll();
+        panelUzytkownikaCaly.removeAll();
+        tabelaKontenerow = new TabelaKontenerow(listaKontenerow);
+        initComponents();
+    }
 
     //gettery
     public JPanel getPanelUzytkownikaCaly() {
@@ -51,8 +58,10 @@ public class UzytkownikWidok extends JPanel{
         return textFieldLogin;
     }
 
+
     private void initComponents() {//metoda do edycji
 
+        //tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
         //tworzenie panelu w ktorym wyswietla sie dwa panele
         panelUzytkownikaCaly.setPreferredSize(new Dimension(800,600));
         panelUzytkownikaCaly.setLayout(new BorderLayout());
@@ -60,8 +69,12 @@ public class UzytkownikWidok extends JPanel{
         //tworzenie panelu na ktorym bedzie wyswietlac sie lista
         panelListy.setPreferredSize(new Dimension(600,600));
         panelListy.setLayout(new BorderLayout());
+        panelListy.setPreferredSize(new Dimension(600,600));
+        panelListy.setLayout(new BorderLayout());
         panelListy.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
         panelListy.add(tabelaKontenerow.getTabela().getTableHeader(), BorderLayout.NORTH);
+        //System.out.println(tabelaKontenerow.getTabela().getAccessibleContext());
+        //panelListy.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
 
         //tworzenie panelu w ktorym bedzie mozna sie zalogowac
         panelLogowania.setPreferredSize(new Dimension(200, 600));
