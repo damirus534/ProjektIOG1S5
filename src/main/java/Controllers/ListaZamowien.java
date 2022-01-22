@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -70,18 +71,43 @@ public class ListaZamowien {
     public Vector<Zamowienie> getListaZanowien(){
         return this.listaZanowien;
     }
-    public int znajdzZamowienie(String adres,int idKontenera){
+    public int znajdzZamowienie(String adres, int idKontenera) {
+        int i =1;
         for(Zamowienie zam1 : this.listaZanowien){
+
             if(zam1.getIdKontenera()==idKontenera&&zam1.getAdres()==adres){
                 return zam1.idZamowienia;
+
             }
+            i++;
         }
         return -1;
     }
+
     public Zamowienie getZamowienie(int id){
-        for(Zamowienie zamowienie:listaZanowien){
-            if(zamowienie.idZamowienia==id)return zamowienie;
+        return listaZanowien.get(id);
+
+    }
+
+    public void zmienKolejnosc(int start,int stop){
+        Vector<Zamowienie> temp = new Vector();
+        int i = 0;
+
+        for(Iterator var5 = this.listaZanowien.iterator(); var5.hasNext(); ++i) {
+            Zamowienie zamowienie = (Zamowienie)var5.next();
+            if (i == start) {
+                temp.add((Zamowienie)this.listaZanowien.get(stop));
+            } else if (i == stop) {
+                temp.add((Zamowienie)this.listaZanowien.get(start));
+            } else {
+                temp.add(zamowienie);
+            }
         }
-        return null;
+
+        this.listaZanowien = temp;
+    }
+
+    public int getLenght(){
+        return listaZanowien.size();
     }
 }

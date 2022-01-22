@@ -8,6 +8,7 @@ import DB.dataBase;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -130,40 +131,43 @@ public class KierowcaWidok extends JPanel {
                                                 {
                                                     LocalDate data =java.time.LocalDate.now();
                                                     String statusNowy;
-                                                    int wybranyKurs=AktualnyKurs.getSelectedRow();
-                                                    int nrZamowienia = Zamowienia.znajdzZamowienie(AktualneWektor.get(wybranyKurs).get(0),
-                                                            Integer.parseInt(AktualneWektor.get(AktualnyKurs.getSelectedRow()).get(1)));
-                                                    switch(Zamowienia.getZamowienie(nrZamowienia).getStatus())
-                                                    {
-                                                        case Zakonczenie:
-                                                            statusNowy = "Zakonczono";
-                                                            break;
-                                                        case  OczekiwaniaNaDostarczenie:
-                                                            statusNowy = "DostarczenieDoKlienta";
-                                                            data.plusDays(7);
-                                                            AktualnyKurs.remove(wybranyKurs);
-                                                            AktualneWektor.remove(wybranyKurs);
-                                                            break;
-                                                        case DostarczenieDoKlienta:
-                                                            statusNowy = "DostarcznieDoWysypiska";
-                                                            break;
-                                                        case DostarcznieDoWysypiska:
-                                                            statusNowy = "Zakonczenie";
-                                                            AktualnyKurs.remove(wybranyKurs);
-                                                            AktualneWektor.remove(wybranyKurs);
-                                                            break;
-                                                        default:
-                                                            statusNowy = "OczekiwaniaNaDostarczenie";
+
+                                                    if(AktualnyKurs.getSelectedRow()!=-1) {
+                                                        int wybranyKurs=AktualnyKurs.getSelectedRow();
+                                                        int nrZamowienia = Zamowienia.znajdzZamowienie(AktualneWektor.get(wybranyKurs).get(0),
+                                                                Integer.parseInt(AktualneWektor.get(AktualnyKurs.getSelectedRow()).get(1)));
+                                                        switch (Zamowienia.getZamowienie(nrZamowienia).getStatus()) {
+                                                            case Zakonczenie:
+                                                                statusNowy = "Zakonczono";
+                                                                break;
+                                                            case OczekiwaniaNaDostarczenie:
+                                                                statusNowy = "DostarczenieDoKlienta";
+                                                                break;
+                                                            case DostarczenieDoKlienta:
+                                                                statusNowy = "DostarcznieDoWysypiska";
+                                                                data = data.plusDays(7);
+                                                                ((DefaultTableModel) AktualnyKurs.getModel()).removeRow(wybranyKurs);
+                                                                break;
+                                                            case DostarcznieDoWysypiska:
+                                                                statusNowy = "Zakonczenie";
+                                                                System.out.println(wybranyKurs);
+                                                                ((DefaultTableModel) AktualnyKurs.getModel()).removeRow(wybranyKurs);
+
+                                                                revalidate();
+                                                                break;
+                                                            default:
+                                                                statusNowy = "OczekiwaniaNaDostarczenie";
+                                                        }
+
+
+
+
+                                                        Zamowienia.zmienStatusZamowienia(nrZamowienia);
+                                                        db.table("orders").edit(String.valueOf(nrZamowienia), "status", statusNowy);
+                                                        db.table("orders").edit(String.valueOf(nrZamowienia), "data", data.toString());
+                                                        status = statusNowy;
                                                     }
-
-
-
-                                                    System.out.println(nrZamowienia);
-
-                                                    System.out.println(statusNowy);
-                                                    db.table("orders").edit(String.valueOf(nrZamowienia), "status", statusNowy);
-                                                    db.table("orders").edit(String.valueOf(nrZamowienia),"data",data.toString());
-                                                    status = statusNowy;
+                                                    else JOptionPane.showMessageDialog(null,"Niewybrano kursu");
                                                 }
                                             }
         );

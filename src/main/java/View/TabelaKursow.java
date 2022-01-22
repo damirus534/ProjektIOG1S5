@@ -83,6 +83,17 @@ public class TabelaKursow {
         return this.tabela;
     }
     public Vector<Vector<String>> getAktualne(){
-        return aktualne;
+
+        Vector<Vector<String>> temp1 = new Vector<>();
+
+        for(int i=0;i<aktualne.size();i++){
+            Vector<String> temp2 = new Vector<>();
+            temp2.add(aktualne.get(i).get(2));
+            temp2.add(aktualne.get(i).get(3));
+            temp2.add(aktualne.get(i).get(0));
+            temp1.add(temp2);
+        }
+
+        return temp1;
     }
 }

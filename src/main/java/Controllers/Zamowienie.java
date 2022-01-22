@@ -26,6 +26,14 @@ public class Zamowienie {
     public String getData(){return  this.data;}
     public StatusZamowienia getStatus(){return this.status;}
 
+    public String getLoginUzytkownika() {
+        return loginUzytkownika;
+    }
+
+    public int getIdZamowienia() {
+        return idZamowienia;
+    }
+
 
     public void zmienStatusZamowienia(){
         status.kolejnyStatusZamowienia();

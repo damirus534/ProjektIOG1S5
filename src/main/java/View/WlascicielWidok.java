@@ -2,13 +2,23 @@ package View;
 
 import Controllers.ListaKontenerow;
 import Controllers.ListaZamowien;
+import Controllers.Zamowienie;
+import DB.dataBase;
 
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Vector;
 import static javax.swing.JOptionPane.showMessageDialog;
+
 
 public class WlascicielWidok extends JPanel {
     //konstruktor
@@ -21,6 +31,7 @@ public class WlascicielWidok extends JPanel {
         tabelaKontenerow=new TabelaKontenerow(listaKontenerow);
         aktualneWektor=tabelaKursow.getAktualne();
         initComponents();
+        this.listaZamowien=listaZamowien;
     }
 
 
@@ -62,6 +73,8 @@ public class WlascicielWidok extends JPanel {
     //zmienne dla panelu zarzadzania kursami
     private JButton zmienKolejnoscButton = new JButton("zmien kolejnosc");
 
+    private ListaZamowien listaZamowien;
+    private dataBase db = new dataBase();
 
 
 
@@ -161,7 +174,74 @@ public class WlascicielWidok extends JPanel {
                 panelTabeliKontenerow.setVisible(true);
             }
         });
+        zmienKolejnoscButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] option = {
+                        "Przesun na poczatek",
+                        "Przesun na koniec",
+                        "Przesun o jedno w gore",
+                        "Przesun o jedno w dol"
+                };
+                int n = JOptionPane.showOptionDialog(null, "Wybierz opcje", "Wybor",
+                        JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[2]);
+                LocalDate data = java.time.LocalDate.now();
+                String statusNowy;
+                int nrZamowienia=0;
+                int wybranyKurs = AktualnyKurs.getSelectedRow();
+                if (AktualnyKurs.getSelectedRow() != -1) {
+                    nrZamowienia = listaZamowien.znajdzZamowienie(aktualneWektor.get(wybranyKurs).get(0),
+                            Integer.parseInt(aktualneWektor.get(wybranyKurs).get(1)));
+                    System.out.println(nrZamowienia);
+                }
+                switch (n){
+                    case 0:if (nrZamowienia==1){
+                        break;
+                    } else{
 
+                        db.table("orders").delete(String.valueOf(nrZamowienia));
+                        db.table("orders").delete(String.valueOf(1));
+                        zmianaKolejnosc(1,listaZamowien.getZamowienie(nrZamowienia-1));
+                        zmianaKolejnosc(nrZamowienia,listaZamowien.getZamowienie(0));
+                        listaZamowien.zmienKolejnosc(0,nrZamowienia-1);
+
+                        ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),0);
+                    }break;
+                    case 1:
+                        if(listaZamowien.getLenght()!=nrZamowienia-1) {
+                            int size=listaZamowien.getLenght()-1;
+                            db.table("orders").delete(String.valueOf(size));
+                            db.table("orders").delete(String.valueOf(size));
+                            zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(size));
+                            zmianaKolejnosc(size + 1, listaZamowien.getZamowienie(nrZamowienia - 1));
+                            listaZamowien.zmienKolejnosc(size, nrZamowienia - 1);
+                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),aktualneWektor.size());
+                        }
+                        break;
+                    case 2:
+                        if(nrZamowienia!=1) {
+                           db.table("orders").delete(String.valueOf(nrZamowienia));
+                            db.table("orders").delete(String.valueOf(nrZamowienia-1));
+                            zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(nrZamowienia-2));
+                            zmianaKolejnosc(nrZamowienia-1, listaZamowien.getZamowienie(nrZamowienia - 1));
+                            listaZamowien.zmienKolejnosc(nrZamowienia-1, nrZamowienia - 2);
+                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow()-1);
+                        }
+                        break;
+                    case 3:
+                        if(listaZamowien.getLenght()!=nrZamowienia-1) {
+                            db.table("orders").delete(String.valueOf(nrZamowienia));
+                            db.table("orders").delete(String.valueOf(nrZamowienia + 1));
+                            zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(nrZamowienia - 1));
+                            zmianaKolejnosc(nrZamowienia + 1, listaZamowien.getZamowienie(nrZamowienia ));
+                            listaZamowien.zmienKolejnosc(nrZamowienia - 1, nrZamowienia );
+                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow()+    1);
+                        }
+                        break;
+                }
+
+            }
+        });
         dodajKontenerButton.addActionListener((var e) -> {
             tabelaKontenerow.dodawanieKonteneru();
             panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
@@ -189,5 +269,30 @@ public class WlascicielWidok extends JPanel {
     public JButton getWylogujButton(){return wylogujButton;}
     public JPanel getPanelWlascicielaCaly() {
         return panelWlascicielaCaly;
+    }
+    private void zmianaKolejnosc(int start, Zamowienie zamowienie){
+
+
+
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("adres", zamowienie.getAdres());
+        maps.put("containerID", zamowienie.getIdKontenera());
+        maps.put("data", zamowienie.getData());
+        maps.put("orderID",zamowienie.getIdZamowienia());
+        maps.put("status",zamowienie.getStatus());
+        maps.put("username", zamowienie.getLoginUzytkownika());
+        db.table("orders").add(String.valueOf(start), maps);
+    }
+
+    public ListaZamowien getListaZamowien() {
+        return listaZamowien;
+    }
+
+    public void setTabelaKursow(TabelaKursow tabelaKursow) {
+        this.tabelaKursow = tabelaKursow;
+    }
+
+    public void setListaZamowien(ListaZamowien listaZamowien) {
+        this.listaZamowien = listaZamowien;
     }
 }
