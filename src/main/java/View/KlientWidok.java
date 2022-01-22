@@ -8,16 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -28,16 +24,16 @@ public final class KlientWidok extends JPanel {
     public KlientWidok() {
         this.loggedUser = "";
     }
-    
 
     //baza danych
     dataBase db = new dataBase();
-    
+
     //zalogowany aktualnie uzytkownik
     private String loggedUser;
 
     //zmienne paneli
-    private JPanel panelKlientaCaly = new JPanel();;
+    private JPanel panelKlientaCaly = new JPanel();
+    ;
     private JPanel panelListy;
     private JPanel panelListyZamowien;
     private JPanel panelZamowienia;
@@ -72,20 +68,21 @@ public final class KlientWidok extends JPanel {
     public JButton getWylogujButton() {
         return wylogujButton;
     }
-    
+
     //settery
-    public void setLoggedUser(String loggedUsr){
+    public void setLoggedUser(String loggedUsr) {
         panelKlientaCaly.removeAll();
         loggedUser = loggedUsr;
         initComponents();
     }
-    public void setTabelaKontenerow(TabelaKontenerow tabelaKontenerow){
-        this.tabelaKontenerow=tabelaKontenerow;
+
+    public void setTabelaKontenerow(TabelaKontenerow tabelaKontenerow) {
+        this.tabelaKontenerow = tabelaKontenerow;
     }
 
     public void initComponents() {
         //tworzenie okna klienta
-        
+
         panelKlientaCaly.setSize(800, 600);
         panelKlientaCaly.setLayout(new BorderLayout(0, 1));
 
@@ -104,9 +101,10 @@ public final class KlientWidok extends JPanel {
         KolumnyZamowienWektor = new Vector<String>(2);
         KolumnyZamowienWektor.add("status");
         KolumnyZamowienWektor.add("id zamowienia");
-        
+
         ZamowieniaWektor = new Vector<Vector<String>>();
-        
+        Vector<String> constainersIds = new Vector<String>();
+
         Map<String, Object> orders = db.table("orders").list();
         String dataZamowieniaUzytkownika = "";
 
@@ -120,63 +118,105 @@ public final class KlientWidok extends JPanel {
             String dataZamowienia = (String) order.get("data");
             long idZamowienia = (long) order.get("orderID");
             String idZamowieniaTekst = idZamowienia + "";
+            long containerId = (long) order.get("containerID");
+            String containerIdText = containerId + "";
+
             if (loggedUser.equals(username)) {
+                constainersIds.add(containerIdText);
                 Vector<String> daneDotabeli = new Vector<String>(2);
                 daneDotabeli.add(status);
                 daneDotabeli.add(idZamowieniaTekst);
                 ZamowieniaWektor.add(daneDotabeli);
-                if(dataZamowienia.compareTo(dataZamowieniaUzytkownika) > 0)
+                if (dataZamowienia.compareTo(dataZamowieniaUzytkownika) > 0) {
                     dataZamowieniaUzytkownika = dataZamowienia;
+                }
             }
         }
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Map<String, Object> conatiners = db.table("containers").list();
+
+        //sprawdzenie czy zamowione kontenery nie sa dostepne
+        boolean status = false;
+        String containerIdText = "";
+        String availability = "";
+        long containerId = 0;
+        int size = conatiners.size();
+        for (int i = 1; i <= size; ++i) {
+            try {
+                if (i > 100) {
+                    break;
+                }
+                String iString = i + "";
+                HashMap<String, Object> container = (HashMap<String, Object>) conatiners.get(iString);
+                containerId = (long) container.get("id");
+                status = (boolean) container.get("status");
+                containerIdText = containerId + "";
+                availability = (String) container.get("dostepnosc");
+            } catch (Exception e) {
+                ++size;
+                continue;
+            }
+            for (String containerID : constainersIds) {
+                if (containerID.equals(containerIdText) && status) {
+                    try {
+                        status = false;
+                        Date availabilityDate = sdf.parse(availability);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(availabilityDate);
+                        cal.add(Calendar.DATE, 7);
+                        availabilityDate = cal.getTime();
+                        String formatted = sdf.format(availabilityDate);
+                        db.table("containers").edit(String.valueOf(containerId), "status", status);
+                        db.table("containers").edit(String.valueOf(containerId), "dostepnosc", formatted);
+                    } catch (ParseException ex) {
+                        continue;
+                    }
+                }
+            }
+        }
+
         //pobranie aktualnej daty
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
         String date2 = java.time.LocalDate.now().toString();
         long diff = 0;
-        
+
         //sprawdzanie czy uzytkownik posiada jakies zamowienia
-        if(!ZamowieniaWektor.isEmpty())
-        {
-            try 
-            {
+        if (!ZamowieniaWektor.isEmpty()) {
+            try {
                 Date firstDate = sdf.parse(dataZamowieniaUzytkownika);
                 Date secondDate = sdf.parse(date2);
                 long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
                 diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                if(diff < 2)
+                if (diff < 2) {
                     diff = 2;
-            } 
-            catch (ParseException ex) 
-            {
+                }
+            } catch (ParseException ex) {
                 diff = 2;
             }
         }
         powiadomienie = new JTextArea(20, 20);
         powiadomienie.setText("Nie masz zadnych \npowiadomien");
-        if(!ZamowieniaWektor.isEmpty())
-        {
-                switch(ZamowieniaWektor.get(0).get(0))
-                {
-                    case "Zakonczono":
-                        powiadomienie.setText("Twoje zamowienie \nzostalo zakonczone.");
-                        break;
-                    case "OczekiwaniaNaDostarczenie":
-                        powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie\n"
-                                +"\nPozostaly " + (diff-2) + " dni do\ndostarczenia kontenera.");
-                        break;
-                    case "DostarczenieDoKlienta":
-                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie\n"
-                                + "\nPozostaly " + (diff-1) + " dni do\ndostarczenia do\nPana/Pani kontenera.");
-                        break;
-                    case "DostarcznieDoWysypiska":
-                        powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska\n"
-                                + "\nPozostaly " + diff + " dni do\nzabrania kontenera\nna wysypisko.");
-                        break;
-                    default:
-                        powiadomienie.setText("Nie masz zadnych \npowiadomien");
-                        break;
-                }
+        if (!ZamowieniaWektor.isEmpty()) {
+            switch (ZamowieniaWektor.get(0).get(0)) {
+                case "Zakonczono":
+                    powiadomienie.setText("Twoje zamowienie \nzostalo zakonczone.");
+                    break;
+                case "OczekiwaniaNaDostarczenie":
+                    powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie\n"
+                            + "\nPozostaly " + (diff - 2) + " dni do\ndostarczenia kontenera.");
+                    break;
+                case "DostarczenieDoKlienta":
+                    powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie\n"
+                            + "\nPozostaly " + (diff - 1) + " dni do\ndostarczenia do\nPana/Pani kontenera.");
+                    break;
+                case "DostarcznieDoWysypiska":
+                    powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska\n"
+                            + "\nPozostaly " + diff + " dni do\nzabrania kontenera\nna wysypisko.");
+                    break;
+                default:
+                    powiadomienie.setText("Nie masz zadnych \npowiadomien");
+                    break;
+            }
         }
 
         modelTabelaZamowien = new DefaultTableModel(ZamowieniaWektor, KolumnyZamowienWektor);

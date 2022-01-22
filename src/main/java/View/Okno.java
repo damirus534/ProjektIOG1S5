@@ -7,8 +7,15 @@ import DB.Table;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Okno extends JFrame {
 
@@ -155,12 +162,34 @@ public class Okno extends JFrame {
             }
             else
             {
-                var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, date,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
-                listaZamowien.dodajZamowienie(nowe_zamowienie);
-                var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
-                listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
-                addToContainersDB(dostepnosc,false,id_kontenera);
-                addToOrdersDB(adres,id_kontenera,date,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
+                try 
+                {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String date2 = java.time.LocalDate.now().toString();
+                    Date availabilityDate = sdf.parse(date2);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(availabilityDate);
+                    cal.add(Calendar.DATE, 7);
+                    availabilityDate = cal.getTime();
+                    String formatted = sdf.format(availabilityDate);
+                    var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, formatted,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
+                    listaZamowien.dodajZamowienie(nowe_zamowienie);
+                    var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
+                    listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
+                    addToContainersDB(formatted,false,id_kontenera);
+                    addToOrdersDB(adres,id_kontenera,formatted,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
+                }
+                catch (ParseException ex) 
+                {
+                    var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, date,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
+                    listaZamowien.dodajZamowienie(nowe_zamowienie);
+                    var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
+                    listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
+                    addToContainersDB(dostepnosc,false,id_kontenera);
+                    addToOrdersDB(adres,id_kontenera,date,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
+                }
+                    
+
             }
         });
     }
