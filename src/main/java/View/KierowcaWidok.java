@@ -85,7 +85,6 @@ public class KierowcaWidok extends JPanel {
         //ustawiania panela kotenero
         dodanieKolumn();
         TabelaKursow=new JTable(KursyWektor,KolumnyWektor);
-        TabelaKursow.setBackground(Color.RED);
         PanelListyKursow.setPreferredSize(new Dimension(600,600));
         TabelaKursow.setFillsViewportHeight(true);
         PanelListyKursow.setLayout(new BoxLayout(PanelListyKursow,BoxLayout.Y_AXIS));
