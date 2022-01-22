@@ -61,21 +61,8 @@ public class Okno extends JFrame {
         okno.getContentPane().add(oknoOdUzytkownika, BorderLayout.NORTH);
         okno.setVisible(true);
 
-        KlasaUzytkownikow xd = new KlasaUzytkownikow("xd", "xd", 2);
         //akcja logowania
         WidokUzytkownika.getButtonZaloguj().addActionListener((ActionEvent e) -> {
-            //test kontenerow
-//            Map<String, String> data = new HashMap<>();
-//            data.put("bruher", "xdxdxd");
-//            data.put("crng", "crng");
-//            data.put("xdxddxd", "123123");
-//            data.put("kaczynski", "crng");
-//            db.table("containers").add(data);
-
-            //db.table("containers").delete("apJEuDv3OxQKDR6PoO0w")
-            //test:test
-            //macias:xdxd
-            //bruher:cringo
 
             if(WidokUzytkownika.getTextFieldLogin().getText().equals("")) {
                 alert("wpisz swoja nazwe", 0);
@@ -90,7 +77,7 @@ public class Okno extends JFrame {
             switch (db.auth().login(WidokUzytkownika.getTextFieldLogin().getText(), WidokUzytkownika.getTextFieldHaslo().getText())) {
                 case GOOD:
                     String loggedUser = db.auth().userName + "";
-                    alert(db.auth().userName + " zalogowaned", 1);
+                    alert(db.auth().userName + " zalogowano", 1);
                     switch (db.auth().authStatusGetter()) {
                         case CLIENT:
                             //uzycie nowego konstruktora
@@ -119,10 +106,10 @@ public class Okno extends JFrame {
 
                     break;
                 case USER_NULL:
-                    alert("nie ma takiego usera xdds", 0);
+                    alert("user nie istnieje", 0);
                     break;
                 case BAD_PASSWORD:
-                    alert("zle haslo dsxddxd dzbanie", 0);
+                    alert("zle haslo", 0);
                     break;
             }
         });
@@ -152,9 +139,6 @@ public class Okno extends JFrame {
         });
         
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
-            //tutaj trzeba zrobic wyswietlanie dialoga i odczyta? date kiedy dostarczyc kontener oraz adres.
-            //nastepnie zrobic dodanie do bazy danych, najlepiej poprzez wywolanie jakiejs metody w liscie zamowien.
-            //potem oczywiscie zaktualizowa? tabele. metoda dawajaca wolne id zamowienia jest zrobiona.
             String adres = dialogbox();
             int wolne_id = listaZamowien.zwrocWolneIdZamowienia();
             long id_kontenera = listaKontenerow.wolneID();
@@ -184,11 +168,13 @@ public class Okno extends JFrame {
     private void initDB() {
         this.db = new dataBase();
     }
+
     private String dialogbox() {
 
         String adres = JOptionPane.showInputDialog(okno,"Prosze podac adres:");
 
         int a = JOptionPane.showConfirmDialog(okno, "Czy wpisano poprawny adres?");
+
         if (a == JOptionPane.YES_OPTION) {okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);}
         return adres;
     }
@@ -222,13 +208,6 @@ public class Okno extends JFrame {
         f.setAlwaysOnTop(true);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JOptionPane.showMessageDialog(f, message, "error", type);
-    }
-
-    public void register(String name, String pass) {
-        Map<String, String> data = new HashMap<>();
-        data.put("pass", pass);
-
-        db.auth().register(name, data);
     }
 
 }

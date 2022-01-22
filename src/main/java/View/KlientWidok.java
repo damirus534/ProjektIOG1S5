@@ -163,15 +163,15 @@ public final class KlientWidok extends JPanel {
                         break;
                     case "OczekiwaniaNaDostarczenie":
                         powiadomienie.setText("Twoje zamowienie \noczekuje na dostarczenie\n"
-                                +"\nPozosta³y " + (diff-2) + " dni do\ndostarczenia kontenera.");
+                                +"\nPozostaly " + (diff-2) + " dni do\ndostarczenia kontenera.");
                         break;
                     case "DostarczenieDoKlienta":
                         powiadomienie.setText("Twoje zamowienie \njest dostarczane do ciebie\n"
-                                + "\nPozosta³y " + (diff-1) + " dni do\ndostarczenia do\nPana/Pani kontenera.");
+                                + "\nPozostaly " + (diff-1) + " dni do\ndostarczenia do\nPana/Pani kontenera.");
                         break;
                     case "DostarcznieDoWysypiska":
                         powiadomienie.setText("Twoje zamowienie \njest dostarczane do wysypiska\n"
-                                + "\nPozosta³y " + diff + " dni do\ndostarczenia kontenera\nna wysypisko.");
+                                + "\nPozostaly " + diff + " dni do\nzabrania kontenera\nna wysypisko.");
                         break;
                     default:
                         powiadomienie.setText("Nie masz zadnych \npowiadomien");

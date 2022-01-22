@@ -7,10 +7,7 @@ import Controllers.Zamowienie;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.awt.*;
 import java.util.Vector;
-
-import static Controllers.StatusZamowienia.DostarczenieDoKlienta;
 
 public class TabelaKursow {
 
