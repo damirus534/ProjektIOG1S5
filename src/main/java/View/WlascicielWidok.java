@@ -246,14 +246,12 @@ public class WlascicielWidok extends JPanel {
             tabelaKontenerow.dodawanieKonteneru();
             panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
             panelTabeliKontenerow.validate();
-            showMessageDialog(null, "Kontener zostal dodany!");
         });
 
         usunKontenerButton.addActionListener((var e) -> {
             tabelaKontenerow.usuwanieKonteneru();
             panelTabeliKontenerow.add(tabelaKontenerow.getTabela(), BorderLayout.CENTER);
             panelTabeliKontenerow.validate();
-            showMessageDialog(null, "Kontener zostal usuniety!");
         });
 
         panelWlascicielaCaly.add(panelZarzadzaniaKontenerami, BorderLayout.EAST);

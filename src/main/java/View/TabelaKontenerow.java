@@ -10,6 +10,10 @@ import javax.swing.table.TableModel;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Logger;
+
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class TabelaKontenerow {
     public TabelaKontenerow(){
@@ -104,17 +108,25 @@ public class TabelaKontenerow {
         data.put("id", temp.idKontenera);
 
         db.table("containers").add(String.valueOf(temp.idKontenera), data);
+
+        showMessageDialog(null, "Kontener zostal dodany!");
     }
 
     public void usuwanieKonteneru(){
         int row = tabela.getSelectedRow();
 
-        ((DefaultTableModel)tabela.getModel()).removeRow(row);
+        if(kont.konteneryVector.get(row).getStatus() == true){
+            ((DefaultTableModel)tabela.getModel()).removeRow(row);
 
-        dataBase db = new dataBase();
+            dataBase db = new dataBase();
 
-        db.table("containers").delete(String.valueOf(kont.konteneryVector.get(row).idKontenera));
+            db.table("containers").delete(String.valueOf(kont.konteneryVector.get(row).idKontenera));
 
-        kont.konteneryVector.remove(row);
+            kont.konteneryVector.remove(row);
+
+            showMessageDialog(null, "Kontener zostal usuniety!");
+        }else{
+            showMessageDialog(null, "Kontenera nie mozna usunac!", "Blad!", ERROR_MESSAGE);
+        }
     }
 }
