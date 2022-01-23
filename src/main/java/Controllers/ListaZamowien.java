@@ -1,5 +1,7 @@
 package Controllers;
 
+import DB.dataBase;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -46,8 +48,22 @@ public class ListaZamowien {
 
     }
 
-    public void dodajZamowienie(Zamowienie zamowienie){
+    public void dodajZamowienie(Zamowienie zamowienie, String username){
+
+        dataBase db = new dataBase();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("adres", zamowienie.adres);
+        data.put("containerID", zamowienie.idKontenera);
+        data.put("data", zamowienie.data);
+        data.put("orderID",zamowienie.idZamowienia);
+        data.put("status",zamowienie.status.name());
+        data.put("username",username);
+
+        db.table("orders").add(String.valueOf(zamowienie.idZamowienia), data);
         listaZanowien.add(zamowienie);
+
+
     }
 
     public void zmienStatusZamowienia(int idZamowienia){
@@ -106,6 +122,8 @@ public class ListaZamowien {
 
         this.listaZanowien = temp;
     }
+
+
 
     public int getLenght(){
         return listaZanowien.size();

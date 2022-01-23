@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class Okno extends JFrame {
 
     //metoda ktora inicjuje okno
@@ -144,25 +146,39 @@ public class Okno extends JFrame {
             okno.setContentPane(oknoOdUzytkownika);
             okno.getContentPane().revalidate();
         });
-        
+
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
+            String adres = JOptionPane.showInputDialog(okno,"Prosze podac adres:");
+            if(adres.length()<=5){
+                alert("wpisano niepoprawnie adres", 0);
+            }else{
+                String formatted=null;
+                try{
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String date2 = java.time.LocalDate.now().toString();
+                    Date availabilityDate = sdf.parse(date2);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(availabilityDate);
+                    cal.add(Calendar.DATE, 7);
+                    availabilityDate = cal.getTime();
+                    formatted = sdf.format(availabilityDate);
+                    listaZamowien.dodajZamowienie(new Zamowienie(listaZamowien.zwrocWolneIdZamowienia(), db.auth().userName, formatted, adres, listaKontenerow.zwrocPierwszyWolnyKontener(), StatusZamowienia.OczekiwaniaNaDostarczenie), db.auth().userName);
+                    listaKontenerow.zmienStatusKontenera(listaKontenerow.zwrocPierwszyWolnyKontener(), formatted);
+                    showMessageDialog(null, "Pomyslnie dodano zamowienie!");
+
+                }catch (ParseException ex){
+                    alert("formatowanie daty poszlo nie tak", 0);
+                }
+            }
+
+
+            /*
             String adres = dialogbox();
             int wolne_id = listaZamowien.zwrocWolneIdZamowienia();
             long id_kontenera = listaKontenerow.wolneID();
-            String date = listaKontenerow.podajAktualnaDate();
-            long pierwszyWolnyKontener = listaKontenerow.zwrocPierwszyWolnyKontener();
-            String dostepnosc = listaKontenerow.getLista().get((int)pierwszyWolnyKontener).getNajblizszaDostepnosc();
-            if(adres=="")
+
             {
-                JOptionPane.showMessageDialog(okno, "Adres nie może być pusty!", "error", JOptionPane.ERROR_MESSAGE);
-            }
-            else if(adres.length()<=5)
-            {
-                JOptionPane.showMessageDialog(okno, "Adres nie może być krótszy niż 5 znaków!", "error", JOptionPane.ERROR_MESSAGE);
-            }
-            else
-            {
-                try 
+                try
                 {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     String date2 = java.time.LocalDate.now().toString();
@@ -172,28 +188,20 @@ public class Okno extends JFrame {
                     cal.add(Calendar.DATE, 7);
                     availabilityDate = cal.getTime();
                     String formatted = sdf.format(availabilityDate);
+
                     var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, formatted,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
                     listaZamowien.dodajZamowienie(nowe_zamowienie);
                     var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
-                    listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
-                    addToContainersDB(formatted,false,id_kontenera);
-                    addToOrdersDB(adres,id_kontenera,formatted,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
-                }
-                catch (ParseException ex) 
-                {
-                    var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, date,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
-                    listaZamowien.dodajZamowienie(nowe_zamowienie);
-                    var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
-                    listaKontenerow.ListaKontenerowDodajKontener(nowy_kontener);
-                    addToContainersDB(dostepnosc,false,id_kontenera);
+
                     addToOrdersDB(adres,id_kontenera,date,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
                 }
-                    
+
 
             }
+                okno.getContentPane().validate();
+            }*/
         });
     }
-
     private void initDB() {
         this.db = new dataBase();
     }
@@ -236,7 +244,7 @@ public class Okno extends JFrame {
         JFrame f = new JFrame("Parent");
         f.setAlwaysOnTop(true);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JOptionPane.showMessageDialog(f, message, "error", type);
+        showMessageDialog(f, message, "error", type);
     }
 
 }
