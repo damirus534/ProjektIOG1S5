@@ -150,9 +150,8 @@ public class KierowcaWidok extends JPanel {
                                                                 break;
                                                             case DostarcznieDoWysypiska:
                                                                 statusNowy = "Zakonczenie";
-                                                                System.out.println(wybranyKurs);
                                                                 ((DefaultTableModel) AktualnyKurs.getModel()).removeRow(wybranyKurs);
-
+                                                                db.table("containers").edit(String.valueOf(Zamowienia.getZamowienie(nrZamowienia-1).getIdKontenera()), "status", "true");
                                                                 revalidate();
                                                                 break;
                                                             default:
