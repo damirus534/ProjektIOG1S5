@@ -192,8 +192,8 @@ public class WlascicielWidok extends JPanel {
                 if (AktualnyKurs.getSelectedRow() != -1) {
                     nrZamowienia = listaZamowien.znajdzZamowienie(aktualneWektor.get(wybranyKurs).get(0),
                             Integer.parseInt(aktualneWektor.get(wybranyKurs).get(1)));
-                    System.out.println(nrZamowienia);
-                }
+
+
                 switch (n){
                     case 0:if (AktualnyKurs.getSelectedRow()==0){
                         JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
@@ -239,7 +239,7 @@ public class WlascicielWidok extends JPanel {
                         else JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
                         break;
                 }
-
+            }else JOptionPane.showMessageDialog(null,"Niewybrano kolumny");
             }
         });
         dodajKontenerButton.addActionListener((var e) -> {
