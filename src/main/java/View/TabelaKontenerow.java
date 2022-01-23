@@ -129,11 +129,31 @@ public class TabelaKontenerow {
             showMessageDialog(null, "Kontenera nie mozna usunac!", "Blad!", ERROR_MESSAGE);
         }
     }
-    public void zmienStatusKonteneraWTabeli(long IDKontenera){
-        for(Kontener element: kont.konteneryVector){
-            if(element.idKontenera == IDKontenera){
+    public void zmienStatusKonteneraWTabeli(long IDKontenera, String formatted){
+        for(Kontener element: kont.konteneryVector) {
+            if (element.idKontenera == IDKontenera) {
                 element.status = false;
+                for(int i=0;i<3;i++){
+                    if(tabela.getColumnName(i)=="nr_Kontenera"){
+                        for(int j = tabela.getRowCount();j<0;j--){
+                            if (tabela.getValueAt(j, i).toString()==String.valueOf(IDKontenera)) {
+                                for(int k=0;k<3;k++){
+                                    if(tabela.getColumnName(k)=="Status"){
+                                        tabela.setValueAt("false", j, k);
+                                        for(int l=0;l<3;l++){
+                                            if(tabela.getColumnName(l)=="najblizsza_dostepnosc"){
+                                                tabela.setValueAt(formatted, j, l);
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+
     }
 }
