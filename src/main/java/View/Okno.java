@@ -125,9 +125,11 @@ public class Okno extends JFrame {
         //przejscie na okno wlasciciela
         WidokKierowcy.getWylogujButton().addActionListener((var e) -> {
             
-            okno.getContentPane().invalidate();
+           /* okno.getContentPane().invalidate();
             okno.setContentPane(oknoOdUzytkownika);
-            okno.getContentPane().revalidate();
+            okno.getContentPane().revalidate();*/
+            okno.dispose();
+            Okno okno=new Okno();
         });
         WidokWlasciciela.getZmianaWidokuButton().addActionListener((var e) -> {
             //trzeba dodac tabele kursow do klasy tak jak tabela kontenerow jest dodana i tutaj zmieniac panele po wcisnieciu przycisku
@@ -135,16 +137,13 @@ public class Okno extends JFrame {
             okno.getContentPane().revalidate();
         });
         WidokWlasciciela.getWylogujButton().addActionListener((var e) -> {
-            WidokUzytkownika.refreshContainers(listaKontenerow);
-            okno.getContentPane().invalidate();
-            okno.setContentPane(oknoOdUzytkownika);
-            okno.getContentPane().revalidate();
+            okno.dispose();
+            Okno okno=new Okno();
         });
 
         WidokKlienta.getWylogujButton().addActionListener((var e) -> {
-            okno.getContentPane().invalidate();
-            okno.setContentPane(oknoOdUzytkownika);
-            okno.getContentPane().revalidate();
+            okno.dispose();
+            Okno okno=new Okno();
         });
 
         WidokKlienta.getZlozZamowienieButton().addActionListener((var e) -> {
