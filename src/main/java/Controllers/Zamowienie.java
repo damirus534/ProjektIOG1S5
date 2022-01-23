@@ -34,6 +34,9 @@ public class Zamowienie {
         return idZamowienia;
     }
 
+    public void setStatus(StatusZamowienia status) {
+        this.status = status;
+    }
 
     public void zmienStatusZamowienia(){
         status.kolejnyStatusZamowienia();

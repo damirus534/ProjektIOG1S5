@@ -141,6 +141,8 @@ public class KierowcaWidok extends JPanel {
                                                                 statusNowy = "Zakonczono";
                                                                 break;
                                                             case OczekiwaniaNaDostarczenie:
+                                                                Zamowienia.getZamowienie(nrZamowienia-1).setStatus(DostarczenieDoKlienta);
+                                                                AktualnyKurs.getSelectionModel().clearSelection();
                                                                 statusNowy = "DostarczenieDoKlienta";
                                                                 break;
                                                             case DostarczenieDoKlienta:
