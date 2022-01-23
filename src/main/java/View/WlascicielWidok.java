@@ -195,48 +195,48 @@ public class WlascicielWidok extends JPanel {
                     System.out.println(nrZamowienia);
                 }
                 switch (n){
-                    case 0:if (nrZamowienia==1){
+                    case 0:if (AktualnyKurs.getSelectedRow()==0){
+                        JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
                         break;
                     } else{
 
-                        db.table("orders").delete(String.valueOf(nrZamowienia));
-                        db.table("orders").delete(String.valueOf(1));
+
                         zmianaKolejnosc(1,listaZamowien.getZamowienie(nrZamowienia-1));
                         zmianaKolejnosc(nrZamowienia,listaZamowien.getZamowienie(0));
                         listaZamowien.zmienKolejnosc(0,nrZamowienia-1);
-
                         ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),0);
+                        ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(1,1,wybranyKurs);
                     }break;
                     case 1:
-                        if(listaZamowien.getLenght()!=nrZamowienia-1) {
+                        if(AktualnyKurs.getSelectedRow()<aktualneWektor.size()-1) {
                             int size=listaZamowien.getLenght()-1;
-                            db.table("orders").delete(String.valueOf(size));
-                            db.table("orders").delete(String.valueOf(size));
+
                             zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(size));
                             zmianaKolejnosc(size + 1, listaZamowien.getZamowienie(nrZamowienia - 1));
                             listaZamowien.zmienKolejnosc(size, nrZamowienia - 1);
-                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),aktualneWektor.size());
+                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(wybranyKurs,wybranyKurs,aktualneWektor.size()-1);
+                            ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(aktualneWektor.size()-2,aktualneWektor.size()-2,wybranyKurs);
                         }
+                        else JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
                         break;
                     case 2:
-                        if(nrZamowienia!=1) {
-                           db.table("orders").delete(String.valueOf(nrZamowienia));
-                            db.table("orders").delete(String.valueOf(nrZamowienia-1));
+                        if(AktualnyKurs.getSelectedRow()!=0) {
+
                             zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(nrZamowienia-2));
                             zmianaKolejnosc(nrZamowienia-1, listaZamowien.getZamowienie(nrZamowienia - 1));
                             listaZamowien.zmienKolejnosc(nrZamowienia-1, nrZamowienia - 2);
                             ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow()-1);
-                        }
+                        }else JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
                         break;
                     case 3:
-                        if(listaZamowien.getLenght()!=nrZamowienia-1) {
-                            db.table("orders").delete(String.valueOf(nrZamowienia));
-                            db.table("orders").delete(String.valueOf(nrZamowienia + 1));
-                            zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(nrZamowienia - 1));
-                            zmianaKolejnosc(nrZamowienia + 1, listaZamowien.getZamowienie(nrZamowienia ));
+                        if(AktualnyKurs.getSelectedRow()<aktualneWektor.size()-1) {
+
+                            zmianaKolejnosc(nrZamowienia+1, listaZamowien.getZamowienie(nrZamowienia - 1));
+                            zmianaKolejnosc(nrZamowienia, listaZamowien.getZamowienie(nrZamowienia ));
                             listaZamowien.zmienKolejnosc(nrZamowienia - 1, nrZamowienia );
                             ((DefaultTableModel) AktualnyKurs.getModel()).moveRow(AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow(),AktualnyKurs.getSelectedRow()+    1);
                         }
+                        else JOptionPane.showMessageDialog(null,"Niepoprawna opercja");
                         break;
                 }
 
@@ -270,16 +270,13 @@ public class WlascicielWidok extends JPanel {
     }
     private void zmianaKolejnosc(int start, Zamowienie zamowienie){
 
+        db.table("orders").edit(String.valueOf(start), "adres", zamowienie.getAdres());
+        db.table("orders").edit(String.valueOf(start), "containerID", zamowienie.getIdKontenera());
+        db.table("orders").edit(String.valueOf(start), "data", zamowienie.getData());
+        db.table("orders").edit(String.valueOf(start), "orderID", zamowienie.getIdZamowienia());
+        db.table("orders").edit(String.valueOf(start), "status", zamowienie.getStatus());
+        db.table("orders").edit(String.valueOf(start), "username", zamowienie.getLoginUzytkownika());
 
-
-        Map<String, Object> maps = new HashMap<>();
-        maps.put("adres", zamowienie.getAdres());
-        maps.put("containerID", zamowienie.getIdKontenera());
-        maps.put("data", zamowienie.getData());
-        maps.put("orderID",zamowienie.getIdZamowienia());
-        maps.put("status",zamowienie.getStatus());
-        maps.put("username", zamowienie.getLoginUzytkownika());
-        db.table("orders").add(String.valueOf(start), maps);
     }
 
     public ListaZamowien getListaZamowien() {

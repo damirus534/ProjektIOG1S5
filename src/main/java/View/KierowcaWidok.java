@@ -136,7 +136,7 @@ public class KierowcaWidok extends JPanel {
                                                         int wybranyKurs=AktualnyKurs.getSelectedRow();
                                                         int nrZamowienia = Zamowienia.znajdzZamowienie(AktualneWektor.get(wybranyKurs).get(0),
                                                                 Integer.parseInt(AktualneWektor.get(AktualnyKurs.getSelectedRow()).get(1)));
-                                                        switch (Zamowienia.getZamowienie(nrZamowienia).getStatus()) {
+                                                        switch (Zamowienia.getZamowienie(nrZamowienia-1).getStatus()) {
                                                             case Zakonczenie:
                                                                 statusNowy = "Zakonczono";
                                                                 break;

@@ -76,7 +76,7 @@ public class ListaZamowien {
         for(Zamowienie zam1 : this.listaZanowien){
 
             if(zam1.getIdKontenera()==idKontenera&&zam1.getAdres()==adres){
-                return zam1.idZamowienia;
+                return i;
 
             }
             i++;
