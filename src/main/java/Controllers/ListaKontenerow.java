@@ -1,5 +1,7 @@
 package Controllers;
 
+import DB.dataBase;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +21,7 @@ public class ListaKontenerow extends Kontener{
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
         LocalDate localDate = LocalDate.now();
         LocalDate tmpDate = null;
-        System.out.println(dtf.format(localDate));
+        //System.out.println(dtf.format(localDate));
         for(Integer i=1, j = 1; i <= dane.size(); i++, j++) {
             if (dane.get(j.toString()) != null) {
                 temp = (HashMap<String, Object>) dane.get(j.toString());
@@ -66,5 +68,22 @@ public class ListaKontenerow extends Kontener{
             if(i<kontener.getIdKontenera()) i = kontener.getIdKontenera();
         }
         return i+1;
+    }
+
+    public void zmienStatusKontenera(long idKontenera, String zmienionaData){
+        for(Kontener element: konteneryVector){
+            if(element.idKontenera==idKontenera){
+                element.status=false;
+                element.najblizszaDostepnosc = zmienionaData;
+                dataBase db = new dataBase();
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("dostepnosc", element.najblizszaDostepnosc);
+                data.put("status", element.status);
+                data.put("id", idKontenera);
+
+                db.table("containers").add(String.valueOf(idKontenera), data);
+            }
+        }
     }
 }

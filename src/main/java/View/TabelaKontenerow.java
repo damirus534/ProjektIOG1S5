@@ -129,4 +129,11 @@ public class TabelaKontenerow {
             showMessageDialog(null, "Kontenera nie mozna usunac!", "Blad!", ERROR_MESSAGE);
         }
     }
+    public void zmienStatusKonteneraWTabeli(long IDKontenera){
+        for(Kontener element: kont.konteneryVector){
+            if(element.idKontenera == IDKontenera){
+                element.status = false;
+            }
+        }
+    }
 }
