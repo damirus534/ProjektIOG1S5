@@ -163,8 +163,12 @@ public class Okno extends JFrame {
                     formatted = sdf.format(availabilityDate);
                     listaZamowien.dodajZamowienie(new Zamowienie(listaZamowien.zwrocWolneIdZamowienia(), db.auth().userName, formatted, adres, listaKontenerow.zwrocPierwszyWolnyKontener(), StatusZamowienia.OczekiwaniaNaDostarczenie), db.auth().userName);
                     listaKontenerow.zmienStatusKontenera(listaKontenerow.zwrocPierwszyWolnyKontener(), formatted);
-                    showMessageDialog(null, "Pomyslnie dodano zamowienie!");
-
+                    showMessageDialog(null, "Pomyslnie dodano zamowienie");
+                    WidokKlienta.setTabelaKontenerow(new TabelaKontenerow(listaKontenerow));
+                    WidokKlienta.setLoggedUser(db.auth().userName);
+                    okno.getContentPane().invalidate();
+                    okno.setContentPane(oknoOdKlienta);
+                    okno.getContentPane().revalidate();
                 }catch (ParseException ex){
                     alert("formatowanie daty poszlo nie tak", 0);
                 }
