@@ -94,20 +94,20 @@ public class TabelaKontenerow {
 
         Vector<String> daneDoTabeli1 = new Vector<>();
 
-        daneDoTabeli1.add(String.valueOf(temp.idKontenera));
-        daneDoTabeli1.add(temp.najblizszaDostepnosc);
-        daneDoTabeli1.add(String.valueOf(temp.status));
+        daneDoTabeli1.add(String.valueOf(temp.getIdKontenera()));
+        daneDoTabeli1.add(temp.getNajblizszaDostepnosc());
+        daneDoTabeli1.add(String.valueOf(temp.getStatus()));
 
         ((DefaultTableModel)tabela.getModel()).addRow(daneDoTabeli1);
 
         dataBase db = new dataBase();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("dostepnosc", String.valueOf(temp.najblizszaDostepnosc));
-        data.put("status", temp.status);
-        data.put("id", temp.idKontenera);
+        data.put("dostepnosc", String.valueOf(temp.getNajblizszaDostepnosc()));
+        data.put("status", temp.getStatus());
+        data.put("id", temp.getIdKontenera());
 
-        db.table("containers").add(String.valueOf(temp.idKontenera), data);
+        db.table("containers").add(String.valueOf(temp.getIdKontenera()), data);
 
         showMessageDialog(null, "Kontener zostal dodany!");
     }
@@ -120,7 +120,7 @@ public class TabelaKontenerow {
 
             dataBase db = new dataBase();
 
-            db.table("containers").delete(String.valueOf(kont.konteneryVector.get(row).idKontenera));
+            db.table("containers").delete(String.valueOf(kont.konteneryVector.get(row).getIdKontenera()));
 
             kont.konteneryVector.remove(row);
 
