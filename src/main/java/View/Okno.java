@@ -174,75 +174,12 @@ public class Okno extends JFrame {
                 }
             }
 
-
-            /*
-            String adres = dialogbox();
-            int wolne_id = listaZamowien.zwrocWolneIdZamowienia();
-            long id_kontenera = listaKontenerow.wolneID();
-
-            {
-                try
-                {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    String date2 = java.time.LocalDate.now().toString();
-                    Date availabilityDate = sdf.parse(date2);
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(availabilityDate);
-                    cal.add(Calendar.DATE, 7);
-                    availabilityDate = cal.getTime();
-                    String formatted = sdf.format(availabilityDate);
-
-                    var nowe_zamowienie = new Zamowienie(wolne_id,db.auth().userName, formatted,adres,listaKontenerow.wolneID(), StatusZamowienia.DostarczenieDoKlienta);
-                    listaZamowien.dodajZamowienie(nowe_zamowienie);
-                    var nowy_kontener = new Kontener(false,dostepnosc,id_kontenera);
-
-                    addToOrdersDB(adres,id_kontenera,date,wolne_id,StatusZamowienia.DostarczenieDoKlienta.name(),db.auth().userName);
-                }
-
-
-            }
-                okno.getContentPane().validate();
-            }*/
         });
     }
     private void initDB() {
         this.db = new dataBase();
     }
 
-    private String dialogbox() {
-
-        String adres = JOptionPane.showInputDialog(okno,"Prosze podac adres:");
-
-        int a = JOptionPane.showConfirmDialog(okno, "Czy wpisano poprawny adres?");
-
-        if (a == JOptionPane.YES_OPTION) {okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);}
-        return adres;
-    }
-    private void addToContainersDB(String dostepnosc,boolean status,long id)
-    {
-        dataBase db = new dataBase();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("dostepnosc", dostepnosc);
-        data.put("status", status);
-        data.put("id", id);
-
-        db.table("containers").add(String.valueOf(id), data);
-    }
-    private void addToOrdersDB(String adres,long idContainer,String date,int idOrder,String status,String username)
-    {
-        dataBase db = new dataBase();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("adres", adres);
-        data.put("containerID", idContainer);
-        data.put("data", date);
-        data.put("orderID",idOrder);
-        data.put("status",status);
-        data.put("username",username);
-
-        db.table("orders").add(String.valueOf(idOrder), data);
-    }
     private void alert(String message, int type) {
         JFrame f = new JFrame("Parent");
         f.setAlwaysOnTop(true);
