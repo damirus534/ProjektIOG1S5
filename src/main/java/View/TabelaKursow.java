@@ -16,14 +16,6 @@ public class TabelaKursow {
         nazwyKolumn.add("Status zamowienia");
         nazwyKolumn.add("id kontenera");
 
-        Vector<String> daneDoTabeli1 = new Vector<>();
-
-        //kursy.dodajZamowienie(new Zamowienie(1, "user1", "07.01.2022", "Krasinskiego8", 1, StatusZamowienia.Zakonczenie));
-
-        //daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
-        //daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
-        //daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
-        //daneDoTabeli.add(daneDoTabeli1);
 
         modelTabeli = new DefaultTableModel(daneDoTabeli, nazwyKolumn);
         tabela = new JTable(modelTabeli);
@@ -31,10 +23,6 @@ public class TabelaKursow {
         tabela.setEnabled(false);
         tabela.setVisible(true);
 
-        //daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).data));
-        //daneDoTabeli1.add(kursy.getListaZanowien().get(0).status.name());
-        //daneDoTabeli1.add(String.valueOf(kursy.getListaZanowien().get(0).idKontenera));
-        //daneDoTabeli.add(daneDoTabeli1);
 
     };
     public TabelaKursow(ListaZamowien listaZamowien){
